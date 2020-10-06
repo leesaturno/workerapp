@@ -6,10 +6,9 @@ import Logo from '../../images/logo.png'
 import {useDispatch,useSelector} from 'react-redux';
 import {LoginAction} from '../../Redux/Dusk/loginreducer';
 
-
-
 function Login(){
-  const disparador="";
+  const disparador=useDispatch();
+  const user=useSelector(store=>store.session.user);
   return (
     <div>
       <article className="border-login card-dark card-Lg">

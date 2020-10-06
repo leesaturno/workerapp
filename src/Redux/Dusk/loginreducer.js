@@ -2,7 +2,7 @@ import axios from 'axios';
 
 //Constanes
 const LoginState={
-    array:[]
+    user:[]
 };
 
 //types
@@ -12,7 +12,7 @@ const OPTENER_Y_VALIDAR_USUARIOS="OPTENER_Y_VALIDAR_USUARIOS";
 export default function Loginreducer(state=LoginState,action){
     switch (action.type) {
         case OPTENER_Y_VALIDAR_USUARIOS:
-            return {...state, array: action.payload}
+            return {...state, user:action.payload}
         default:
             return state
     }
