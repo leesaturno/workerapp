@@ -1,1 +1,84 @@
 @import "../../App.scss";
+
+body {
+    background: rgba(24,25,27,1);
+    background: linear-gradient(0deg, rgba(248,248,248,1) 0%, rgba(24,25,27,1) 100%);
+}
+
+.border-login {
+    border-right: 35px solid $primary;
+}
+
+.card-dark {
+    background-color: $card-dark;
+}
+
+.card-Lg {
+    border-radius: 10px;
+    height: auto;
+    margin: 0 auto;
+    margin-top: 6%;
+    width: 40%;
+    img {
+        height: 50%;
+        left: 25%;
+        margin: 0 auto;
+        margin-bottom: -55px !important;
+        margin-top: -35px !important;
+        position: relative;
+        width: 50%;
+    }
+    form {
+        padding: 30px;
+        label {
+            color: hsla(0,0%,56.1%,.7);
+            font-size: 12px;
+        }
+        input {
+            background-color: transparent;
+            border: 1px solid #424242;
+            border-radius: 3px;
+            color: $text-D;
+            font-size: 13px;
+            height: 40px;
+            margin-bottom: 20px;
+            padding: 10px;
+            width: 100%;
+        }
+    }
+}
+
+.custom-radio-checkbox {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    font-family: arial;
+    margin-bottom: 30px;
+    &__show--checkbox {
+      background-image: url('../../images/svg/caja2.svg');
+    }
+    &__input {
+        display: none;
+    }
+    &__show {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      margin-right: .5rem;
+      background-size: cover;
+    }
+    &__input:checked + &__show--checkbox {
+      background-image: url('../../images/svg/caja-1.svg');
+    }
+  }
+  
+  .bttn {
+      background-color: $primary;
+      border: none;
+      border-radius: 5px;
+      bottom: 25px;
+      color: $white;
+      font-size: 13px;
+      height: 50px;
+      width: 100%;
+  }

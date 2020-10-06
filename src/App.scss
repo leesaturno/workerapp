@@ -1,1 +1,106 @@
 @import "~ed-grid/ed-grid";
+
+$primary: #7A8A65;
+
+$bg-dark: #18191B;
+$card-dark: #242224;
+$divider: #313131;
+$light: #f8f8f8;
+$muted: #696969;
+$text-D: #8F8F8F;
+$text-L: #3A3A3A;
+$white: #ffffff;
+
+*, ::after, ::before{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: $bg-dark;
+    color: $text-D;
+    font-family: Roboto,sans-serif;
+    font-size: .8rem;
+    font-weight: 400;
+    height: 100%;
+    line-height:1.5;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+h1 {
+    font-size: 25px;
+    font-weight: 400;
+}
+
+.main {
+    left: 5%;
+    right: 5%;
+    position: relative;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.mt-10 {
+    margin-top: 10%;
+}
+
+.bxs {
+    box-shadow: 0 3px 30px rgba(0,0,0,.3),0 3px 24px rgba(0,0,0,.3);
+}
+
+.text-ups {
+    text-transform: uppercase;
+}
+
+// responsive
+
+@media (max-width: 767px) {
+    .navbar {
+        background: $card-dark !important;
+        padding: .6rem 0 !important;
+        .navbar-left {
+            display: block !important;
+        }
+        .user{
+            img {
+                width: 50px !important;
+            }
+        }
+    }
+    .sidebar {
+        padding-top: 60px !important;
+        padding-bottom: 0 !important;
+        .main-menu {
+            width: 90px !important;
+            height: calc(100% - 60px) !important;
+            left: 0 !important;
+            .footer {
+                display: none !important;
+            }
+        }
+    }
+
+    footer {
+        left: 10px !important;
+    }
+}
+
+
+@media (min-width: 320px) and (max-width: 767px){
+    .card-Lg {
+        margin-top: 10% !important;
+        width: 60% !important;
+        img {
+            margin-top: -20px !important;
+            width: 150px;
+        }
+    }
+}
+@media (min-width: 220px) and (max-width: 320px) {
+    .card-Lg {
+        margin-top: 20% !important;
+        width: 85% !important;
+    }
+}
