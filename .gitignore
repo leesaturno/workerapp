@@ -52,8 +52,10 @@ Thumbs.db
 
 # dependencies
 /node_modules
+/Chronos
 /.pnp
 .pnp.js
+cron.php
 
 # testing
 /coverage
