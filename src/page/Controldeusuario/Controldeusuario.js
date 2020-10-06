@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
 import './Controldeusuario.scss';
 
-class Controldeusuario extends Component {
-    render(){
-    return (
-        <div></div>
-    );
-  }
+function Controldeusuario() {
+  return (
+      <div></div>
+  );
 }
 
 export default Controldeusuario;

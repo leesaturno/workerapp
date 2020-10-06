@@ -5,10 +5,10 @@ import Login from './page/Login/Login';
 import Bienvenida from './page/Bienvenida/Bienvenida';
 import Evaluador from './page/Evaluador/Evaluador';
 import Controldeusuario from './page/Controldeusuario/Controldeusuario';
-import {Provider} from 'react-redux';
-import GenerateStore from './Redux/store';
 //import
-            
+//Redux
+import {Provider} from 'react-redux';
+import GenerateStore from './Redux/store';    
             
 
 function App() {
