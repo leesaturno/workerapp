@@ -1,11 +1,16 @@
-import {createStore, combineReducers, compose, applyMiddleware} from 'redux'
-import thunk from 'redux-thunk'
+import {createStore, combineReducers, compose, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
+import Loginreducer from './Dusk/loginreducer';
 
 
-const reducer=combineReducers({
 
-});
+const rootReducer = combineReducers({
+    session: Loginreducer
+})
 
-const store= createStore(reducer);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-export default store;
+export default function generateStore() {
+    const store = createStore( rootReducer, composeEnhancers( applyMiddleware(thunk) ) );
+    return store
+}
