@@ -54,53 +54,83 @@ h1 {
     text-transform: uppercase;
 }
 
-// responsive
-
-@media (max-width: 767px) {
-    .navbar {
-        background: $card-dark !important;
-        padding: .6rem 0 !important;
-        .navbar-left {
-            display: block !important;
-        }
-        .user{
-            img {
-                width: 50px !important;
-            }
-        }
-    }
-    .sidebar {
-        padding-top: 60px !important;
-        padding-bottom: 0 !important;
-        .main-menu {
-            width: 90px !important;
-            height: calc(100% - 60px) !important;
-            left: 0 !important;
-            .footer {
-                display: none !important;
-            }
-        }
-    }
-
-    footer {
-        left: 10px !important;
-    }
+footer {
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    color: $divider;
+    transition: color .3s;
+    transition: background .3s;
+    bottom: -36px;
+    position: fixed;
+    left: 174px;
+    // @include respond('phone-land') {
+    //     left: 10px;
+    // }
 }
 
 
-@media (min-width: 320px) and (max-width: 767px){
-    .card-Lg {
-        margin-top: 10% !important;
-        width: 60% !important;
-        img {
-            margin-top: -20px !important;
-            width: 150px;
+//MEDIA QUERY MANAGER
+// 0 - 600: Phone 
+// 600 - 900: Tablet portrait
+// 900 - 1200: Tablet landscape
+// 1200 - 1800: Normal styles
+// 1800+ : Big Desktop
+// 1em = 16px
+// The smaller device rules always should write below the bigger device rules
+
+@mixin respond($breakpoint) {
+    @if($breakpoint=="phone") {
+        @media only screen and (max-width: 575px) {
+            @content;
+        }
+    }
+    @if($breakpoint=="phone-land") {
+        @media only screen and (max-width: 767px) {
+            @content;
+        }
+    }
+    @if($breakpoint=="tab-port") {
+        @media only screen and (max-width: 991px) {
+            @content;
+        }
+    }
+    @if($breakpoint=="tab-land") {
+        @media only screen and (max-width: 1199px) {
+            @content;
+        }
+    }
+    @if ($breakpoint=="desktop") {
+        @media only screen and (min-width: 1200px) {
+            @content;
+        }
+    }
+    @if($breakpoint=="big-desktop") {
+        @media only screen and (min-width: 1800px) {
+            @content;
         }
     }
 }
-@media (min-width: 220px) and (max-width: 320px) {
-    .card-Lg {
-        margin-top: 20% !important;
-        width: 85% !important;
+
+//don't use it untill you need this too much
+@mixin custommq($min: null, $max: null) {
+    @if ($min !=null and $max !=null) {
+        @media only screen and (min-width: $min) and (max-width: $max) {
+            @content;
+        }
+    }
+    @if ($min==null and $max !=null) {
+        @media only screen and (max-width: $max) {
+            @content;
+        }
+    }
+    @if ($min !=null and $max==null) {
+        @media only screen and (min-width: $min) {
+            @content;
+        }
     }
 }

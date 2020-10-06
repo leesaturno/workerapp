@@ -12,15 +12,19 @@ function Login(){
   const user=useSelector(store=>store.session.user);
   return (
     <div className="Bg-gradient">
+      <div className="ed-grid"></div>
       <article className="border-login card-dark card-Lg">
         {/*Contenedor de la imagen*/}
-        <img src={Logo} />
+        <div >
+          <img src={Logo} />
+        </div>
+          
 
         {/*Contenido*/}
-        <form action="/bienvenida" className="s-mb-0">
+        <form action="#" className="s-pxy-3">
           <div className="form-group">
             <label>USUARIO</label>
-            <input type="email" name="email" className="form-control" />
+            <input type="email" name="usuario" className="form-control" />
           </div>
           <div className="form-group">
             <label>CONTRASE'A</label>
