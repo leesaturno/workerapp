@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import '../../App';
 import './Login.scss';
 
 import Logo from '../../images/logo.png'
@@ -10,13 +11,13 @@ function Login(){
   const disparador=useDispatch();
   const user=useSelector(store=>store.session.user);
   return (
-    <div>
+    <div className="Bg-gradient">
       <article className="border-login card-dark card-Lg">
         {/*Contenedor de la imagen*/}
         <img src={Logo} />
 
         {/*Contenido*/}
-        <form action="#" className="s-mb-0">
+        <form action="/bienvenida" className="s-mb-0">
           <div className="form-group">
             <label>USUARIO</label>
             <input type="email" name="email" className="form-control" />

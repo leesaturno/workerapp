@@ -1,8 +1,11 @@
 @import "../../App.scss";
 
-body {
+.Bg-gradient {
     background: rgba(24,25,27,1);
     background: linear-gradient(0deg, rgba(248,248,248,1) 0%, rgba(24,25,27,1) 100%);
+    height: 100%;
+    position: fixed;
+    width: 100%;
 }
 
 .border-login {
