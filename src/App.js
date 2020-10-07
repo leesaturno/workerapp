@@ -14,18 +14,19 @@ import GenerateStore from './Redux/store';
 function App() {
   const store=GenerateStore();
   return (
-    <Provider store={store}>
-      <Router>
+    <Router>
+      <Provider store={store}>
         <Switch>
             <Route exact path='/' component={Login} />
-            <Route path='/bienvenida' component={Bienvenida} />
-            <Route path='/Login' component={Login} />
-            <Route path='/Evaluador' component={Evaluador} /> 
-            <Route path='/Controldeusuario' component={Controldeusuario} /> 
+            <Route exact path='/bienvenida' component={Bienvenida} />
+            <Route exact path='/Login' component={Login} />
+            <Route exact path='/Evaluador' component={Evaluador} /> 
+            <Route exact path='/Controldeusuario' component={Controldeusuario} /> 
+            <Route render={() => <h1>Not found!</h1>} />
             {/*ruta*/}
         </Switch>
-      </Router>
-    </Provider>
+      </Provider>
+    </Router>
   );
 }
 

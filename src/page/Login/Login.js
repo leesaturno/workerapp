@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import '../../App';
 import './Login.scss';
 
@@ -10,6 +10,23 @@ import {LoginAction} from '../../Redux/Dusk/loginreducer';
 function Login(){
   const disparador=useDispatch();
   const user=useSelector(store=>store.session.user);
+
+  const [Datos,setDatos]=useState({
+    email:"",
+    password:""
+  })
+  
+  const cargadedatos = (e)=>{
+        setDatos({
+          ...Datos,
+          [e.target.name] : e.target.value
+      })
+  }
+
+  const enviarDatos = (e) => {
+    e.preventDefault()
+    console.log('enviando datos...' + Datos.username + ' ' + Datos.password)
+}
   return (
     <div className="Bg-gradient">
       <div className="ed-grid"></div>
@@ -21,14 +38,14 @@ function Login(){
           
 
         {/*Contenido*/}
-        <form action="/bienvenida" className="s-pxy-3">
+        <form onSubmit={enviarDatos} className="s-pxy-3">
           <div className="form-group">
             <label>USUARIO</label>
-            <input type="email" name="usuario" className="form-control" />
+            <input type="email" name="usuario" onChange={cargadedatos} className="form-control" />
           </div>
           <div className="form-group">
             <label>CONTRASE'A</label>
-            <input name="password" className="form-control" type="password" />
+            <input name="password" className="form-control" onChange={cargadedatos} type="password" />
           </div>
           <div className="form-group">
             <label className="custom-radio-checkbox">
