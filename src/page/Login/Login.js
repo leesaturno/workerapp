@@ -16,12 +16,12 @@ function Login(){
       <article className="border-login card-dark card-Lg">
         {/*Contenedor de la imagen*/}
         <div >
-          <img src={Logo} />
+          <img src={Logo} alt="Logo" />
         </div>
           
 
         {/*Contenido*/}
-        <form action="#" className="s-pxy-3">
+        <form action="/bienvenida" className="s-pxy-3">
           <div className="form-group">
             <label>USUARIO</label>
             <input type="email" name="usuario" className="form-control" />

@@ -37,7 +37,6 @@ h1 {
 .main {
     left: 5%;
     right: 5%;
-    position: relative;
     text-align: center;
     margin: 0 auto;
 }
@@ -52,25 +51,6 @@ h1 {
 
 .text-ups {
     text-transform: uppercase;
-}
-
-footer {
-    height: 90px;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    color: $divider;
-    transition: color .3s;
-    transition: background .3s;
-    bottom: -36px;
-    position: fixed;
-    left: 174px;
-    // @include respond('phone-land') {
-    //     left: 10px;
-    // }
 }
 
 

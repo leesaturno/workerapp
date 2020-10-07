@@ -1,1 +1,127 @@
 @import "../../App.scss";
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    z-index: 4;
+    height: calc(100% - 100px);
+    transition: border-radius .3s;
+    @include respond('phone-land') {
+        padding-top: 60px;
+        padding-bottom: 0;
+    }
+    .main-menu {
+        width: 120px;
+        height: calc(100% - 50px);
+        background: $card-dark;
+        border-radius: 5px;
+        z-index: 3;
+        position: fixed;
+        transition: transform .3s;
+        padding-top: 0;
+        padding-bottom: 30px;
+        left: 25px;
+        text-align: center;
+        text-transform: uppercase;
+        @include respond('phone-land') {
+            width: 90px;
+            height: calc(100% - 60px);
+            left: 0;
+        }
+        ul {
+            li {
+                position: relative;
+                list-style: none;
+                &.active {
+                    a {
+                        color: $primary;
+                    }
+                    svg {
+                        fill: $primary;
+                    }
+                    &::after {
+                        content: " ";
+                        background: $primary;
+                        border-radius: 10px;
+                        position: absolute;
+                        width: 6px;
+                        height: 70px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        left: 0;
+                    }
+                }
+                &:hover {
+                    a {
+                        color: $primary;
+                    }
+                    svg {
+                        fill: $primary;
+                    }
+                }
+                a {
+                    height: 80px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 400;
+                    border-bottom: 1px solid $divider;
+                    color: $text-D;
+                    transition: color .3s;
+                    transition: background .3s;
+                    text-decoration: none;
+                    svg {
+                        width: 30px;
+                        fill: $text-D;
+                    }
+                    span {
+                        margin-bottom: 5px;
+                    }
+                }
+            }
+        }
+
+        .scroll {
+            padding-right: unset;
+            margin-right: unset;
+            height: 100%;
+        }
+
+        .footer {
+            border-top: 1px solid $divider;
+            margin: 0 auto;
+            height: 90px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            border-bottom: 1px solid $divider;
+            color: $text-D;
+            transition: color .3s;
+            transition: background .3s;
+            margin-top: -10px;
+            @include respond('phone-land') {
+                display: none;
+            }
+            svg {
+                margin-top: -50px;
+                width: 20px;
+            }
+        }
+    }
+
+    .scrollbar-container {
+        margin-right: 0;
+        padding-right: 0;
+        position: relative;
+    }
+}

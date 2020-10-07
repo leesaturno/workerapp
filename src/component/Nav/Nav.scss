@@ -1,0 +1,57 @@
+@import "../../App.scss";
+
+.nav {
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.navbar {
+    background: transparent;
+    height: 60px;
+    padding: 1.5rem 0;
+    vertical-align: middle;
+    @include respond('phone-land') {
+        background: $card-dark;
+        padding: .3rem 0;
+    }
+    .navbar-left {
+        display: none;
+        flex-basis: 40%;
+        position: absolute;
+        padding: 1rem 0;
+        left: -130px;
+        @include respond('phone-land') {
+            display: block;
+        }
+        .menu-button-mobile {
+            text-align: center;
+            margin-left: 20px;
+            svg {
+                height: 22px;
+            }
+        }
+    }
+
+    .navbar-right {
+        flex-basis: 40%;
+        text-align: right;
+    }
+    .user {
+        margin-right: 20px;
+        img {
+            border-radius: 30px;
+            height: 50px;
+            width: 120px;
+            @include respond('phone-land') {
+                height: auto;
+                width: 50px;
+            }
+        }
+    }
+}
+
+.d-inline-block {
+    display: inline-block !important;
+}
