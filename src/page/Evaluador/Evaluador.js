@@ -6,8 +6,14 @@ import Menulateral from '../../component/Menulateral/Menulateral'
 import CardStep from '../../component/Card/CardStep'
 import Icon from '../../component/Icons/Icons'
 import Footer from '../../component/Footer/Footer'
+//redux
+import {pointAction,ruttAction} from '../../Redux/Dusk/pointreducer';
+import {useDispatch,useSelector} from 'react-redux';
 
 function Evaluador() {
+  const disparador=useDispatch();
+  const evaluador=useSelector(store=>store.evaluador);
+  /* disparador(pointAction()); disparador(ruttAction('RUT')) */
   return (
       <div>
         <Nav></Nav>

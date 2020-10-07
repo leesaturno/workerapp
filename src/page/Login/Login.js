@@ -7,11 +7,10 @@ import {useDispatch,useSelector} from 'react-redux';
 import {LoginAction} from '../../Redux/Dusk/loginreducer';
 //toast
 import { ToastContainer, toast } from 'react-toastify';
-import Segurity from '../../component/Segurity/Segurity';
 
 function Login(props){
   const disparador=useDispatch();
-  const user=useSelector(store=>store.session);
+  const user=useSelector(store=>store.evaluador);
 
   const [Datos,setDatos]=useState({
     usuario:"",
