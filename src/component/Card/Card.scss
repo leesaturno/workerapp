@@ -2,11 +2,13 @@
 
 .card {
     border-radius: .75rem;
-    height: 420px;
-    margin: 0 auto;
-    width: 80%;
+    margin: auto;
+    display: block;
+    width: 85%;
     border: initial;
     box-shadow: 0 1px 15px rgba(0,0,0,.1),0 1px 8px rgba(0,0,0,.1);
+    position: relative;
+    text-align: center;
     .card-header {
         height: 60px;
         border-bottom: 1px solid $divider;
@@ -16,9 +18,85 @@
             line-height: 5em;
         }
     }
+    .card-body {
+        padding: 20px;
+    }
 }
 
-.btn-Card {
+.card-step {
+    border-radius: .75rem;
+    width: 50%;
+    box-shadow: 0 1px 15px rgba(0,0,0,.1),0 1px 8px rgba(0,0,0,.1);
+    margin: auto;
+    text-align: center;
+    .card-header {
+        height: 60px;
+        width: 100%;
+        .card-title {
+            line-height: 5em;
+        }
+    }
+    .card-body {
+        padding: 20px;
+        text-align: left;
+        form {
+            label {
+                color: hsla(0,0%,56.1%,.7);
+                font-size: 12px;
+            }
+            input,
+            select {
+                background-color: transparent;
+                border: 1px solid #424242;
+                border-radius: .3rem;
+                color: $text-D;
+                font-size: 13px;
+                height: 40px;
+                margin-bottom: 20px;
+                padding: 10px;
+                width: 100%;
+            }
+        }
+    }
+}
+
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.separador {
+    border: 1px solid $muted;
+    padding: 15px;
+    margin-bottom: 35px;
+    span {
+        color: $muted;
+        background-color: $card-dark;
+        margin-top: -35px;
+        margin-bottom: 10px;
+        position: absolute;
+        padding: 10px;
+    }
+}
+
+.step3 {
+    text-align: center;
+    svg {
+        fill: $primary;
+    }
+}
+
+.btn-Card,
+.btn-CB {
     background-color: $primary;
     border: none;
     border-radius: .5rem;
@@ -34,10 +112,69 @@
     }
     svg {
         fill: $white;
-        width: 1.8em;
-        height: 1.8em;
+        width: 1.5em;
+        height: 1.5em;
         vertical-align: middle;
     }
+}
+
+.btn-CB {
+    width: 100%;
+    margin-top: 25px;
+}
+
+.form-progress {
+  width: 10%;
+  height: 65px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  &::before {
+    content: "";
+    width: calc(48% - 545px);
+    border-top: 2px solid $primary;
+    position: absolute;
+    top: 21.6%;
+    margin-left: 16px;
+    transform: translateY(-50%);
+    z-index: -100;
+  }
+}
+
+.step {
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  border: 2px solid $primary;
+  background: $bg-dark;
+}
+
+.step-current {
+  border: 2px solid $primary;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 21.6%;
+    margin-left: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background: $primary;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.step-done {
+  font-size: 0.75rem;
+  color: white;
+  border: 2px solid $primary;
+  background: $primary;
+}
+
+.step-done > i {
+  position: relative;
+  top: -2px;
+  z-index: 100;
 }
 
 .mb-3, .my-3 {

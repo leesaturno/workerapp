@@ -5,7 +5,7 @@ import Icon from '../Icons/Icons'
 
 
 const Card = ({ title, btn }) => (
-  <div className="card card-dark d-flex mb-3 ">
+  <div className="card card-dark mb-3 ">
         <div className="card-header">
           <div className="card-title text-ups"> 
             <span className="text-title fl">{ title }</span>

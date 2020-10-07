@@ -75,6 +75,11 @@ h1 {
     font-size: 1em;
 }
 
+input:focus, input.form-control:focus {
+    border: 1px solid $primary;
+    border-radius: .4rem;
+}
+
 
 //MEDIA QUERY MANAGER
 // 0 - 600: Phone 
