@@ -1,20 +1,27 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect } from 'react';
 import '../../App';
 import './Login.scss';
 
-import Logo from '../../images/logo.png'
+import Logo from '../../images/logo.png';
+import {Redirect} from 'react-router-dom';
 //redux
 import {useDispatch,useSelector} from 'react-redux';
 import {LoginAction} from '../../Redux/Dusk/loginreducer';
 
-function Login(){
+function Login(props){
   const disparador=useDispatch();
-  const user=useSelector(store=>store.session.user);
+  const user=useSelector(store=>store.session);
 
   const [Datos,setDatos]=useState({
-    email:"",
+    usuario:"",
     password:""
   })
+
+  useEffect(() => {
+    if(user.atividad==true){
+      props.history.push("/Bienvenida");
+    }
+  });
   
   const cargadedatos = (e)=>{
         setDatos({
@@ -24,24 +31,23 @@ function Login(){
   }
 
   const enviarDatos = (e) => {
-    e.preventDefault()
-    console.log('enviando datos...' + Datos.username + ' ' + Datos.password)
-}
+     e.preventDefault();
+     disparador(LoginAction(Datos.usuario,Datos.password));
+  }
+
   return (
     <div className="Bg-gradient">
       <div className="ed-grid"></div>
       <article className="border-login card-dark card-Lg">
         {/*Contenedor de la imagen*/}
-        <div >
+        <div>
           <img src={Logo} alt="Logo" />
         </div>
-          
-
         {/*Contenido*/}
-        <form onSubmit={enviarDatos} className="s-pxy-3">
+        <form onSubmit={(e)=>{enviarDatos(e);}} className="s-pxy-3">
           <div className="form-group">
             <label>USUARIO</label>
-            <input type="email" name="usuario" onChange={cargadedatos} className="form-control" />
+            <input type="text" name="usuario" onChange={cargadedatos} className="form-control" />
           </div>
           <div className="form-group">
             <label>CONTRASE'A</label>
@@ -60,7 +66,6 @@ function Login(){
           <button className="bttn">AUTENTICAR</button>
         </form>
       </article>
-
     </div>
   );
 }
