@@ -13,7 +13,7 @@ function Evaluador() {
         <Nav></Nav>
         <Menulateral></Menulateral>
 
-        <div class="main mt-5">
+        <div class="main mt-5 ml-10">
 
             <div className="form-progress">
                 <div className="step step-current" />

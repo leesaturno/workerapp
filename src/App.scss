@@ -80,6 +80,9 @@ input:focus, input.form-control:focus {
     border-radius: .4rem;
 }
 
+.Toastify__toast--success {
+    background: $primary !important;
+}
 
 //MEDIA QUERY MANAGER
 // 0 - 600: Phone 

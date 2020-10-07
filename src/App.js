@@ -5,6 +5,7 @@ import Login from './page/Login/Login';
 import Bienvenida from './page/Bienvenida/Bienvenida';
 import Evaluador from './page/Evaluador/Evaluador';
 import Controldeusuario from './page/Controldeusuario/Controldeusuario';
+import NewUser from './page/Controldeusuario/NewUser';
 //import
 //Redux
 import {Provider} from 'react-redux';
@@ -23,6 +24,7 @@ function App() {
             <Route exact path='/Login' component={Login} />
             <Route exact path='/Evaluador' component={Evaluador} /> 
             <Route exact path='/Controldeusuario' component={Controldeusuario} /> 
+            <Route exact path='/NewUser' component={NewUser} />
             <Route render={() => <h1>Not found!</h1>} />
             {/*ruta*/}
         </Switch>

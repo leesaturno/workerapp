@@ -20,8 +20,8 @@ function Login(props){
 
   useEffect(() => {
     if(user.atividad==true){
-        toast.success('Usuario verificado con exito', {
-          position: "bottom-right",
+        toast.success('¡Usuario verificado con exito!', {
+          position: "top-right",
           autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,

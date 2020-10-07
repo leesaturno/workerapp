@@ -26,16 +26,17 @@ function Menulateral(props) {
               </a></NavLink>
             </li>
             <li className="nav-item">
-            <NavLink to="/Controldeusuario"><a href="/Controldeusuario">
+            <NavLink to="/Controldeusuario"><a>
                 <Icon name="users"/>
                 <span>Control de usuarios</span>
               </a></NavLink>
             </li>
             <li className="nav-item">
-              <a href="/Evaluador">
+            <NavLink to="/Evaluador"><a>
                 <Icon name="evaluador"/>
                 <span>Evaluador</span>
               </a>
+              </NavLink>
             </li>
           </ul>
         </div>

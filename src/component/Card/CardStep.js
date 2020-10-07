@@ -4,8 +4,6 @@ import './Card.scss';
 
 const CardStep = ({ title, content }) => (
     <div>
-        
-
         <div className="card-step card-dark mb-3">
             <div className="card-header">
                 <div className="card-title text-title text-ups"> 
@@ -16,7 +14,6 @@ const CardStep = ({ title, content }) => (
                 { content }
             </div>
         </div>
-
     </div>
 );
 
