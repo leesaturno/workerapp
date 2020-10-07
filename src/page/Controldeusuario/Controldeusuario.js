@@ -3,6 +3,7 @@ import './Controldeusuario.scss';
 
 import Nav from '../../component/Nav/Nav'
 import Menulateral from '../../component/Menulateral/Menulateral'
+import Card from '../../component/Card/Card'
 import Footer from '../../component/Footer/Footer'
 
 function Controldeusuario() {
@@ -11,8 +12,8 @@ function Controldeusuario() {
         <Nav></Nav>
         <Menulateral></Menulateral>
 
-        <div class="main mt-10">
-            <h1 class="text-ups">Control de usuarios</h1>
+        <div class="main mt-5 ml-10">
+            <Card title="usuarios del sistema" btn="Nuevo usuario "></Card>
         </div>
 
         <Footer></Footer>

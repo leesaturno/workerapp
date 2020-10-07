@@ -30,8 +30,14 @@ body {
 }
 
 h1 {
-    font-size: 25px;
-    font-weight: 400;
+    font-size: 1.75rem;
+    padding-bottom: 10px;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-bottom: .5rem;
+    font-weight: 500;
+    line-height: 1.2;
 }
 
 .main {
@@ -39,6 +45,17 @@ h1 {
     right: 5%;
     text-align: center;
     margin: 0 auto;
+}
+
+.bxs {
+    box-shadow: 0 3px 30px rgba(0,0,0,.3),0 3px 24px rgba(0,0,0,.3);
+}
+
+.ml-10 {
+    margin-left: 10%;
+}
+.mt-5 {
+    margin-top: 5%;
 }
 
 .mt-10 {
@@ -51,6 +68,11 @@ h1 {
 
 .text-ups {
     text-transform: uppercase;
+}
+
+.text-title {
+    color: $primary;
+    font-size: 1em;
 }
 
 

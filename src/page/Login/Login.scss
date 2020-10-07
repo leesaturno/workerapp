@@ -17,7 +17,7 @@
 }
 
 .card-Lg {
-    border-radius: 10px;
+    border-radius: .75rem;
     height: auto;
     margin: 0 auto;
     margin-top: 6%;
@@ -48,7 +48,7 @@
         input {
             background-color: transparent;
             border: 1px solid #424242;
-            border-radius: 3px;
+            border-radius: .4rem;
             color: $text-D;
             font-size: 13px;
             height: 40px;
@@ -86,7 +86,7 @@
   .bttn {
       background-color: $primary;
       border: none;
-      border-radius: 5px;
+      border-radius: .75rem;
       bottom: 25px;
       color: $white;
       cursor: pointer;

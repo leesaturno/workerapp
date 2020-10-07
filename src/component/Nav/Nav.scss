@@ -14,6 +14,7 @@
     vertical-align: middle;
     @include respond('phone-land') {
         background: $card-dark;
+        box-shadow: 0 1px 15px rgba(0,0,0,.1),0 1px 8px rgba(0,0,0,.1);
         padding: .3rem 0;
     }
     .navbar-left {

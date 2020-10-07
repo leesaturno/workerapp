@@ -2,9 +2,6 @@
 
 footer {
     height: 90px;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -12,7 +9,7 @@ footer {
     transition: color .3s;
     transition: background .3s;
     bottom: -36px;
-    position: fixed;
+    position: relative;
     left: 174px;
     @include respond('phone-land') {
         left: 5%;
