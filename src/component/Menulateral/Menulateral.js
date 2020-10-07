@@ -4,7 +4,7 @@ import Icon from '../Icons/Icons'
 import { useSelector } from 'react-redux';
 import {Redirect,NavLink} from 'react-router-dom';
 
-function Menulateral() {
+function Menulateral(props) {
   const user=useSelector(store=>store.session);
   const door=()=>{
     if(user.atividad==false){
