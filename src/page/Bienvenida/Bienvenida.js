@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect} from 'react';
 import './Bienvenida.scss';
 
 import Nav from '../../component/Nav/Nav'
@@ -9,10 +9,10 @@ function Bienvenida() {
   return (
       <div>
         <Nav></Nav>
-        <Menulateral></Menulateral>
+        <Menulateral ></Menulateral>
 
-        <div class="main mt-10">
-            <h1 class="text-ups">Bienvenido (NOMBRE DE USUARIO)</h1>
+        <div className="main mt-10">
+            <h1 className="text-ups">Bienvenido (NOMBRE DE USUARIO)</h1>
         </div>
 
         <Footer></Footer>

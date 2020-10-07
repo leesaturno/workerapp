@@ -8,7 +8,8 @@ import Controldeusuario from './page/Controldeusuario/Controldeusuario';
 //import
 //Redux
 import {Provider} from 'react-redux';
-import GenerateStore from './Redux/store';    
+import GenerateStore from './Redux/store';
+import 'react-toastify/dist/ReactToastify.css';
             
 
 function App() {

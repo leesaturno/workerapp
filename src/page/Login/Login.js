@@ -1,12 +1,13 @@
 import React, {useState, useEffect } from 'react';
 import '../../App';
 import './Login.scss';
-
 import Logo from '../../images/logo.png';
-import {Redirect} from 'react-router-dom';
 //redux
 import {useDispatch,useSelector} from 'react-redux';
 import {LoginAction} from '../../Redux/Dusk/loginreducer';
+//toast
+import { ToastContainer, toast } from 'react-toastify';
+import Segurity from '../../component/Segurity/Segurity';
 
 function Login(props){
   const disparador=useDispatch();
@@ -19,7 +20,18 @@ function Login(props){
 
   useEffect(() => {
     if(user.atividad==true){
-      props.history.push("/Bienvenida");
+        toast.success('Usuario verificado con exito', {
+          position: "bottom-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+          setTimeout(() => {
+            props.history.push("/Bienvenida");
+          }, 3000);
     }
   });
   
@@ -50,7 +62,7 @@ function Login(props){
             <input type="text" name="usuario" onChange={cargadedatos} className="form-control" />
           </div>
           <div className="form-group">
-            <label>CONTRASE'A</label>
+            <label>CONTRASEÑA</label>
             <input name="password" className="form-control" onChange={cargadedatos} type="password" />
           </div>
           <div className="form-group">
@@ -66,6 +78,7 @@ function Login(props){
           <button className="bttn">AUTENTICAR</button>
         </form>
       </article>
+      <ToastContainer/>
     </div>
   );
 }

@@ -8,17 +8,19 @@ const LoginState={
 
 //types
 const OPTENER_Y_VALIDAR_USUARIOS="OPTENER_Y_VALIDAR_USUARIOS";
-var fix;
+var fix=false;
+var fixarray=[];
 //reducer
 export default function Loginreducer(state=LoginState,action){
     switch (action.type) {
         case OPTENER_Y_VALIDAR_USUARIOS:
             if(action.payload!=""){
                 fix=true;
+                fixarray=action.payload;
             }
-            return {...state, user:action.payload,atividad:fix}
+            return {...state, user:fixarray,atividad:fix}
         default:
-            return {...state,atividad:false}
+            return state
     }
 }
 
