@@ -11,10 +11,11 @@ const Card = ({ title, btn, href}) => (
             <span className="text-title fl">{ title }</span>
             <NavLink to={href}><a className="fr mr-30">
               <button className="btn-Card text-ups">
-                { btn }
-                <span>
-                  <Icon name="newUser"/>
+                <span className="text-h">
+                 { btn }
                 </span>
+                
+                <Icon name="newUser"/>
               </button>
             </a></NavLink>
           </div>

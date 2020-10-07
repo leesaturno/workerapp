@@ -12,6 +12,7 @@
     @include respond('phone-land') {
         padding-top: 60px;
         padding-bottom: 0;
+        position: relative;
     }
     .main-menu {
         width: 120px;

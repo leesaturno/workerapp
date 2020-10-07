@@ -18,7 +18,7 @@ function Evaluador() {
               content={
                 <form>
 
-                    <div className="ed-grid s-grid-2">
+                    <div className="ed-grid lg-grid-2">
                         <div className="form-group">
                             <label className="text-ups">usuario</label>
                             <input type="text" name="user" className="form-control"/> 
@@ -32,7 +32,7 @@ function Evaluador() {
 
                     <br/>
 
-                    <div className="ed-grid s-grid-2">
+                    <div className="ed-grid lg-grid-2">
                         <div className="form-group">
                             <label className="text-ups">contrase'a</label>
                             <input type="password" name="password" className="form-control"/> 
@@ -46,7 +46,7 @@ function Evaluador() {
 
                     <br/>
 
-                    <div className="ed-grid s-grid-3">
+                    <div className="ed-grid lg-grid-3">
                         <div className="form-group">
                             <label className="text-ups">fecha de nacimiento</label>
                             <input type="date" name="fNacimiento" className="form-control"/> 
@@ -63,7 +63,7 @@ function Evaluador() {
                         </div>
                     </div>
 
-                    <div className="ed-grid s-grid-3">
+                    <div className="ed-grid lg-grid-3">
                         <div className="form-group">
                             <label className="text-ups">telefono</label>
                             <input type="tel" name="phone" className="form-control"/> 
@@ -84,9 +84,11 @@ function Evaluador() {
                     </div>
 
                     <br/>
-                    <div className="form-group">
-                        <label className="text-ups">Direccion</label>
-                        <input type="text" name="direccion" className="form-control" />
+                    <div className="ed-grid">
+                        <div className="form-group">
+                            <label className="text-ups">Direccion</label>
+                            <input type="text" name="direccion" className="form-control" />
+                        </div>
                     </div>
                   
                   

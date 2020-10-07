@@ -12,6 +12,7 @@
     height: 60px;
     padding: 1.5rem 0;
     vertical-align: middle;
+    width: 100%;
     @include respond('phone-land') {
         background: $card-dark;
         box-shadow: 0 1px 15px rgba(0,0,0,.1),0 1px 8px rgba(0,0,0,.1);
@@ -55,4 +56,9 @@
 
 .d-inline-block {
     display: inline-block !important;
+}
+
+.fixed-top {
+    position: fixed;
+    z-index: 999999;
 }
