@@ -1,12 +1,64 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import './Controldeusuario.scss';
 
 import Nav from '../../component/Nav/Nav'
 import Menulateral from '../../component/Menulateral/Menulateral'
 import CardStep from '../../component/Card/CardStep'
 import Footer from '../../component/Footer/Footer'
+// Redux 
+import {useDispatch} from 'react-redux';
+import usuarioinsertaction from '../../Redux/Dusk/loginreducer';
+import { ToastContainer, toast } from 'react-toastify';
 
-function Evaluador() {
+function NewUser() {
+    const disparador=useDispatch();
+    const [Clientes,setClientes]=useState({
+        user:"",
+        email:"",
+        password:"",
+        password2:"",
+        fNacimiento:"",
+        cargo:"",
+        name:"",
+        phone:"",
+        cel:"",
+        privilegios:"",
+        direccion:""
+      })
+      
+      const cargadedatos = (e)=>{
+            setClientes({
+              ...Clientes,
+              [e.target.name] : e.target.value
+          })
+      }
+    
+      const enviarDatos = (e) => {
+         e.preventDefault();
+         if(Clientes.password==Clientes.password2){
+            toast.success('Usuario registrado con exito', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                });
+         disparador(usuarioinsertaction(Clientes.user,Clientes.password,Clientes.privilegios,Clientes.name,Clientes.email,Clientes.fNacimiento,Clientes.direccion,Clientes.cargo,Clientes.phone,Clientes.cel,"1"));
+         }else{
+            toast.warn('¡las contraseñas no son iguales!', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                });
+         }
+      }
+    
   return (
       <div>
         <Nav></Nav>
@@ -16,17 +68,16 @@ function Evaluador() {
 
             <CardStep title="nuevo usuario"
               content={
-                <form>
-
+                <form onSubmit={enviarDatos}>
                     <div className="ed-grid lg-grid-2">
                         <div className="form-group">
                             <label className="text-ups">usuario</label>
-                            <input type="text" name="user" className="form-control"/> 
+                            <input type="text" name="user" required onChange={cargadedatos} className="form-control"/> 
                         </div>
 
                         <div className="form-group">
                             <label className="text-ups">correo electronico</label>
-                            <input type="email" name="email" className="form-control" />
+                            <input type="email" name="email" required className="form-control" />
                         </div>
                     </div>
 
@@ -34,13 +85,13 @@ function Evaluador() {
 
                     <div className="ed-grid lg-grid-2">
                         <div className="form-group">
-                            <label className="text-ups">contrase'a</label>
-                            <input type="password" name="password" className="form-control"/> 
+                            <label className="text-ups">contraseña</label>
+                            <input type="password" name="password" required onChange={cargadedatos} className="form-control"/> 
                         </div>
 
                         <div className="form-group">
-                            <label className="text-ups">confirmar contrase'a</label>
-                            <input type="password" name="password" className="form-control" />
+                            <label className="text-ups">confirmar contraseña</label>
+                            <input type="password" name="password2" required onChange={cargadedatos} className="form-control" />
                         </div>
                     </div>
 
@@ -49,36 +100,36 @@ function Evaluador() {
                     <div className="ed-grid lg-grid-3">
                         <div className="form-group">
                             <label className="text-ups">fecha de nacimiento</label>
-                            <input type="date" name="fNacimiento" className="form-control"/> 
+                            <input type="date" name="fNacimiento" required onChange={cargadedatos} className="form-control"/> 
                         </div>
 
                         <div className="form-group">
                             <label className="text-ups">cargo</label>
-                            <input type="text" name="cargo" className="form-control" />
+                            <input type="text" name="cargo" required onChange={cargadedatos} className="form-control" />
                         </div>
 
                         <div className="form-group">
                             <label className="text-ups">Nombre</label>
-                            <input type="text" name="name" className="form-control" />
+                            <input type="text" name="name" required onChange={cargadedatos} className="form-control" />
                         </div>
                     </div>
 
                     <div className="ed-grid lg-grid-3">
                         <div className="form-group">
                             <label className="text-ups">telefono</label>
-                            <input type="tel" name="phone" className="form-control"/> 
+                            <input type="tel" name="phone" required onChange={cargadedatos} className="form-control"/> 
                         </div>
 
                         <div className="form-group">
                             <label className="text-ups">celular</label>
-                            <input type="tel" name="cel" className="form-control" />
+                            <input type="tel" name="cel" required onChange={cargadedatos} className="form-control" />
                         </div>
 
                         <div className="form-group">
-                            <label className="text-ups" name="privilegios">privilegios</label>
-                            <select name="privilegios" id="privilegios">
-                                <option value="admin">Admin</option>
-                                <option value="usuario">Usuario</option>
+                            <label className="text-ups" required name="privilegios">privilegios</label>
+                            <select name="privilegios" onChange={cargadedatos} id="privilegios">
+                                <option value="1">Admin</option>
+                                <option value="0">Usuario</option>
                             </select>
                         </div>
                     </div>
@@ -87,7 +138,7 @@ function Evaluador() {
                     <div className="ed-grid">
                         <div className="form-group">
                             <label className="text-ups">Direccion</label>
-                            <input type="text" name="direccion" className="form-control" />
+                            <input type="text" name="direccion" required onChange={cargadedatos} className="form-control" />
                         </div>
                     </div>
                   
@@ -98,10 +149,10 @@ function Evaluador() {
               }
             ></CardStep>
         </div>
-
+        <ToastContainer/>
         <Footer></Footer>
       </div>
   );
 }
 
-export default Evaluador;
+export default NewUser;

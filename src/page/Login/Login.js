@@ -58,11 +58,11 @@ function Login(props){
         <form onSubmit={(e)=>{enviarDatos(e);}} className="s-pxy-3">
           <div className="form-group">
             <label>USUARIO</label>
-            <input type="text" name="usuario" onChange={cargadedatos} className="form-control" />
+            <input type="text" name="usuario" onChange={cargadedatos} required  className="form-control" />
           </div>
           <div className="form-group">
             <label>CONTRASEÑA</label>
-            <input name="password" className="form-control" onChange={cargadedatos} type="password" />
+            <input name="password" className="form-control" onChange={cargadedatos} required type="password" />
           </div>
           <div className="form-group">
             <label className="custom-radio-checkbox">
