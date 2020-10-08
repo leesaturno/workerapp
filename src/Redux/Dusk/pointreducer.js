@@ -25,7 +25,7 @@ export default function pointreducer(state=pointState,action){
 //Acciones
 export const pointAction = () => async (dispatch,getState) =>{
     try {
-        const res= await axios.get("https://api.workerapp.cl/api/pointservice");
+        const res= await axios.get("https://api.workerapp.cl/api/pointservice/");
         dispatch({
             type:OPTENER_PUNTOS_DE_SERVICIO,
             payload: res.data

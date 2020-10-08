@@ -10,7 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 function Login(props){
   const disparador=useDispatch();
-  const user=useSelector(store=>store.evaluador);
+  const user=useSelector(store=>store.session);
 
   const [Datos,setDatos]=useState({
     usuario:"",

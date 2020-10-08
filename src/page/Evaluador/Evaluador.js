@@ -1,24 +1,190 @@
-import React, {Component} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import './Evaluador.scss';
-
+import { ToastContainer, toast } from 'react-toastify';
 import Nav from '../../component/Nav/Nav'
 import Menulateral from '../../component/Menulateral/Menulateral'
 import CardStep from '../../component/Card/CardStep'
 import Icon from '../../component/Icons/Icons'
 import Footer from '../../component/Footer/Footer'
+import Script from 'react-load-script';
+import verificador  from 'verificador-rut'
 //redux
 import {pointAction,ruttAction} from '../../Redux/Dusk/pointreducer';
 import {useDispatch,useSelector} from 'react-redux';
 
 function Evaluador() {
-  const disparador=useDispatch();
-  const evaluador=useSelector(store=>store.evaluador);
-  /* disparador(pointAction()); disparador(ruttAction('RUT')) */
+  const [query, setQuery] = useState(null);
+  const [datos, setDatos] = useState({
+    rut:'',
+    digito:''
+  });
+   const [lat, setlat]= useState(0);
+  const [lng,setlng]= useState(0);
+  const [FO,setFO]= useState(false);
+  const [WL,setWL]= useState(false);
+const captarrut= (e)=>{
+  setDatos({
+    ...datos, 
+    [e.target.name] : e.target.value
+  })
+}
+const verificadorrut= ()=>{
+  if(verificador(datos.rut+'-'+datos.digito)) {return (<h3 >Valido</h3>); }else return (<h3>invalido</h3>)
+}
+
+const  handleScriptLoad =  () => {
+       
+  // Declare Options For Autocomplete
+/*     const options = {
+    types: ['(cities)'],
+  }; */
+
+  // Initialize Google Autocomplete
+  /*global google*/ // To disable any eslint 'google not defined' errors
+
+  
+  const autocomplete  =  new google.maps.places.Autocomplete(
+    document.getElementById('autocomplete'),
+  );
+  // Avoid paying for data that you don't need by restricting the set of
+  // place fields that are returned to just the address components and formatted
+  // address.
+ /*  this.autocomplete.setFields(['address_components', 'formatted_address','geometry.location.lat']); */
+
+  // Fire Event when a suggested name is selected
+  autocomplete.addListener('place_changed', ()=> {   const addressObject = autocomplete.getPlace();
+  const address = addressObject.address_components;
+
+  // Check if address is valid
+
+    const query2= addressObject.formatted_address;
+    const lttd= addressObject.geometry.location.lat();
+    const lngtd =addressObject.geometry.location.lng();
+    //aqui deberian almacenarse en el estado pero no logro hacerlo
+   setQuery(query2);
+    setlat(lttd);
+    setlng(lngtd);
+  })
+
+}
+
+
+const disparador=useDispatch();
+const evaluador=useSelector(store=>store.evaluador);
+/* disparador(pointAction()); disparador(ruttAction('RUT')) */
+
+useEffect(()=>{
+  disparador(pointAction());
+})
+const evaldireccion = ()=>{
+  var R = 6371
+  var  rad = function(x) {return x*Math.PI/180;}
+
+evaluador.point.forEach(point => {
+  /* let INDEX_tecnologia= element.INDEX_tecnologia; */
+ 
+  if(point.INDEX_tecnologia==="1"){
+   
+ 
+
+     var dLat1 = rad( lat - point.latitud );
+     var dLong1 = rad( lng- point.longitud );
+     var a1 = Math.sin(dLat1/2) * Math.sin(dLat1/2) + Math.cos(rad(lat)) * Math.cos(rad(point.latitud)) * Math.sin(dLong1/2) * Math.sin(dLong1/2);
+var circunferencia = 2 * Math.atan2(Math.sqrt(a1), Math.sqrt(1-a1));
+var d1 = R * circunferencia;
+d1.toFixed(3)
+if(d1.toFixed(3) <= 0.300){
+
+setFO(true)
+console.log(d1.toFixed(3)+"soy fibra");
+
+
+} /* else if (d1.toFixed(3) >  0.350  ){
+FO= false;
+} */ }
+if (point.INDEX_tecnologia==="2") {
+
+ 
+  
+    var dLat = rad( lat - point.latitud );
+    var dLong = rad( lng- point.longitud );
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(rad(lat)) * Math.cos(rad(point.latitud)) * Math.sin(dLong/2) * Math.sin(dLong/2);
+var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+var d = R * c;
+d.toFixed(3)
+if(d.toFixed(3) <= 0.350){
+console.log(d.toFixed(3)+"soy WL");
+setWL(true)
+
+
+
+} /* else if (d.toFixed(3) >  0.350  ){
+WL= false;
+} */ 
+   
+}
+})
+
+
+if (WL && FO) {
+  toast.success( <Icon name="exito"/>, {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    });  
+    
+  
+  
+}else if (WL) {
+  toast.success( <Icon name="exito"/>, {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    }); 
+  
+  
+} else if (FO) {
+  
+  toast.success( <Icon name="exito"/>, {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    }); 
+} else {
+ 
+  toast.info( <Icon name="exito"/>, {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    }); 
+}
+  }
   return (
       <div>
+      
         <Nav></Nav>
         <Menulateral></Menulateral>
-
+        <Script
+          url="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBMNPzyCUNfyF9hFDMBspwZhOkDvUQamp8"
+          onLoad={handleScriptLoad}
+        />
+        <ToastContainer/>
         <div class="main mt-5 ml-10">
 
             <div className="form-progress">
@@ -35,10 +201,11 @@ function Evaluador() {
                       <label className="text-ups">Rut</label>
                       <div className="ed-grid lg-grid-2">
                         <div>
-                          <input type="number" name="rut" className="form-control" placeholder="12.672.579" /> 
+                          <input type="text" name="rut" onChange={captarrut} className="form-control" placeholder="12.672.579" /> 
                         </div>
                         <div>
-                          <input type="number" name="rut" className="form-control" placeholder={1} />
+                        
+                          <input type="text" name="digito"  onBlur={verificadorrut} onChange={captarrut} className="form-control" placeholder={1} />
                         </div>
                       </div>
                     </div>
@@ -46,7 +213,7 @@ function Evaluador() {
                     <div className="ed-grid">
                       <div className="form-group">
                         <label className="text-ups">Direccion</label>
-                        <input name="direccion" className="form-control" type="text" placeholder="Escribe tu direccion" />
+                        <input name="direccion" className="form-control" type="text" placeholder="Escribe tu direccion"  id='autocomplete'  onBlur={evaldireccion}/>
                       </div>
                     </div>
 
