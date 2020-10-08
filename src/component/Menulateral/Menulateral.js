@@ -10,7 +10,10 @@ function Menulateral(props) {
     if(user.atividad==false){
       return <Redirect to="/"/>
     }
-    }
+  }
+
+
+      
   return (
     <div className="sidebar">
       {

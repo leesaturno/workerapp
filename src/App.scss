@@ -1,5 +1,7 @@
 @import "~ed-grid/ed-grid";
 
+@import "antd/dist/antd";
+
 $primary: #7A8A65;
 
 $bg-dark: #18191B;
@@ -32,6 +34,7 @@ body {
 h1 {
     font-size: 1.75rem;
     padding-bottom: 10px;
+    color: $text-D;
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './Evaluador.scss';
 
 import Nav from '../../component/Nav/Nav'
-import Menulateral from '../../component/Menulateral/Menulateral'
+import Menua from '../../component/Menulateral/Menu'
 import CardStep from '../../component/Card/CardStep'
 import Icon from '../../component/Icons/Icons'
 import Footer from '../../component/Footer/Footer'
@@ -11,7 +11,7 @@ function Evaluador() {
   return (
       <div>
         <Nav></Nav>
-        <Menulateral></Menulateral>
+        <Menua></Menua>
 
         <div class="main mt-5 ml-10">
 

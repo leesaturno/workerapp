@@ -10,13 +10,11 @@
 .navbar {
     background: transparent;
     height: 60px;
-    padding: 1.5rem 0;
+    padding: 0;
     vertical-align: middle;
     width: 100%;
     @include respond('phone-land') {
-        background: $card-dark;
-        box-shadow: 0 1px 15px rgba(0,0,0,.1),0 1px 8px rgba(0,0,0,.1);
-        padding: .3rem 0;
+        padding: 1.5rem 0;
     }
     .navbar-left {
         display: none;
@@ -43,12 +41,12 @@
     .user {
         margin-right: 20px;
         img {
-            border-radius: 30px;
-            height: 50px;
-            width: 120px;
+            border-radius: 3rem;
+            width: 150px;
             @include respond('phone-land') {
                 height: auto;
-                width: 50px;
+                width: 90px;
+                margin-top: -20px;
             }
         }
     }
@@ -58,7 +56,15 @@
     display: inline-block !important;
 }
 
-.fixed-top {
-    position: fixed;
-    z-index: 999999;
+.ant-dropdown-menu {
+    background-color: $card-dark !important;
+    top: 15px !important;
+}
+
+.ant-dropdown-menu-item > a, .ant-dropdown-menu-submenu-title > a {
+    display: block;
+    margin: -5px -12px;
+    padding: 5px 12px;
+    color:$text-D !important;
+    transition: all 0.3s;
 }

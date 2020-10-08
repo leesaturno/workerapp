@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './Bienvenida.scss';
 
 import Nav from '../../component/Nav/Nav'
-import Menulateral from '../../component/Menulateral/Menulateral'
+import Menua from '../../component/Menulateral/Menu'
 import Footer from '../../component/Footer/Footer'
 import {useSelector} from 'react-redux'
 
@@ -11,9 +11,9 @@ function Bienvenida() {
   return (
       <div>
         <Nav></Nav>
-        <Menulateral ></Menulateral>
+        <Menua></Menua>
 
-        <div className="main mt-10">
+        <div className="main mt-10 ml-10">
           <h1 className="text-ups">Bienvenido {user.user.map(Items=>{ return Items.nombre })}</h1>
         </div>
 
