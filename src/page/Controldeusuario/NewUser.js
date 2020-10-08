@@ -7,7 +7,7 @@ import CardStep from '../../component/Card/CardStep'
 import Footer from '../../component/Footer/Footer'
 // Redux 
 import {useDispatch} from 'react-redux';
-import usuarioinsertaction from '../../Redux/Dusk/loginreducer';
+import {usuarioinsertaction} from '../../Redux/Dusk/usuarioreducer';
 import { ToastContainer, toast } from 'react-toastify';
 
 function NewUser() {
@@ -45,7 +45,7 @@ function NewUser() {
                 draggable: true,
                 progress: undefined,
                 });
-         disparador(usuarioinsertaction(Clientes.user,Clientes.password,Clientes.privilegios,Clientes.name,Clientes.email,Clientes.fNacimiento,Clientes.direccion,Clientes.cargo,Clientes.phone,Clientes.cel,"1"));
+            disparador(usuarioinsertaction(Clientes.user,Clientes.password,Clientes.privilegios,Clientes.name,Clientes.email,Clientes.fNacimiento,Clientes.direccion,Clientes.cargo,Clientes.phone,Clientes.cel,"1"));
          }else{
             toast.warn('¡las contraseñas no son iguales!', {
                 position: "top-right",
@@ -63,9 +63,7 @@ function NewUser() {
       <div>
         <Nav></Nav>
         <Menua></Menua>
-
-        <div class="main mt-5 ml-10">
-
+        <div className="main mt-5 ml-10">
             <CardStep title="nuevo usuario"
               content={
                 <form onSubmit={enviarDatos}>
@@ -77,7 +75,7 @@ function NewUser() {
 
                         <div className="form-group">
                             <label className="text-ups">correo electronico</label>
-                            <input type="email" name="email" required className="form-control" />
+                            <input type="email" name="email" onChange={cargadedatos} required className="form-control" />
                         </div>
                     </div>
 
@@ -129,7 +127,7 @@ function NewUser() {
                             <label className="text-ups" required name="privilegios">privilegios</label>
                             <select name="privilegios" onChange={cargadedatos} id="privilegios">
                                 <option value="1">Admin</option>
-                                <option value="0">Usuario</option>
+                                <option value="2">Usuario</option>
                             </select>
                         </div>
                     </div>
