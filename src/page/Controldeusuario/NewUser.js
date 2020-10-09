@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import './Controldeusuario.scss';
 
-import Nav from '../../component/Nav/Nav'
-import Menua from '../../component/Menulateral/Menu'
 import CardStep from '../../component/Card/CardStep'
 import Footer from '../../component/Footer/Footer'
 // Redux 
@@ -61,8 +59,6 @@ function NewUser() {
     
   return (
       <div>
-        <Nav></Nav>
-        <Menua></Menua>
         <div className="main mt-5 ml-10">
             <CardStep title="nuevo usuario"
               content={

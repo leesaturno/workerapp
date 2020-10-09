@@ -1,8 +1,6 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import './Evaluador.scss';
 import { ToastContainer, toast } from 'react-toastify';
-import Nav from '../../component/Nav/Nav';
-import Menua from '../../component/Menulateral/Menu';
 // import CardStep from '../../component/Card/CardStep';
 import Icon from '../../component/Icons/Icons';
 import Footer from '../../component/Footer/Footer';
@@ -179,9 +177,6 @@ if (WL && FO) {
   }
   return (
       <div>
-      
-        <Nav></Nav>
-        <Menua></Menua>
         <Script
           url="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBMNPzyCUNfyF9hFDMBspwZhOkDvUQamp8"
           onLoad={handleScriptLoad}

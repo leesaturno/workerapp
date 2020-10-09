@@ -10,7 +10,7 @@ function Controldeusuario() {
   return (
       <div>
         <div class="main mt-5 ml-10">
-            <Card title="usuarios del sistema" btn="Nuevo usuario" href="/NewUser"></Card>
+            <Card title="usuarios del sistema" btn="Nuevo usuario " href="/NewUser"></Card>
         </div>
 
         <Footer></Footer>

@@ -25,7 +25,7 @@ function App() {
     <Router>
       <Provider store={store}>
       <Route path={["/bienvenida","/Evaluador","/Controldeusuario","/NewUser"]} >
-         <Nav/>
+        <Nav/>
         <Menua/>
       </Route>
         <AnimatedSwitch

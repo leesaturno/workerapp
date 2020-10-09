@@ -5,7 +5,7 @@
     margin: 0 auto !important;
     align-items: center;
     @include respond('phone') {
-        width: 100% !important;
+        width: 50% !important;
     }
   }
 
@@ -57,6 +57,21 @@ background-color: $primary !important; }
     }
 }
 
+.ant-steps-horizontal.ant-steps-label-horizontal {
+    flex-direction: inherit !important;
+}
+
+.ant-steps-horizontal.ant-steps-label-horizontal > .ant-steps-item > .ant-steps-item-container > .ant-steps-item-tail {
+    position: absolute;
+    top: 0;
+    left: 16px;
+    width: 10px;
+    height: 100%;
+    padding: 38px 0 6px;
+    @include respond('phone') {
+        display: none !important;
+    }
+}
 .steps-action {
     padding: 35px 0 0 0;
 }

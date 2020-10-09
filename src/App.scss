@@ -3,8 +3,8 @@
 @import "antd/dist/antd";
 
 $primary: #7A8A65;
-$info: #3F96C1;
-$warning:#ddc74c;
+$info: #3f96c1;
+$warning: #fbcf1e;;
 $error: #d61a24;
 
 $bg-dark: #18191B;
@@ -105,7 +105,7 @@ input:focus, input.form-control:focus {
     }
 }
 
-.Toastify__toast--warnning {
+.Toastify__toast--warn {
     background:$warning !important;
     svg {
         fill: $white;
