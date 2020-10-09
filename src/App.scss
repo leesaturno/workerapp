@@ -3,6 +3,9 @@
 @import "antd/dist/antd";
 
 $primary: #7A8A65;
+$info: #3F96C1;
+$warning:#ddc74c;
+$error: #d61a24;
 
 $bg-dark: #18191B;
 $card-dark: #242224;
@@ -63,6 +66,7 @@ h1 {
 
 .mt-10 {
     margin-top: 10%;
+    max-width: 991px
 }
 
 .bxs {
@@ -85,6 +89,38 @@ input:focus, input.form-control:focus {
 
 .Toastify__toast--success {
     background: $primary !important;
+    svg {
+        fill: $white;
+        width: 20px;
+        height: 20px;
+    }
+}
+
+.Toastify__toast--info {
+    background: $info !important;
+    svg {
+        fill: $white;
+        width: 20px;
+        height: 20px;
+    }
+}
+
+.Toastify__toast--warnning {
+    background:$warning !important;
+    svg {
+        fill: $white;
+        width: 20px;
+        height: 20px;
+    }
+}
+
+.Toastify__toast--error {
+    background: $error !important;
+    svg {
+        fill: $white;
+        width: 20px;
+        height: 20px;
+    }
 }
 
 //MEDIA QUERY MANAGER

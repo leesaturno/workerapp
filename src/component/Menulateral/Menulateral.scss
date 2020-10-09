@@ -55,9 +55,9 @@
         color: $text-D;
         transition: color .3s;
         transition: background .3s;
-        margin-top: -10px;
-        position: relative;
-        bottom: -260px;
+        bottom: -1%;
+        position: absolute;
+        width: 100%;
         svg {
             width: 28px;
             cursor: pointer;
@@ -137,7 +137,6 @@
 .ant-menu-dark.ant-menu-inline-collapsed{
     width: 60px;
     .footer {
-        bottom: -380px;
         svg {
             width: 20px;
         }

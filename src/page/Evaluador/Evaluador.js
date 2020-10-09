@@ -1,13 +1,15 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import './Evaluador.scss';
 import { ToastContainer, toast } from 'react-toastify';
-import Nav from '../../component/Nav/Nav'
-import Menua from '../../component/Menulateral/Menu'
-import CardStep from '../../component/Card/CardStep'
-import Icon from '../../component/Icons/Icons'
-import Footer from '../../component/Footer/Footer'
+import Nav from '../../component/Nav/Nav';
+import Menua from '../../component/Menulateral/Menu';
+// import CardStep from '../../component/Card/CardStep';
+import Icon from '../../component/Icons/Icons';
+import Footer from '../../component/Footer/Footer';
 import Script from 'react-load-script';
-import verificador  from 'verificador-rut'
+import verificador  from 'verificador-rut';
+
+import Eevaluador from './eevaluador';
 //redux
 import {pointAction,ruttAction} from '../../Redux/Dusk/pointreducer';
 import {useDispatch,useSelector} from 'react-redux';
@@ -164,7 +166,7 @@ if (WL && FO) {
     }); 
 } else {
  
-  toast.info( <Icon name="exito"/>, {
+  toast.info( <Icon name="info"/> , {
     position: "top-right",
     autoClose: 2000,
     hideProgressBar: false,
@@ -186,14 +188,9 @@ if (WL && FO) {
         />
         <ToastContainer/>
         <div class="main mt-5 ml-10">
+          <Eevaluador></Eevaluador>
 
-            <div className="form-progress">
-                <div className="step step-current" />
-                <div className="step" />
-                <div className="step" />
-            </div>
-
-            <CardStep title="evaluador"
+            {/* <CardStep title="evaluador"
               content={
                 <div>
                   <form action>
@@ -223,9 +220,9 @@ if (WL && FO) {
                   </form>
                 </div>
               }
-            ></CardStep>
+            ></CardStep> */}
 
-            <CardStep title="registro de cliente"
+            {/* <CardStep title="registro de cliente"
               content={
                 <form action>
                   <div className="separador">
@@ -314,15 +311,15 @@ if (WL && FO) {
                 </form>
 
               }
-            ></CardStep>
+            ></CardStep> */}
         
-            <CardStep title="¡cliente creado exitosamente!"
+            {/* <CardStep title="¡cliente creado exitosamente!"
               content={
                 <div class="step3">
                   <Icon name="exito"/>
                 </div>
           }
-            ></CardStep>
+            ></CardStep> */}
         </div>
 
         <Footer></Footer>
