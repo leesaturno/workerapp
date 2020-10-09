@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import './Bienvenida.scss';
 
-import Nav from '../../component/Nav/Nav'
-import Menua from '../../component/Menulateral/Menu'
 import Footer from '../../component/Footer/Footer'
 import {useSelector} from 'react-redux'
 

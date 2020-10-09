@@ -1,0 +1,56 @@
+@import "../../App.scss";
+
+.MuiPaper-root {
+    color: $text-D !important;
+    background-color: $card-dark !important;
+}
+
+.MuiPaper-elevation4 {
+    box-shadow: none !important;
+}
+
+.MuiTableCell-body {
+    color: $text-D !important;
+}
+
+.MuiTableCell-root {
+    border-bottom: 1px solid $divider !important;
+}
+
+.MUIDataTableBodyRow-responsiveStacked-68 {
+    border-top: solid 1px $divider !important;
+    border-bottom: solid 1px $divider !important;
+}
+
+.MUIDataTableHeadCell-fixedHeader-51 {
+    background-color: $card-dark !important;
+}
+
+.MuiTableCell-head {
+    color: $text-D !important;
+}
+
+.MuiCheckbox-root {
+    color: $text-D !important;
+}
+
+.MUIDataTableSelectCell-headerCell-41 {
+    background-color:$card-dark !important;
+}
+
+.MuiIconButton-root {
+    color: $muted !important;
+}
+
+.MuiTablePagination-root {
+    color: $text-D !important;
+}
+
+.MuiInput-underline::before {
+    color: $primary !important;
+    border-bottom: 1px solid $primary !important;
+}
+
+.MuiInput-underline::after {
+    border-bottom: 1px solid $primary !important;
+}

@@ -4,7 +4,7 @@ import './Card.scss';
 import Icon from '../Icons/Icons'
 import {NavLink} from 'react-router-dom';
   
-const Card = ({ title, btn, href}) => (
+const Card = ({ title, btn, href, content}) => (
   <div className="card card-dark mb-3">
         <div className="card-header">
           <div className="card-title text-ups"> 
@@ -21,6 +21,7 @@ const Card = ({ title, btn, href}) => (
           </div>
         </div>
         <div className="card-body" />
+          { content }
       </div>
 );
 
