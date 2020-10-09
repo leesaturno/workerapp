@@ -48,6 +48,7 @@ h1 {
     margin-bottom: .5rem;
     font-weight: 500;
     line-height: 1.2;
+    color: $text-D !important;
 }
 
 .main {
@@ -78,12 +79,12 @@ h1 {
 }
 
 .text-ups {
-    text-transform: uppercase;
+    text-transform: inherit;
 }
 
 .text-title {
     color: $primary;
-    font-size: 1em;
+    font-size: 1.2em;
 }
 
 input:focus, input.form-control:focus {

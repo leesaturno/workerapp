@@ -41,20 +41,41 @@ background-color: $primary !important; }
     text-align: center;
     cursor: pointer;
     line-height: 2;
-    text-transform: uppercase;
     color: $text-L !important;
-    &:hover {
-        color: $primary !important;
-        border-color: $primary !important;
-
-    }
 }
 .ant-btn-primary {
     color: $white !important;
+    background: $primary !important;
+    border-color: $primary !important;
     &:hover {
         color: $white !important;
 
     }
+}
+
+.ant-btn-warning {
+    color: $warning !important;
+    background: $card-dark !important;
+    border-color: $warning !important;
+    &:hover{
+        color: $white !important;
+        background: $warning !important;
+    }
+}
+
+.ant-btn-danger {
+    color: $error !important;
+    background: $card-dark !important;
+    border-color: $error !important;
+    &:hover{
+        color: $white !important;
+        background: $error !important;
+    }
+}
+
+.btn-DT {
+    width: 80px !important;
+    margin: 0 5px 10px 0;
 }
 
 .ant-steps-horizontal.ant-steps-label-horizontal {

@@ -23,7 +23,6 @@
         transition: transform .3s;
         left: 25px;
         text-align: center;
-        text-transform: uppercase;
         position: fixed;
         padding-top: 0;
         padding-bottom: 30px;
@@ -159,12 +158,4 @@
         transform: translateY(-50%);
         left: 0;
     }
-}
-
-.ant-btn-primary {
-    color: $white !important;
-    background: $primary !important;
-    border-color: $primary !important;
-    text-shadow: none !important;
-    box-shadow: none !important;
 }

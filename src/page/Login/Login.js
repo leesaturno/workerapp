@@ -57,11 +57,11 @@ function Login(props){
         {/*Contenido*/}
         <form onSubmit={(e)=>{enviarDatos(e);}} className="s-pxy-3">
           <div className="form-group">
-            <label>USUARIO</label>
+            <label>Usuario</label>
             <input type="text" name="usuario" onChange={cargadedatos} required  className="form-control" />
           </div>
           <div className="form-group">
-            <label>CONTRASEÑA</label>
+            <label>Contraseña</label>
             <input name="password" className="form-control" onChange={cargadedatos} required type="password" />
           </div>
           <div className="form-group">
@@ -71,10 +71,10 @@ function Login(props){
               {/* Imagen en sustitucion */}
               <span className="custom-radio-checkbox__show custom-radio-checkbox__show--checkbox" />
               {/* Texto */}
-              <span className="custom-radio-checkbox__text">RECUERDAME</span>
+              <span className="custom-radio-checkbox__text">Recuerdame</span>
             </label>
           </div>
-          <button className="bttn">AUTENTICAR</button>
+          <button className="bttn">Autenticar</button>
         </form>
       </article>
       <ToastContainer/>
