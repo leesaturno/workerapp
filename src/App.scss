@@ -123,6 +123,14 @@ input:focus, input.form-control:focus {
     }
 }
 
+.switch-wrapper {
+    position: relative;
+  }
+   
+  .switch-wrapper > div {
+    position: relative;
+  }
+
 //MEDIA QUERY MANAGER
 // 0 - 600: Phone 
 // 600 - 900: Tablet portrait

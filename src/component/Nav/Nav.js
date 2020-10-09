@@ -17,9 +17,13 @@ const menu = (
   </Menu>
 )
 
-function Nav() {
+function Nav(props) {
+  const verif=()=>{
+    console.log(props);
+  }
   return (
       <div>
+        {verif()}
         <nav className="navbar">
           <div className="navbar-right">
             <div className="user d-inline-block">

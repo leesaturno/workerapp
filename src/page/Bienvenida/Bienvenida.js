@@ -10,9 +10,6 @@ function Bienvenida() {
   const user=useSelector(store=>store.session);
   return (
       <div>
-        <Nav></Nav>
-        <Menua></Menua>
-
         <div className="main mt-10 ml-10">
           <h1 className="text-ups">Bienvenido {user.user.map(Items=>{ return Items.nombre })}</h1>
         </div>

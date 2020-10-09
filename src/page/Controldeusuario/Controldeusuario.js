@@ -9,9 +9,6 @@ import Footer from '../../component/Footer/Footer'
 function Controldeusuario() {
   return (
       <div>
-        <Nav></Nav>
-        <Menua></Menua>
-
         <div class="main mt-5 ml-10">
             <Card title="usuarios del sistema" btn="Nuevo usuario" href="/NewUser"></Card>
         </div>
