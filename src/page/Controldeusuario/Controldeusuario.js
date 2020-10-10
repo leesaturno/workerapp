@@ -12,7 +12,7 @@ import Global from '../../Global'
 import axios from 'axios';
 
 
-export default class ontroldeusuario extends Component {
+export default class Controldeusuario extends Component {
 
   constructor(props) {
     super(props);

@@ -68,3 +68,8 @@
     color:$text-D !important;
     transition: all 0.3s;
 }
+
+.ant-dropdown-menu-item-active {
+    background-color: $text-L !important;
+    color: $text-D !important;
+}

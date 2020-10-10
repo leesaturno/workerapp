@@ -1,0 +1,14 @@
+@import "../../App.scss";
+
+.ant-upload.ant-upload-select-picture-card {
+    background-color: $text-L !important;
+    border: 1px dashed $muted !important;
+    border-radius: .75rem !important;
+    text-align: center !important;
+    svg {
+        fill: $muted !important;
+    }
+    & > .ant-upload {
+        color: $muted !important;
+    }
+}
