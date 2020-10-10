@@ -133,7 +133,7 @@ const steps = [
   {
     content: <CardStep title="Estas a un paso"
                 content={
-                    <div class="step3">
+                    <div className="step3">
                     <Icon name="exito"/>
                     </div>
                 }
@@ -173,12 +173,16 @@ class Eevaluador extends React.Component {
         <div className="steps-action">
           {current < steps.length - 1 && (
             <Button type="primary" onClick={() => this.next()}>
-              Siguiente
+              Siguiente 
             </Button>
           )}
           {current === steps.length - 1 && (
             <Button type="primary" onClick={() => message.success('¡Cliente creado exitosamente!')}>
+<<<<<<< HEAD
+            Finalizar
+=======
               Procesar
+>>>>>>> a04d6c20d429b242247be951ded8e14b923a6e4d
             </Button>
           )}
           {current > 0 && (
