@@ -1,0 +1,112 @@
+@import "../../App.scss";
+
+.MuiPaper-root {
+    color: $text-D !important;
+    background-color: $card-dark !important;
+}
+
+.MuiPaper-elevation4 {
+    box-shadow: none !important;
+}
+
+.MuiTableCell-body {
+    color: $text-D !important;
+}
+
+.MuiTableCell-root {
+    border-bottom: 1px solid $divider !important;
+}
+
+.MUIDataTableBodyRow-responsiveStacked-68 {
+    border-top: solid 1px $divider !important;
+    border-bottom: solid 1px $divider !important;
+}
+
+.MUIDataTableHeadCell-fixedHeader-51 {
+    background-color: $card-dark !important;
+}
+
+.MuiTableCell-head {
+    color: $text-D !important;
+}
+
+.MuiCheckbox-root {
+    color: $text-D !important;
+}
+
+.MUIDataTableSelectCell-headerCell-41 {
+    background-color:$card-dark !important;
+}
+
+.MuiIconButton-root {
+    color: $muted !important;
+}
+
+.MuiTablePagination-root {
+    color: $text-D !important;
+}
+
+.MuiInputBase-input{
+    &:focus,
+    &:active{
+        border: none !important ;
+    }
+}
+
+.MUIDataTableHeadCell-sortActive-58 {
+    color: $primary !important;
+}
+
+
+.MuiTableSortLabel-root.MuiTableSortLabel-active.MuiTableSortLabel-root.MuiTableSortLabel-active .MuiTableSortLabel-icon {
+    color: $muted !important;
+}
+
+.MuiSvgIcon-root {
+    color: $muted !important;
+}
+
+.MuiInput-underline::before {
+    color: $primary !important;
+    border-bottom: 1px solid $primary !important;
+}
+
+.MuiInput-underline::after {
+    border-bottom: 1px solid $primary !important;
+}
+
+.MuiInputBase-root {
+    color: $text-D !important;
+    &:active{
+        border: none !important;
+    }
+}
+
+.MuiTableCell-paddingCheckbox {
+    background-color: $card-dark;
+}
+
+.MUIDataTableFilter-root-88 {
+    color: $text-D !important;
+    background-color: $card-dark !important;
+}
+
+.MUIDataTableFilter-title-90 {
+    color: $text-D !important;
+}
+
+.MuiButton-textPrimary{
+    color: $text-D !important;
+}
+
+.MuiFormLabel-root {
+    color: $muted !important;
+}
+
+.MUIDataTableViewCol-title-104 {
+    color:$muted !important;
+}
+
+.MUIDataTableViewCol-label-110 {
+    color: $text-D !important;
+}

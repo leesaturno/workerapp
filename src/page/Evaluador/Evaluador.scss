@@ -5,7 +5,7 @@
     margin: 0 auto !important;
     align-items: center;
     @include respond('phone') {
-        width: 100% !important;
+        width: 50% !important;
     }
   }
 
@@ -41,22 +41,58 @@ background-color: $primary !important; }
     text-align: center;
     cursor: pointer;
     line-height: 2;
-    text-transform: uppercase;
     color: $text-L !important;
-    &:hover {
-        color: $primary !important;
-        border-color: $primary !important;
-
-    }
 }
 .ant-btn-primary {
     color: $white !important;
+    background: $primary !important;
+    border-color: $primary !important;
     &:hover {
         color: $white !important;
 
     }
 }
 
+.ant-btn-warning {
+    color: $warning !important;
+    background: $card-dark !important;
+    border-color: $warning !important;
+    &:hover{
+        color: $white !important;
+        background: $warning !important;
+    }
+}
+
+.ant-btn-danger {
+    color: $error !important;
+    background: $card-dark !important;
+    border-color: $error !important;
+    &:hover{
+        color: $white !important;
+        background: $error !important;
+    }
+}
+
+.btn-DT {
+    width: 80px !important;
+    margin: 0 5px 10px 0;
+}
+
+.ant-steps-horizontal.ant-steps-label-horizontal {
+    flex-direction: inherit !important;
+}
+
+.ant-steps-horizontal.ant-steps-label-horizontal > .ant-steps-item > .ant-steps-item-container > .ant-steps-item-tail {
+    position: absolute;
+    top: 0;
+    left: 16px;
+    width: 10px;
+    height: 100%;
+    padding: 38px 0 6px;
+    @include respond('phone') {
+        display: none !important;
+    }
+}
 .steps-action {
     padding: 35px 0 0 0;
 }

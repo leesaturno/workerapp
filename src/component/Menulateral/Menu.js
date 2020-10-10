@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { useSelector } from 'react-redux';
-import {Redirect,NavLink} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import { Menu, Button } from 'antd';
 import Icon from '../Icons/Icons';
 import {

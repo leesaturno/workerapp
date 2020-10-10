@@ -3,8 +3,8 @@
 @import "antd/dist/antd";
 
 $primary: #7A8A65;
-$info: #3F96C1;
-$warning:#ddc74c;
+$info: #3f96c1;
+$warning: #fbcf1e;;
 $error: #d61a24;
 
 $bg-dark: #18191B;
@@ -20,6 +20,10 @@ $white: #ffffff;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+.bg-card-dark{
+    color: red;
 }
 
 body {
@@ -44,6 +48,7 @@ h1 {
     margin-bottom: .5rem;
     font-weight: 500;
     line-height: 1.2;
+    color: $text-D !important;
 }
 
 .main {
@@ -62,6 +67,7 @@ h1 {
 }
 .mt-5 {
     margin-top: 5%;
+    max-width: 991px
 }
 
 .mt-10 {
@@ -74,12 +80,12 @@ h1 {
 }
 
 .text-ups {
-    text-transform: uppercase;
+    text-transform: inherit;
 }
 
 .text-title {
     color: $primary;
-    font-size: 1em;
+    font-size: 1.2em;
 }
 
 input:focus, input.form-control:focus {
@@ -105,7 +111,7 @@ input:focus, input.form-control:focus {
     }
 }
 
-.Toastify__toast--warnning {
+.Toastify__toast--warn {
     background:$warning !important;
     svg {
         fill: $white;
@@ -130,6 +136,25 @@ input:focus, input.form-control:focus {
   .switch-wrapper > div {
     position: relative;
   }
+
+form {
+    padding: 30px;
+    label {
+        color: hsla(0,0%,56.1%,.7);
+        font-size: 12px;
+    }
+    input {
+        background-color: transparent;
+        border: 1px solid #424242;
+        border-radius: .4rem;
+        color: $text-D;
+        font-size: 13px;
+        height: 40px;
+        margin-bottom: 20px;
+        padding: 10px;
+        width: 100%;
+    }
+}
 
 //MEDIA QUERY MANAGER
 // 0 - 600: Phone 

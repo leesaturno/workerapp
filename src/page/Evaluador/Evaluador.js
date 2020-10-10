@@ -418,8 +418,11 @@ const prev =()=> {
 }
   return (
       <div>
+<<<<<<< HEAD
       
       
+=======
+>>>>>>> a04d6c20d429b242247be951ded8e14b923a6e4d
         <Script
           url="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBMNPzyCUNfyF9hFDMBspwZhOkDvUQamp8"
           onLoad={handleScriptLoad}

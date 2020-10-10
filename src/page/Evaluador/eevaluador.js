@@ -7,7 +7,7 @@ const { Step } = Steps;
 
 const steps = [
   {
-    content: <CardStep title="evaluador"
+    content: <CardStep title="Evaluador"
     content={
         <div>
           <form>
@@ -37,25 +37,25 @@ const steps = [
           </form>
         </div>
       }
-             ></CardStep>,
+    ></CardStep>,
   },
   {
-    content: <CardStep title="registro de cliente"
+    content: <CardStep title="Registro de cliente"
                 content={
                 <form action>
                   <div className="separador">
-                    <span className="text-ups">datos del titular</span>
+                    <span className="text-ups">Datos del titular</span>
                     <div className="ed-grid lg-grid-3">
                       <div className="form-group">
-                        <label className="text-ups">run</label>
+                        <label className="text-ups">Run</label>
                         <input type="number" name="rut" className="form-control" placeholder="12.672.579" /> 
                       </div>
                       <div className="form-group">
-                        <label className="text-ups">serie run</label>
+                        <label className="text-ups">Serie run</label>
                         <input type="number" name="rut" className="form-control" />
                       </div>
                       <div className="form-group">
-                        <label className="text-ups">fecha de nacimiento</label>
+                        <label className="text-ups">Fecha de nacimiento</label>
                         <input type="date" name="fNacimiento" className="form-control" placeholder={1} />
                       </div>
                     </div>
@@ -66,52 +66,52 @@ const steps = [
                         <input type="text" name="nombres" className="form-control" /> 
                       </div>
                       <div className="form-group">
-                        <label className="text-ups">apellido paterno</label>
+                        <label className="text-ups">Apellido paterno</label>
                         <input type="text" name="apPaterno" className="form-control" />
                       </div>
                       <div className="form-group">
-                        <label className="text-ups">apellido materno</label>
+                        <label className="text-ups">Apellido materno</label>
                         <input type="text" name="apMaterno" className="form-control" />
                       </div>
                     </div>
                     
                     <div className="ed-grid lg-grid-2">
                       <div className="form-group">
-                        <label className="text-ups">telefono</label>
+                        <label className="text-ups">Telefono</label>
                         <input type="tel" name="phone" className="form-control" /> 
                       </div>
 
                       <div className="form-group">
-                        <label className="text-ups">correo electronico</label>
+                        <label className="text-ups">Correo electronico</label>
                         <input type="email" name="email" className="form-control" />
                       </div>
                     </div>
                   </div>
                   
                   <div className="separador">
-                    <span className="text-ups">datos de la direccion</span>
+                    <span className="text-ups">Datos de la direccion</span>
                     <div className="ed-grid lg-grid-2">
                       <div className="form-group">
-                        <label className="text-ups">block / manzana</label>
+                        <label className="text-ups">Block / Manzana</label>
                         <input type="text" name="blocManzana" className="form-control" /> 
                       </div>
                       
                       <div className="form-group">
-                        <label className="text-ups">departamento / sitio</label>
+                        <label className="text-ups">Departamento / Sitio</label>
                         <input type="text" name="dptoSitio" className="form-control" />
                       </div>
                     </div>
 
                     <div className="ed-grid">
                       <div className="form-group">
-                        <label className="text-ups">calle referencia</label>
-                        <input name="cReferencia" className="form-control" type="text" id='cReferencia'/>
+                        <label className="text-ups">Calle referencia</label>
+                        <input name="cReferencia" className="form-control" type="text" />
                       </div>
                     </div>
                   </div>
                   
                   <div className="separador">
-                    <span className="text-ups">plan a contratar</span>
+                    <span className="text-ups">Plan a contratar</span>
                     <div className="ed-grid">
                       <div className="form-group">
                         <br />
@@ -178,7 +178,11 @@ class Eevaluador extends React.Component {
           )}
           {current === steps.length - 1 && (
             <Button type="primary" onClick={() => message.success('¡Cliente creado exitosamente!')}>
+<<<<<<< HEAD
             Finalizar
+=======
+              Procesar
+>>>>>>> a04d6c20d429b242247be951ded8e14b923a6e4d
             </Button>
           )}
           {current > 0 && (

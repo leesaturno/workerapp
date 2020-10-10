@@ -1,15 +1,13 @@
 import React, {useState} from 'react';
 import './Controldeusuario.scss';
 
-import Nav from '../../component/Nav/Nav'
-import Menua from '../../component/Menulateral/Menu'
 import CardStep from '../../component/Card/CardStep'
 import Footer from '../../component/Footer/Footer'
 // Redux 
 import {useDispatch} from 'react-redux';
 import {usuarioinsertaction} from '../../Redux/Dusk/usuarioreducer';
 import { ToastContainer, toast } from 'react-toastify';
-
+import Segurity from '../../component/Segurity/Segurity';
 function NewUser() {
     const disparador=useDispatch();
     const [Clientes,setClientes]=useState({
@@ -61,8 +59,6 @@ function NewUser() {
     
   return (
       <div>
-        <Nav></Nav>
-        <Menua></Menua>
         <div className="main mt-5 ml-10">
             <CardStep title="nuevo usuario"
               content={
@@ -149,6 +145,7 @@ function NewUser() {
         </div>
         <ToastContainer/>
         <Footer></Footer>
+        <Segurity/>
       </div>
   );
 }
