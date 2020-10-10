@@ -3,20 +3,29 @@ import axios from 'axios';
 //Constanes
 const pointState={
     rut:[],
-    point:[]
+    point:[],
+    filled:false,
+   
 };
 
 //types
 const OPTENER_PUNTOS_DE_SERVICIO="OPTENER_PUNTOS_DE_SERVICIO";
 const VALIDAR_RUTS="OPTENER_PUNTOS_DE_SERVICIO";
+var fix=false;
+var fixarray=[];
+
 
 //reducer
 export default function pointreducer(state=pointState,action){
     switch (action.type) {
         case OPTENER_PUNTOS_DE_SERVICIO:
-            return {...state, point:action.payload}
+            if(action.payload!=""){
+                fix=true;
+                fixarray=action.payload;
+            }
+            return {...state, point:fixarray, filled:fix} 
         case VALIDAR_RUTS:
-            return {...state, rut:action.payloa}
+            return {...state, rut:action.payload }
         default:
             return state
     }
@@ -25,7 +34,7 @@ export default function pointreducer(state=pointState,action){
 //Acciones
 export const pointAction = () => async (dispatch,getState) =>{
     try {
-        const res= await axios.get("https://api.workerapp.cl/api/pointservice/");
+        const res= await axios.get("https://api.workerapp.cl/api/v2/pointservice");
         dispatch({
             type:OPTENER_PUNTOS_DE_SERVICIO,
             payload: res.data

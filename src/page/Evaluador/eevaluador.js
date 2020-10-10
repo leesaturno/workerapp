@@ -105,7 +105,7 @@ const steps = [
                     <div className="ed-grid">
                       <div className="form-group">
                         <label className="text-ups">calle referencia</label>
-                        <input name="cReferencia" className="form-control" type="text" />
+                        <input name="cReferencia" className="form-control" type="text" id='cReferencia'/>
                       </div>
                     </div>
                   </div>
@@ -133,7 +133,7 @@ const steps = [
   {
     content: <CardStep title="Estas a un paso"
                 content={
-                    <div class="step3">
+                    <div className="step3">
                     <Icon name="exito"/>
                     </div>
                 }
@@ -173,12 +173,12 @@ class Eevaluador extends React.Component {
         <div className="steps-action">
           {current < steps.length - 1 && (
             <Button type="primary" onClick={() => this.next()}>
-              Siguiente
+              Siguiente 
             </Button>
           )}
           {current === steps.length - 1 && (
             <Button type="primary" onClick={() => message.success('¡Cliente creado exitosamente!')}>
-              Finalizar
+            Finalizar
             </Button>
           )}
           {current > 0 && (

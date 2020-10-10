@@ -1,8 +1,10 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState} from 'react';
 import './Evaluador.scss';
 import { ToastContainer, toast } from 'react-toastify';
-import Nav from '../../component/Nav/Nav';
-import Menua from '../../component/Menulateral/Menu';
+import { Steps, Button, message } from 'antd';
+
+import CardStep from '../../component/Card/CardStep';
+
 // import CardStep from '../../component/Card/CardStep';
 import Icon from '../../component/Icons/Icons';
 import Footer from '../../component/Footer/Footer';
@@ -15,7 +17,10 @@ import {pointAction,ruttAction} from '../../Redux/Dusk/pointreducer';
 import {useDispatch,useSelector} from 'react-redux';
 
 function Evaluador() {
-  const [query, setQuery] = useState(null);
+  
+ 
+  const [query, setQuery] = useState({cReferencia:'',
+direccion:''});
   const [datos, setDatos] = useState({
     rut:'',
     digito:''
@@ -31,65 +36,198 @@ const captarrut= (e)=>{
   })
 }
 const verificadorrut= ()=>{
-  if(verificador(datos.rut+'-'+datos.digito)) {return (<h3 >Valido</h3>); }else return (<h3>invalido</h3>)
+  if(verificador(datos.rut+'-'+datos.digito)) {
+    disparador(ruttAction(datos.rut+'-'+datos.digito));
+  return (toast.success( 'Rut Valido', {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    })) 
+  } else return (toast.error( 'Rut invalido', {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      }))
 }
 
 const  handleScriptLoad =  () => {
-       
+    
   // Declare Options For Autocomplete
-/*     const options = {
-    types: ['(cities)'],
-  }; */
+  const options = {
+    componentRestrictions: {country: "cl"}
+  }; 
 
   // Initialize Google Autocomplete
   /*global google*/ // To disable any eslint 'google not defined' errors
+  const autocomplete  =  new google.maps.places.Autocomplete(
+    document.getElementById('autocomplete'),options
+  );
+  autocomplete.addListener('place_changed', ()=> {   const addressObject = autocomplete.getPlace();
+ 
+  
+    // Check if address is valid
+  
+      const query3= addressObject.formatted_address;
+      const lttd= addressObject.geometry.location.lat();
+      const lngtd =addressObject.geometry.location.lng();
+      //aqui deberian almacenarse en el estado pero no logro hacerlo
+      setQuery({direccion: query3});
+      setlat(lttd);
+  setlng(lngtd);
 
   
-  const autocomplete  =  new google.maps.places.Autocomplete(
-    document.getElementById('autocomplete'),
+    })
+ 
+  
+    // Initialize Google Autocomplete
+    /*global google*/ // To disable any eslint 'google not defined' errors
+
+
+ 
+  
+}
+const handleScriptLoad2 = ()=>{
+  const options = {
+    componentRestrictions: {country: "cl"}
+  }; 
+  const cReferencia  =  new google.maps.places.Autocomplete(
+    document.getElementById('cReferencia'),options
   );
-  // Avoid paying for data that you don't need by restricting the set of
-  // place fields that are returned to just the address components and formatted
-  // address.
- /*  this.autocomplete.setFields(['address_components', 'formatted_address','geometry.location.lat']); */
+  cReferencia.addListener('place_changed', ()=> {   const addressObject2 = cReferencia.getPlace();
+ 
+  
+    // Check if address is valid
+  
+      const query2= addressObject2.formatted_address;
+     
+      //aqui deberian almacenarse en el estado pero no logro hacerlo
+      setQuery({cReferencia: query2});
 
-  // Fire Event when a suggested name is selected
-  autocomplete.addListener('place_changed', ()=> {   const addressObject = autocomplete.getPlace();
-  const address = addressObject.address_components;
 
-  // Check if address is valid
-
-    const query2= addressObject.formatted_address;
-    const lttd= addressObject.geometry.location.lat();
-    const lngtd =addressObject.geometry.location.lng();
-    //aqui deberian almacenarse en el estado pero no logro hacerlo
-   setQuery(query2);
-    setlat(lttd);
-    setlng(lngtd);
-  })
-
+  
+    })
 }
 
+const  disparador= useDispatch();
 
-const disparador=useDispatch();
-const evaluador=useSelector(store=>store.evaluador);
 /* disparador(pointAction()); disparador(ruttAction('RUT')) */
 
-useEffect(()=>{
-  disparador(pointAction());
-})
-const evaldireccion = ()=>{
-  var R = 6371
-  var  rad = function(x) {return x*Math.PI/180;}
+const evaluador=useSelector(store=>store.evaluador);
 
-evaluador.point.forEach(point => {
+/* useEffect(()=>{
+
+  if(datos.digito && evaluador.filled===false) {disparador(pointAction()); }
+
+
+
+}) */
+const deudor= ()=>{
+  console.log(evaluador.rut);
+  evaluador.rut.forEach(cliente => {
+    if (cliente.deuda===0) {
+      toast.success( 'Rut Valido y sin deuda', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        })
+    }else {
+      toast.error( 'Rut valido pero presanta deuda', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        })
+    }
+      })
+}
+const msgevaldirecc =()=>{
+  
+  
+if (evaluador.filled === true) {
+  
+
+  if (WL && FO) {
+    toast.success("Cobertura wireless y Fibra", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });  
+    
+    
+    
+  }else if (WL) {
+    toast.success( "Cobertura wireless", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      }); 
+      
+    
+    } else if (FO) {
+      
+    toast.success( "Cobertura fibra optica", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    }); 
+  } else if (lat && lng) 
+    
+  {
+    
+    toast.error( "Sin cobertura", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    }); 
+  }
+}
+}
+const evaldireccion =  ()=>{
+  disparador(pointAction()); 
+
+  
+  evaluador.point.forEach(point => {
+    
+    let R = 6371
+    let  rad = function(x) {return x*Math.PI/180;}
   /* let INDEX_tecnologia= element.INDEX_tecnologia; */
- 
-  if(point.INDEX_tecnologia==="1"){
-   
- 
 
-     var dLat1 = rad( lat - point.latitud );
+  if(point.INDEX_tecnologia==="1"){
+    
+    console.log("soy fibra");
+    
+    var dLat1 = rad( lat - point.latitud );
      var dLong1 = rad( lng- point.longitud );
      var a1 = Math.sin(dLat1/2) * Math.sin(dLat1/2) + Math.cos(rad(lat)) * Math.cos(rad(point.latitud)) * Math.sin(dLong1/2) * Math.sin(dLong1/2);
 var circunferencia = 2 * Math.atan2(Math.sqrt(a1), Math.sqrt(1-a1));
@@ -126,115 +264,61 @@ WL= false;
    
 }
 })
-
-
-if (WL && FO) {
-  toast.success( <Icon name="exito"/>, {
-    position: "top-right",
-    autoClose: 2000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    });  
-    
-  
-  
-}else if (WL) {
-  toast.success( <Icon name="exito"/>, {
-    position: "top-right",
-    autoClose: 2000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    }); 
-  
-  
-} else if (FO) {
-  
-  toast.success( <Icon name="exito"/>, {
-    position: "top-right",
-    autoClose: 2000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    }); 
-} else {
- 
-  toast.info( <Icon name="info"/> , {
-    position: "top-right",
-    autoClose: 2000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    }); 
-}
+msgevaldirecc();
   }
-  return (
-      <div>
-      
-        <Nav></Nav>
-        <Menua></Menua>
-        <Script
-          url="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBMNPzyCUNfyF9hFDMBspwZhOkDvUQamp8"
-          onLoad={handleScriptLoad}
-        />
-        <ToastContainer/>
-        <div class="main mt-5 ml-10">
-          <Eevaluador></Eevaluador>
 
-            {/* <CardStep title="evaluador"
-              content={
+
+const { Step } = Steps;
+
+const steps = [
+  {
+    content: <CardStep title="evaluador"
+    content={
+        <div>
+          <form>
+            <div className="form-group ed-grid">
+              <label className="text-ups">Rut</label>
+              <div className="ed-grid lg-grid-2">
                 <div>
-                  <form action>
-                    <div className="form-group ed-grid">
-                      <label className="text-ups">Rut</label>
-                      <div className="ed-grid lg-grid-2">
-                        <div>
-                          <input type="text" name="rut" onChange={captarrut} className="form-control" placeholder="12.672.579" /> 
-                        </div>
-                        <div>
-                        
-                          <input type="text" name="digito"  onBlur={verificadorrut} onChange={captarrut} className="form-control" placeholder={1} />
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="ed-grid">
-                      <div className="form-group">
-                        <label className="text-ups">Direccion</label>
-                        <input name="direccion" className="form-control" type="text" placeholder="Escribe tu direccion"  id='autocomplete'  onBlur={evaldireccion}/>
-                      </div>
-                    </div>
-
-                    <button className="bttn btn-CB text-ups">crear cliente 
-                      <Icon name="shoppingCart"/>
-                    </button>
-                  </form>
+                <input type="text" name="rut" onChange={captarrut} className="form-control" placeholder="12.672.579" /> 
                 </div>
-              }
-            ></CardStep> */}
+                <div>
+                {deudor()}
+                <input type="text" name="digito"  onBlur={verificadorrut} onChange={captarrut} className="form-control" placeholder={1} />
+                </div>
+              </div>
+            </div>
+            
+            <div className="ed-grid">
+              <div className="form-group">
+                <label className="text-ups">Direccion</label>
+                
+                <input name="direccion" className="form-control" type="text" placeholder="Escribe tu direccion"  id='autocomplete' onBlur={evaldireccion}/>
+              </div>
+            </div>
 
-            {/* <CardStep title="registro de cliente"
-              content={
+            {/* <button className="bttn btn-CB text-ups">crear cliente 
+              <Icon name="shoppingCart"/>
+            </button> */}
+          </form>
+        </div>
+      }
+             ></CardStep>,
+  },
+  {
+    content: <CardStep title="registro de cliente"
+                content={
                 <form action>
                   <div className="separador">
                     <span className="text-ups">datos del titular</span>
                     <div className="ed-grid lg-grid-3">
                       <div className="form-group">
                         <label className="text-ups">run</label>
-                        <input type="number" name="rut" className="form-control" placeholder="12.672.579" /> 
+                        <input type="text" name="rut" className="form-control" placeholder="12.672.579" value={datos.rut+'-'+datos.digito}/> 
                       </div>
                       <div className="form-group">
                         <label className="text-ups">serie run</label>
-                        <input type="number" name="rut" className="form-control" />
+                        <input type="text" name="rut" className="form-control" />
                       </div>
                       <div className="form-group">
                         <label className="text-ups">fecha de nacimiento</label>
@@ -287,7 +371,187 @@ if (WL && FO) {
                     <div className="ed-grid">
                       <div className="form-group">
                         <label className="text-ups">calle referencia</label>
-                        <input name="cReferencia" className="form-control" type="text" />
+                        <input name="cReferencia" className="form-control" type="text" id='cReferencia'/>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="separador">
+                    <span className="text-ups">plan a contratar</span>
+                    <div className="ed-grid">
+                      <div className="form-group">
+                        <br />
+                        <select name="plan" id="plan">
+                          <option>Lista de planes por velocidad</option>
+                          <option value={1}>1</option>
+                          <option value={2}>2</option>
+                          <option value={3}>3</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+  
+                  {/* <button className="bttn btn-CB text-ups">procesar</button> */}
+                </form>
+                }
+              ></CardStep>,
+  },
+  {
+    content: <CardStep title="Estas a un paso"
+                content={
+                    <div className="step3">
+                    <Icon name="exito"/>
+                    </div>
+                }
+             ></CardStep>,
+  },
+];
+const [current, setCurrent]= useState(0);
+const next=()=> {
+
+  setCurrent(current+1 );
+}
+
+const prev =()=> {
+ 
+  setCurrent(current-1 );
+}
+  return (
+      <div>
+      
+      
+        <Script
+          url="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBMNPzyCUNfyF9hFDMBspwZhOkDvUQamp8"
+          onLoad={handleScriptLoad}
+        />
+          <Script
+          url="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBMNPzyCUNfyF9hFDMBspwZhOkDvUQamp8"
+          onLoad={handleScriptLoad2}
+        />
+        <ToastContainer/>
+        <div className="main mt-5 ml-10">
+        <Steps current={current}>
+          {steps.map(item => (
+            <Step key={item.title} title={item.title} />
+          ))}
+        </Steps>
+        <div className="steps-content">{steps[current].content}</div>
+        
+        <div className="steps-action">
+          {current < steps.length - 1 && (
+            <Button type="primary" onClick={() => next()}>
+              Siguiente 
+            </Button>
+          )}
+          {current === steps.length - 1 && (
+            <Button type="primary" onClick={() => message.success('¡Cliente creado exitosamente!')}>
+            Finalizar
+            </Button>
+          )}
+          {current > 0 && (
+            <Button style={{ margin: '10px 25px' }} onClick={() => prev()}>
+              Anterior
+            </Button>
+          )}
+        </div>
+            {/* <CardStep title="evaluador"
+              content={
+                <div>
+                  <form action>
+                    <div className="form-group ed-grid">
+                      <label className="text-ups">Rut</label>
+                      <div className="ed-grid lg-grid-2">
+                        <div>
+                          <input type="text" name="rut" onChange={captarrut} className="form-control" placeholder="12.672.579" /> 
+                        </div>
+                        <div>
+                        
+                          <input type="text" name="digito"  onBlur={verificadorrut} onChange={captarrut} className="form-control" placeholder={1} />
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="ed-grid">
+                      <div className="form-group">
+                        <label className="text-ups">Direccion</label>
+                        <input name="direccion" className="form-control" type="text" placeholder="Escribe tu direccion"  id='autocomplete'  onBlur={msgevaldirecc}/>
+                      </div>
+                    </div>
+
+                    <button className="bttn btn-CB text-ups">crear cliente 
+                      <Icon name="shoppingCart"/>
+                    </button>
+                  </form>
+                </div>
+              }
+            ></CardStep> */}
+
+            {/* <CardStep title="registro de cliente"
+              content={
+                <form action>
+                  <div className="separador">
+                    <span className="text-ups">datos del titular</span>
+                    <div className="ed-grid lg-grid-3">
+                      <div className="form-group">
+                        <label className="text-ups">run</label>
+                        <input type="text" name="rut" className="form-control" placeholder="12.672.579" value={datos.rut+"-"+datos.digito}/> 
+                      </div>
+                      <div className="form-group">
+                        <label className="text-ups">serie run</label>
+                        <input type="text" name="rut" className="form-control" />
+                      </div>
+                      <div className="form-group">
+                        <label className="text-ups">fecha de nacimiento</label>
+                        <input type="date" name="fNacimiento" className="form-control" placeholder={1} />
+                      </div>
+                    </div>
+
+                    <div className="ed-grid lg-grid-3">
+                      <div className="form-group">
+                        <label className="text-ups">Nombres</label>
+                        <input type="text" name="nombres" className="form-control" /> 
+                      </div>
+                      <div className="form-group">
+                        <label className="text-ups">apellido paterno</label>
+                        <input type="text" name="apPaterno" className="form-control" />
+                      </div>
+                      <div className="form-group">
+                        <label className="text-ups">apellido materno</label>
+                        <input type="text" name="apMaterno" className="form-control" />
+                      </div>
+                    </div>
+                    
+                    <div className="ed-grid lg-grid-2">
+                      <div className="form-group">
+                        <label className="text-ups">telefono</label>
+                        <input type="tel" name="phone" className="form-control" /> 
+                      </div>
+
+                      <div className="form-group">
+                        <label className="text-ups">correo electronico</label>
+                        <input type="email" name="email" className="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="separador">
+                    <span className="text-ups">datos de la direccion</span>
+                    <div className="ed-grid lg-grid-2">
+                      <div className="form-group">
+                        <label className="text-ups">block / manzana</label>
+                        <input type="text" name="blocManzana" className="form-control" /> 
+                      </div>
+                      
+                      <div className="form-group">
+                        <label className="text-ups">departamento / sitio</label>
+                        <input type="text" name="dptoSitio" className="form-control" />
+                      </div>
+                    </div>
+
+                    <div className="ed-grid">
+                      <div className="form-group">
+                        <label className="text-ups">calle referencia</label>
+                        <input name="cReferencia" id="cReferencia" className="form-control" type="text" />
                       </div>
                     </div>
                   </div>
