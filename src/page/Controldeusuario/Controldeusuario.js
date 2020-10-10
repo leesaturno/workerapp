@@ -102,8 +102,9 @@ export default class Controldeusuario extends Component {
                       options = {{
                         filter: true,
                         filterType: 'dropdown',
-                        responsive: 'standard',
-                        tableBodyHeight: '400px'
+                        responsive: 'vertical',
+                        // tableBodyHeight: '400px',
+                        // tableBodyMaxHeight: ''
                       }}
                   />
                 }

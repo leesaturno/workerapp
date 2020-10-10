@@ -178,11 +178,7 @@ class Eevaluador extends React.Component {
           )}
           {current === steps.length - 1 && (
             <Button type="primary" onClick={() => message.success('¡Cliente creado exitosamente!')}>
-<<<<<<< HEAD
-            Finalizar
-=======
               Procesar
->>>>>>> a04d6c20d429b242247be951ded8e14b923a6e4d
             </Button>
           )}
           {current > 0 && (
