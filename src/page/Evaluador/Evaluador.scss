@@ -42,11 +42,13 @@ background-color: $primary !important; }
     cursor: pointer;
     line-height: 2;
     color: $text-L !important;
+    outline: none;
 }
 .ant-btn-primary {
     color: $white !important;
     background: $primary !important;
     border-color: $primary !important;
+    outline: none;
     &:hover {
         color: $white !important;
 
@@ -57,6 +59,7 @@ background-color: $primary !important; }
     color: $warning !important;
     background: $card-dark !important;
     border-color: $warning !important;
+    outline: none;
     &:hover{
         color: $white !important;
         background: $warning !important;
@@ -67,6 +70,7 @@ background-color: $primary !important; }
     color: $error !important;
     background: $card-dark !important;
     border-color: $error !important;
+    outline: none;
     &:hover{
         color: $white !important;
         background: $error !important;
@@ -76,6 +80,7 @@ background-color: $primary !important; }
 .btn-DT {
     width: 80px !important;
     margin: 0 5px 10px 0;
+    outline: none;
 }
 
 .ant-steps-horizontal.ant-steps-label-horizontal {

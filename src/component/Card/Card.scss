@@ -97,8 +97,7 @@
                 padding: 10px;
                 width: 100%;
                 &:focus {
-                    background-color: transparent;
-                    border: 1px solid #424242;  
+                    border: 1px solid $primary;  
                 }
             }
         }
@@ -158,6 +157,7 @@ input[type=number] {
     text-align: center;
     cursor: pointer;
     line-height: 2;
+    outline: none;
     @include respond('phone-land') {
         width: 3rem;
     }

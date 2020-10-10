@@ -90,7 +90,7 @@ h1 {
 
 input:focus, input.form-control:focus {
     border: 1px solid $primary;
-    border-radius: .4rem;
+    outline: none;
 }
 
 .Toastify__toast--success {
@@ -155,6 +155,7 @@ form {
         width: 100%;
     }
 }
+
 
 //MEDIA QUERY MANAGER
 // 0 - 600: Phone 

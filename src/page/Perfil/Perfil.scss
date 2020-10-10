@@ -5,6 +5,11 @@
     border: 1px dashed $muted !important;
     border-radius: .75rem !important;
     text-align: center !important;
+    img {
+        width: 104px !important;
+        height: 104px !important;
+        border-radius: .75rem !important;
+    }
     svg {
         fill: $muted !important;
     }
