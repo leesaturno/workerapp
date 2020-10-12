@@ -226,7 +226,7 @@ const { Step } = Steps;
 
 const steps = [
   {
-    content: <CardStep title="evaluador"
+    content: <CardStep title="Evaluador"
     content={
         <div>
           <form>
@@ -250,10 +250,6 @@ const steps = [
                 <input name="direccion" className="form-control" type="text"  placeholder="Escribe tu direccion"  id='autocomplete' onBlur={evaldireccion}/>
               </div>
             </div>
-
-            {/* <button className="bttn btn-CB text-ups">crear cliente 
-              <Icon name="shoppingCart"/>
-            </button> */}
           </form>
         </div>
       }
@@ -269,7 +265,7 @@ const steps = [
                               <div className="ed-grid lg-grid-3">
                                 <div className="form-group">
                                   <label className="text-ups">Run</label>
-                                  <input type="text" name="rut" className="form-control" placeholder="12.672.579" value={datos.rut+'-'+datos.digito} disabled/> 
+                                  <input type="text" name="rut" className="form-control" placeholder="12.672.579" value={datos.rut+'-'+datos.digito} readOnly/> 
                                 </div>
                                 <div className="form-group">
                                   <label className="text-ups">Serie run</label>
@@ -316,7 +312,7 @@ const steps = [
                                 <div className="form-group">
                                   <label className="text-ups">Direcci&#243;n</label>
                                   
-                                  <input name="direccion" className="form-control" type="text"id='autocomplete' onBlur={evaldireccion} disabled/>
+                                  <input name="direccion" className="form-control" type="text"id='autocomplete' value={query} readOnly/>
                                 </div>
                               </div>
 

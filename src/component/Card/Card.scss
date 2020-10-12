@@ -121,6 +121,9 @@
                 &:focus {
                     border: 1px solid $primary;  
                 }
+                &:read-only{
+                    border: none;
+                }
             }
         }
     }

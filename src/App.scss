@@ -170,6 +170,9 @@ form {
         margin-bottom: 20px;
         padding: 10px;
         width: 100%;
+        &:read-only{
+            border: none;
+        }
     }
 }
 
