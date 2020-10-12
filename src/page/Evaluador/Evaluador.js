@@ -37,7 +37,9 @@ const captarrut= (e)=>{
 }
 const verificadorrut= async ()=>{
   if(verificador(datos.rut+'-'+datos.digito)) {
-    message.success({content:'¡Rut Valido!', icon:<img src={require("../../images/id-card.png")} width="28" height="28" alt=""/>, duration:3, onClose:evaldireccion})
+    message.success({content:'¡Rut Valido!', icon:<img src={require("../../images/id-card.png")} width="28" height="28" alt=""/>, duration:3, onClose:evaldireccion,   style: {
+      marginTop: '13vh', float: 'right',
+    }})
     disparador(pointAction()); 
     const res= await axios.get("https://api.workerapp.cl/api/factibilidadrut/"+datos.rut+'-'+datos.digito);
     const timeout= 1000;
@@ -47,7 +49,9 @@ const verificadorrut= async ()=>{
       setdeuda(cliente.deuda)
       setTimeout(() => {
         if (cliente.deuda >0) {
-          message.error({content:' ¡Deudor!', icon:<img src={require("../../images/deudor.png")} width="28" height="28" alt=""/>, duration:5})
+          message.error({content:' ¡Deudor!', icon:<img src={require("../../images/deudor.png")} width="28" height="28" alt=""/>, duration:5, style: {
+            marginTop: '13vh', float: 'right',
+          }})
         } 
        
       }, timeout);
@@ -55,7 +59,9 @@ const verificadorrut= async ()=>{
    
 
   
-  } else return ( message.error({content:'¡Rut invalido!', icon:<img src={require("../../images/invalidrut.png")} width="32" height="32" alt=""/>, duration:3}))
+  } else return ( message.error({content:'¡Rut invalido!', icon:<img src={require("../../images/invalidrut.png")} width="32" height="32" alt=""/>, duration:3, style: {
+    marginTop: '13vh', float: 'right',
+  }}))
 }
 
 const  handleScriptLoad =  () => {
@@ -137,22 +143,30 @@ setWL(WL);
     }
   });
   if (WL && FO) {
-    message.success({content:<img src={require("../../images/optica-fiber.png")} width="32" height="32" alt=""/>, icon:<img src={require("../../images/wifi-signal (1).png")} width="28" height="28" alt=""/>, duration:3}) 
+    message.success({content:<img src={require("../../images/optica-fiber.png")} width="32" height="32" alt=""/>, icon:<img src={require("../../images/wifi-signal (1).png")} width="28" height="28" alt=""/>, duration:3, style: {
+      marginTop: '13vh', float: 'right',
+    }}) 
     
     
     
   }else if (WL) {
-    message.success({content:<img src={require("../../images/wifi-signal (1).png")} width="28" height="28" alt=""/>,icon: "", duration:3})
+    message.success({content:<img src={require("../../images/wifi-signal (1).png")} width="28" height="28" alt=""/>,icon: "", duration:3, style: {
+      marginTop: '13vh', float: 'right',
+    }})
       
     
     } else if (FO) {
       
-      message.success({content:<img src={require("../../images/optica-fiber.png")} width="32" height="32" alt=""/>,icon: "" , duration:3}) 
+      message.success({content:<img src={require("../../images/optica-fiber.png")} width="32" height="32" alt=""/>,icon: "" , duration:3, style: {
+        marginTop: '13vh', float: 'right',
+      }}) 
   } else if (lat && lng) 
     
   {
     
-    message.error({content:<img src={require("../../images/no-optica-fiber.png")} width="32" height="32" alt=""/>, icon:<img src={require("../../images/no-wifi.png")} width="32" height="32" alt=""/> , duration:3})
+    message.error({content:<img src={require("../../images/no-optica-fiber.png")} width="32" height="32" alt=""/>, icon:<img src={require("../../images/no-wifi.png")} width="32" height="32" alt=""/> , duration:3, style: {
+      marginTop: '13vh', float: 'right',
+    }})
   }
   })
  
@@ -312,7 +326,7 @@ const steps = [
                                 <div className="form-group">
                                   <label className="text-ups">Direcci&#243;n</label>
                                   
-                                  <input name="direccion" className="form-control" type="text"id='autocomplete' value={query} readOnly/>
+                                  <input name="direccion" className="form-control" type="text"id='autocomplete' value={query.direccion} readOnly/>
                                 </div>
                               </div>
 
