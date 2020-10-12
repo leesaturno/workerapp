@@ -83,7 +83,81 @@ const  handleScriptLoad =  () => {
       setQuery({direccion: query3});
       setlat(lttd);
   setlng(lngtd);
+  axios.get(`https://api.workerapp.cl/api/v2/pointservice`)
+  .then(res => {
+    const pointservice = res.data;
+    var R = 6371
+    var  rad = function(x) {return x*Math.PI/180;}
+    var FO= false;
+    var WL= false;
 
+    pointservice.forEach(point => {
+     
+      if(point.INDEX_tecnologia==="1"){
+       
+     
+
+         var dLat1 = rad( lttd - point.latitud );
+         var dLong1 = rad( lngtd- point.longitud );
+         var a1 = Math.sin(dLat1/2) * Math.sin(dLat1/2) + Math.cos(rad(lttd)) * Math.cos(rad(point.latitud)) * Math.sin(dLong1/2) * Math.sin(dLong1/2);
+var circunferencia = 2 * Math.atan2(Math.sqrt(a1), Math.sqrt(1-a1));
+var d1 = R * circunferencia;
+d1.toFixed(3)
+if(d1.toFixed(3) <= 0.300){
+FO=true;
+
+  setFO(FO);
+ 
+
+
+
+console.log(d1.toFixed(3)+"soy fibra");
+
+
+} /* else if (d1.toFixed(3) >  0.350  ){
+FO= false;
+} */ }
+    if (point.INDEX_tecnologia==="2") {
+    
+     
+      
+        var dLat = rad( lat - point.latitud );
+        var dLong = rad( lng- point.longitud );
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(rad(lat)) * Math.cos(rad(point.latitud)) * Math.sin(dLong/2) * Math.sin(dLong/2);
+var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+var d = R * c;
+d.toFixed(3)
+if(d.toFixed(3) <= 0.350){
+console.log(d.toFixed(3)+"soy WL");
+WL= true;
+
+setWL(WL);
+
+} 
+       
+    }
+  });
+  if (WL && FO) {
+    message.success({content:<img src={require("../../images/optica-fiber.png")} width="32" height="32" alt=""/>, icon:<img src={require("../../images/wifi-signal (1).png")} width="28" height="28" alt=""/>, duration:3}) 
+    
+    
+    
+  }else if (WL) {
+    message.success({content:<img src={require("../../images/wifi-signal (1).png")} width="28" height="28" alt=""/>,icon: "", duration:3})
+      
+    
+    } else if (FO) {
+      
+      message.success({content:<img src={require("../../images/optica-fiber.png")} width="32" height="32" alt=""/>,icon: "" , duration:3}) 
+  } else if (lat && lng) 
+    
+  {
+    
+    message.error({content:<img src={require("../../images/no-optica-fiber.png")} width="32" height="32" alt=""/>, icon:<img src={require("../../images/no-wifi.png")} width="32" height="32" alt=""/> , duration:3})
+  }
+  })
+ 
+    
   
     })
  
@@ -137,77 +211,15 @@ const msgevaldirecc =()=>{
 
   
 
-  if (WL && FO) {
-    message.success({content:<img src={require("../../images/optica-fiber.png")} width="32" height="32" alt=""/>, icon:<img src={require("../../images/wifi-signal (1).png")} width="28" height="28" alt=""/>, duration:3}) 
-    
-    
-    
-  }else if (WL) {
-    message.success({content:<img src={require("../../images/wifi-signal (1).png")} width="28" height="28" alt=""/>,icon: "", duration:3})
-      
-    
-    } else if (FO) {
-      
-      message.success({content:<img src={require("../../images/optica-fiber.png")} width="32" height="32" alt=""/>,icon: "" , duration:3}) 
-  } else if (lat && lng) 
-    
-  {
-    
-    message.error({content:<img src={require("../../images/no-optica-fiber.png")} width="32" height="32" alt=""/>, icon:<img src={require("../../images/no-wifi.png")} width="32" height="32" alt=""/> , duration:3})
-  }
+ 
 
 }
-const evaldireccion =  async()=>{
+const evaldireccion = async()=>{
  
   
   
-  evaluador.point.forEach(point => {
-    
-    let R = 6371
-    let  rad = function(x) {return x*Math.PI/180;}
-  /* let INDEX_tecnologia= element.INDEX_tecnologia; */
-
-  if(point.INDEX_tecnologia==="1"){
  
-    
-    var dLat1 = rad( lat - point.latitud );
-     var dLong1 = rad( lng- point.longitud );
-     var a1 = Math.sin(dLat1/2) * Math.sin(dLat1/2) + Math.cos(rad(lat)) * Math.cos(rad(point.latitud)) * Math.sin(dLong1/2) * Math.sin(dLong1/2);
-var circunferencia = 2 * Math.atan2(Math.sqrt(a1), Math.sqrt(1-a1));
-var d1 = R * circunferencia;
-d1.toFixed(3)
-if(d1.toFixed(3) <= 0.250){
-
-setFO(true)
-console.log(d1.toFixed(3)+"soy fibra");
-
-
-} /* else if (d1.toFixed(3) >  0.350  ){
-FO= false;
-} */ }
-if (point.INDEX_tecnologia==="2") {
-
  
-  
-    var dLat = rad( lat - point.latitud );
-    var dLong = rad( lng- point.longitud );
-    var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(rad(lat)) * Math.cos(rad(point.latitud)) * Math.sin(dLong/2) * Math.sin(dLong/2);
-var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-var d = R * c;
-d.toFixed(3)
-if(d.toFixed(3) <= 0.300){
-console.log(d.toFixed(3)+"soy WL");
-setWL(true)
-
-
-
-} /* else if (d.toFixed(3) >  0.350  ){
-WL= false;
-} */ 
-   
-}
-})
-msgevaldirecc();
   }
 
 
@@ -236,7 +248,7 @@ const steps = [
               <div className="form-group">
                 <label className="text-ups">Direccion</label>
                 
-                <input name="direccion" className="form-control" type="text" onFocus={handleScriptLoad} placeholder="Escribe tu direccion"  id='autocomplete' onBlur={evaldireccion}/>
+                <input name="direccion" className="form-control" type="text"  placeholder="Escribe tu direccion"  id='autocomplete' onBlur={evaldireccion}/>
               </div>
             </div>
 

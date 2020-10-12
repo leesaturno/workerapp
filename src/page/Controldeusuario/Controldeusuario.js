@@ -7,7 +7,7 @@ import Footer from '../../component/Footer/Footer'
 import Segurity from '../../component/Segurity/Segurity';
 
 import { ToastContainer, toast } from 'react-toastify';
-import { Button } from 'antd';
+import { Button,Popconfirm, message } from 'antd';
 import Global from '../../Global'
 import axios from 'axios';
 
@@ -31,7 +31,15 @@ export default class Controldeusuario extends Component {
       this.setState({ users:users });
     })
    }
-
+ confirm(e) {
+    console.log(e);
+    message.success('Click on Yes');
+  }
+  
+   cancel(e) {
+    console.log(e);
+    message.error('Click on No');
+  }
 
   render(){
     return (
@@ -87,7 +95,15 @@ export default class Controldeusuario extends Component {
                                 return (
                                   <>
                                     <Button type="warning" className="btn-DT">Editar</Button>
+                                    <Popconfirm
+    title="Are you sure delete this task?"
+    onConfirm={this.confirm.bind(this)}
+    onCancel={this.cancel.bind(this)}
+    okText="Yes"
+    cancelText="No"
+  >
                                     <Button type="danger" className="btn-DT">Eliminar</Button>
+                                    </Popconfirm>
                                   </>
                                 );
                               }
