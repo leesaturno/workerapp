@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './Evaluador.scss';
 import { ToastContainer, toast } from 'react-toastify';
 import { Steps, Button, message } from 'antd';
-
+import axios from 'axios';
 import CardStep from '../../component/Card/CardStep';
 
 // import CardStep from '../../component/Card/CardStep';
@@ -29,37 +29,38 @@ direccion:''});
   const [lng,setlng]= useState(0);
   const [FO,setFO]= useState(false);
   const [WL,setWL]= useState(false);
+  const [deuda,setdeuda]= useState(0);
 const captarrut= (e)=>{
   setDatos({
     ...datos, 
     [e.target.name] : e.target.value
   })
 }
-const verificadorrut= ()=>{
+const verificadorrut= async ()=>{
   if(verificador(datos.rut+'-'+datos.digito)) {
-    disparador(ruttAction(datos.rut+'-'+datos.digito));
-  return (toast.success( 'Rut Valido', {
-    position: "top-right",
-    autoClose: 2000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    })) 
-  } else return (toast.error( 'Rut invalido', {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      }))
+    message.success({content:'¡Rut Valido!', icon:<img src={require("../../images/id-card.png")} width="28" height="28" alt=""/>, duration:3, onClose:evaldireccion})
+    disparador(pointAction()); 
+    const res= await axios.get("https://api.workerapp.cl/api/factibilidadrut/"+datos.rut+'-'+datos.digito);
+    const timeout= 1000;
+
+    console.log(deuda);
+    res.data.forEach(cliente =>{
+      setdeuda(cliente.deuda)
+      setTimeout(() => {
+        if (cliente.deuda >0) {
+          message.error({content:' ¡Deudor!', icon:<img src={require("../../images/deudor.png")} width="28" height="28" alt=""/>, duration:5})
+        } 
+       
+      }, timeout);
+    });
+   
+
+  
+  } else return ( message.error({content:'¡Rut invalido!', icon:<img src={require("../../images/invalidrut.png")} width="32" height="32" alt=""/>, duration:3}))
 }
 
 const  handleScriptLoad =  () => {
-    
+
   // Declare Options For Autocomplete
   const options = {
     componentRestrictions: {country: "cl"}
@@ -129,93 +130,36 @@ const evaluador=useSelector(store=>store.evaluador);
 
 
 }) */
-const deudor= ()=>{
-  console.log(evaluador.rut);
-  evaluador.rut.forEach(cliente => {
-    if (cliente.deuda===0) {
-      toast.success( 'Rut Valido y sin deuda', {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        })
-    }else {
-      toast.error( 'Rut valido pero presanta deuda', {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        })
-    }
-      })
-}
+
 const msgevaldirecc =()=>{
   
   
-if (evaluador.filled === true) {
+
   
 
   if (WL && FO) {
-    toast.success("Cobertura wireless y Fibra", {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });  
+    message.success({content:<img src={require("../../images/optica-fiber.png")} width="32" height="32" alt=""/>, icon:<img src={require("../../images/wifi-signal (1).png")} width="28" height="28" alt=""/>, duration:3}) 
     
     
     
   }else if (WL) {
-    toast.success( "Cobertura wireless", {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      }); 
+    message.success({content:<img src={require("../../images/wifi-signal (1).png")} width="28" height="28" alt=""/>,icon: "", duration:3})
       
     
     } else if (FO) {
       
-    toast.success( "Cobertura fibra optica", {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    }); 
+      message.success({content:<img src={require("../../images/optica-fiber.png")} width="32" height="32" alt=""/>,icon: "" , duration:3}) 
   } else if (lat && lng) 
     
   {
     
-    toast.error( "Sin cobertura", {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    }); 
+    message.error({content:<img src={require("../../images/no-optica-fiber.png")} width="32" height="32" alt=""/>, icon:<img src={require("../../images/no-wifi.png")} width="32" height="32" alt=""/> , duration:3})
   }
-}
-}
-const evaldireccion =  ()=>{
-  disparador(pointAction()); 
 
+}
+const evaldireccion =  async()=>{
+ 
+  
   
   evaluador.point.forEach(point => {
     
@@ -224,8 +168,7 @@ const evaldireccion =  ()=>{
   /* let INDEX_tecnologia= element.INDEX_tecnologia; */
 
   if(point.INDEX_tecnologia==="1"){
-    
-    console.log("soy fibra");
+ 
     
     var dLat1 = rad( lat - point.latitud );
      var dLong1 = rad( lng- point.longitud );
@@ -233,7 +176,7 @@ const evaldireccion =  ()=>{
 var circunferencia = 2 * Math.atan2(Math.sqrt(a1), Math.sqrt(1-a1));
 var d1 = R * circunferencia;
 d1.toFixed(3)
-if(d1.toFixed(3) <= 0.300){
+if(d1.toFixed(3) <= 0.250){
 
 setFO(true)
 console.log(d1.toFixed(3)+"soy fibra");
@@ -252,7 +195,7 @@ if (point.INDEX_tecnologia==="2") {
 var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 var d = R * c;
 d.toFixed(3)
-if(d.toFixed(3) <= 0.350){
+if(d.toFixed(3) <= 0.300){
 console.log(d.toFixed(3)+"soy WL");
 setWL(true)
 
@@ -280,11 +223,11 @@ const steps = [
               <label className="text-ups">Rut</label>
               <div className="ed-grid lg-grid-2">
                 <div>
-                <input type="text" name="rut" onChange={captarrut} className="form-control" placeholder="12.672.579" /> 
+                <input type="text" name="rut" minLength="7" maxLength="8"  onChange={captarrut} className="form-control" placeholder="12672579" /> 
                 </div>
                 <div>
-                {deudor()}
-                <input type="text" name="digito"  onBlur={verificadorrut} onChange={captarrut} className="form-control" placeholder={1} />
+               
+                <input type="text" name="digito" maxLength="1" onBlur={verificadorrut} onChange={captarrut} className="form-control" placeholder={1} />
                 </div>
               </div>
             </div>
@@ -293,7 +236,7 @@ const steps = [
               <div className="form-group">
                 <label className="text-ups">Direccion</label>
                 
-                <input name="direccion" className="form-control" type="text" placeholder="Escribe tu direccion"  id='autocomplete' onBlur={evaldireccion}/>
+                <input name="direccion" className="form-control" type="text" onFocus={handleScriptLoad} placeholder="Escribe tu direccion"  id='autocomplete' onBlur={evaldireccion}/>
               </div>
             </div>
 
@@ -314,7 +257,7 @@ const steps = [
                     <div className="ed-grid lg-grid-3">
                       <div className="form-group">
                         <label className="text-ups">run</label>
-                        <input type="text" name="rut" className="form-control" placeholder="12.672.579" value={datos.rut+'-'+datos.digito}/> 
+                        <input type="text" name="rut" className="form-control" placeholder="12672.y579" value={datos.rut+'-'+datos.digito}/> 
                       </div>
                       <div className="form-group">
                         <label className="text-ups">serie run</label>
@@ -371,7 +314,7 @@ const steps = [
                     <div className="ed-grid">
                       <div className="form-group">
                         <label className="text-ups">calle referencia</label>
-                        <input name="cReferencia" className="form-control" type="text" id='cReferencia'/>
+                        <input name="cReferencia" className="form-control" type="text" id='cReferencia' onFocus={handleScriptLoad2}/>
                       </div>
                     </div>
                   </div>
@@ -422,10 +365,7 @@ const prev =()=> {
           url="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBMNPzyCUNfyF9hFDMBspwZhOkDvUQamp8"
           onLoad={handleScriptLoad}
         />
-          <Script
-          url="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBMNPzyCUNfyF9hFDMBspwZhOkDvUQamp8"
-          onLoad={handleScriptLoad2}
-        />
+       
         <ToastContainer/>
         <div className="main mt-5 ml-10">
         <Steps current={current}>
