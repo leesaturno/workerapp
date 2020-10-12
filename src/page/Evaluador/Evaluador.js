@@ -245,7 +245,7 @@ const steps = [
             
             <div className="ed-grid">
               <div className="form-group">
-                <label className="text-ups">Direccion</label>
+                <label className="text-ups">Direcci&#243;n</label>
                 
                 <input name="direccion" className="form-control" type="text"  placeholder="Escribe tu direccion"  id='autocomplete' onBlur={evaldireccion}/>
               </div>
@@ -269,7 +269,7 @@ const steps = [
                               <div className="ed-grid lg-grid-3">
                                 <div className="form-group">
                                   <label className="text-ups">Run</label>
-                                  <input type="text" name="rut" className="form-control" placeholder="12.672.579" value={datos.rut+'-'+datos.digito}/> 
+                                  <input type="text" name="rut" className="form-control" placeholder="12.672.579" value={datos.rut+'-'+datos.digito} disabled/> 
                                 </div>
                                 <div className="form-group">
                                   <label className="text-ups">Serie run</label>
@@ -311,6 +311,16 @@ const steps = [
                             
                             <div className="separador">
                               <span className="text-ups">Datos de la direcci&#243;n</span>
+
+                              <div className="ed-grid">
+                                <div className="form-group">
+                                  <label className="text-ups">Direcci&#243;n</label>
+                                  
+                                  <input name="direccion" className="form-control" type="text"id='autocomplete' onBlur={evaldireccion} disabled/>
+                                </div>
+                              </div>
+
+
                               <div className="ed-grid lg-grid-2">
                                 <div className="form-group">
                                   <label className="text-ups">Block / Manzana</label>
