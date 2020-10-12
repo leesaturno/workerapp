@@ -94,11 +94,11 @@ export default class Perfil extends Component {
 
                             <div className="ed-grid lg-grid-2">
                                 <div className="form-group">
-                                <label className="text-ups">Cumplea;os</label>
+                                <label className="text-ups">Cumpleaños</label>
                                 <input type="date" name="cumple" className="form-control" /> 
                                 </div>
                                 <div className="form-group">
-                                <label className="text-ups">Nombres</label>
+                                <label className="text-ups">Nombre</label>
                                 <input type="text" name="nombres" className="form-control" /> 
                                 </div>
                                 
@@ -106,7 +106,7 @@ export default class Perfil extends Component {
                             
                             <div className="ed-grid lg-grid-2">
                                 <div className="form-group">
-                                <label className="text-ups">Telefono</label>
+                                <label className="text-ups">Tel&#233;fono</label>
                                 <input type="tel" name="phone" className="form-control" /> 
                                 </div>
         
@@ -119,7 +119,7 @@ export default class Perfil extends Component {
                             
                             <div className="ed-grid">
                                 <div className="form-group">
-                                <label className="text-ups">Direccion</label>
+                                <label className="text-ups">Direcci&#243;n</label>
                                 <input name="cReferencia" className="form-control" type="text" />
                                 </div>
                             </div>
