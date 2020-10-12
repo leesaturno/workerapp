@@ -3,6 +3,7 @@ import './Controldeusuario.scss';
 
 import CardStep from '../../component/Card/CardStep'
 import Footer from '../../component/Footer/Footer'
+import { Select } from 'antd';
 // Redux 
 import {useDispatch} from 'react-redux';
 import {usuarioinsertaction} from '../../Redux/Dusk/usuarioreducer';
@@ -56,11 +57,16 @@ function EditUser() {
                 });
          }
       }
+    const { Option } = Select;
+      
+    const onSearch=(val) => {
+        console.log('search:', val);
+    }
     
   return (
       <div>
         <div className="main mt-5 ml-10">
-            <CardStep title="Editar usuario"
+            <CardStep title="Nuevo usuario"
               content={
                 <form onSubmit={enviarDatos}>
                     <div className="ed-grid lg-grid-2">
@@ -120,11 +126,23 @@ function EditUser() {
                         </div>
                     
                         <div className="form-group">
-                            <label className="text-ups" required name="privilegios">Privilegios</label>
-                            <select name="privilegios" onChange={cargadedatos} id="privilegios">
-                                <option value="1">Admin</option>
-                                <option value="2">Usuario</option>
-                            </select>
+                            <label className="text-ups" required    >Privilegios</label>
+                            <Select 
+                                name="privilegios"
+                                showSearch
+                                placeholder="Selecciona un privilegio"
+                                title="privilegios"
+                                onChange={(value)=>{setClientes({...Clientes,
+                                    privilegios : value})}}
+                                onSearch={onSearch}
+                                defaultValue='Admin'
+                                filterOption={(input, option) =>
+                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                  }
+                            >
+                                <Option value="1">Admin</Option>
+                                <Option value="2">Usuario</Option>
+                            </Select>
                         </div>
                     </div>
 
@@ -145,7 +163,7 @@ function EditUser() {
         </div>
         <ToastContainer/>
         <Footer></Footer>
-        {/* <Segurity/> */}
+        <Segurity/>
       </div>
   );
 }

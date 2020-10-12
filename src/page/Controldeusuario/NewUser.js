@@ -126,27 +126,23 @@ function NewUser() {
                         </div>
                     
                         <div className="form-group">
-                            <label className="text-ups" required    name="privilegios">Privilegios</label>
+                            <label className="text-ups" required    >Privilegios</label>
                             <Select 
                                 name="privilegios"
                                 showSearch
-                                style={{ width: 200 }}
-                                placeholder="Privilegios"
-                                optionFilterProp="children"
-                                onChange={cargadedatos}
+                                placeholder="Selecciona un privilegio"
+                                title="privilegios"
+                                onChange={(value)=>{setClientes({...Clientes,
+                                    privilegios : value})}}
                                 onSearch={onSearch}
+                                defaultValue='Admin'
                                 filterOption={(input, option) =>
-                                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                }
+                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                  }
                             >
                                 <Option value="1">Admin</Option>
                                 <Option value="2">Usuario</Option>
                             </Select>
-                           
-                            {/* <select name="privilegios" onChange={cargadedatos} id="privilegios">
-                                <option value="1">Admin</option>
-                                <option value="2">Usuario</option>
-                            </select> */}
                         </div>
                     </div>
 

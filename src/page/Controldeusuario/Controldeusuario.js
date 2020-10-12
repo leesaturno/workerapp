@@ -103,7 +103,7 @@ componentDidMount(){
                           },
                           {
                             name: "telefono",
-                            label: "Tel&#233;fono",
+                            label: "Telefono",
                             options: {
                               filter: true,
                               sort: false,
