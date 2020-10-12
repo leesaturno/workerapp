@@ -32,6 +32,7 @@
 
 .MuiCheckbox-root {
     color: $text-D !important;
+    display: none !important;
 }
 
 .MUIDataTableSelectCell-headerCell-41 {
@@ -84,6 +85,7 @@
 
 .MuiTableCell-paddingCheckbox {
     background-color: $card-dark;
+    display: none !important;
 }
 
 .MUIDataTableFilter-root-88 {

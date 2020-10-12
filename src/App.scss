@@ -4,7 +4,7 @@
 
 $primary: #7A8A65;
 $info: #3f96c1;
-$warning: #fbcf1e;;
+$warning: #fbcf1e;
 $error: #d61a24;
 
 $bg-dark: #18191B;
@@ -62,17 +62,23 @@ h1 {
     box-shadow: 0 3px 30px rgba(0,0,0,.3),0 3px 24px rgba(0,0,0,.3);
 }
 
+.ml-5 {
+    margin-left: 5%;
+}
+
 .ml-10 {
     margin-left: 10%;
+    @media only screen and (max-width: 767px) {
+        margin-left: 15%;
+    }
 }
 .mt-5 {
     margin-top: 5%;
-    max-width: 991px
 }
 
 .mt-10 {
     margin-top: 10%;
-    max-width: 991px
+    // max-width: 991px
 }
 
 .bxs {
@@ -129,6 +135,14 @@ input:focus, input.form-control:focus {
     }
 }
 
+.ant-message svg {
+    position: relative;
+    top: 1px;
+    margin-right: 8px;
+    width: 16px;
+    height: 16px;
+ }
+
 .switch-wrapper {
     position: relative;
   }
@@ -139,6 +153,9 @@ input:focus, input.form-control:focus {
 
 form {
     padding: 30px;
+    @media only screen and (max-width: 767px) {
+        padding: 10px;
+    }
     label {
         color: hsla(0,0%,56.1%,.7);
         font-size: 12px;
@@ -155,6 +172,15 @@ form {
         width: 100%;
     }
 }
+
+.ant-tooltip-inner {
+    background-color: rgba(122, 138, 101, 0.75) !important;
+}
+
+.ant-tooltip-arrow-content {
+    background-color: rgba(122, 138, 101, 0.75) !important;
+}
+  
 
 
 //MEDIA QUERY MANAGER

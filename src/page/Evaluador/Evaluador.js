@@ -2,6 +2,9 @@ import React, {useEffect, useState} from 'react';
 import './Evaluador.scss';
 import { ToastContainer, toast } from 'react-toastify';
 import { Steps, Button, message } from 'antd';
+import {
+  CopyrightOutlined
+} from '@ant-design/icons';
 
 import CardStep from '../../component/Card/CardStep';
 
@@ -38,24 +41,10 @@ const captarrut= (e)=>{
 const verificadorrut= ()=>{
   if(verificador(datos.rut+'-'+datos.digito)) {
     disparador(ruttAction(datos.rut+'-'+datos.digito));
-  return (toast.success( 'Rut Valido', {
-    position: "top-right",
-    autoClose: 2000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    })) 
-  } else return (toast.error( 'Rut invalido', {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      }))
+  return (message.success(
+            {content: 'Rut valido',
+            icon: <CopyrightOutlined />})) 
+  } else return (message.error('Rut invalido'))
 }
 
 const  handleScriptLoad =  () => {
@@ -200,16 +189,17 @@ if (evaluador.filled === true) {
   } else if (lat && lng) 
     
   {
+    message.error('Sin cobertura');
     
-    toast.error( "Sin cobertura", {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    }); 
+    // toast.error( "Sin cobertura", {
+    //   position: "top-right",
+    //   autoClose: 2000,
+    //   hideProgressBar: false,
+    //   closeOnClick: true,
+    //   pauseOnHover: true,
+    //   draggable: true,
+    //   progress: undefined,
+    // }); 
   }
 }
 }
@@ -225,7 +215,7 @@ const evaldireccion =  ()=>{
 
   if(point.INDEX_tecnologia==="1"){
     
-    console.log("soy fibra");
+    
     
     var dLat1 = rad( lat - point.latitud );
      var dLong1 = rad( lng- point.longitud );
@@ -272,139 +262,134 @@ const { Step } = Steps;
 
 const steps = [
   {
-    content: <CardStep title="evaluador"
-    content={
-        <div>
-          <form>
-            <div className="form-group ed-grid">
-              <label className="text-ups">Rut</label>
-              <div className="ed-grid lg-grid-2">
-                <div>
-                <input type="text" name="rut" onChange={captarrut} className="form-control" placeholder="12.672.579" /> 
-                </div>
-                <div>
-                {deudor()}
-                <input type="text" name="digito"  onBlur={verificadorrut} onChange={captarrut} className="form-control" placeholder={1} />
-                </div>
-              </div>
-            </div>
-            
-            <div className="ed-grid">
-              <div className="form-group">
-                <label className="text-ups">Direccion</label>
-                
-                <input name="direccion" className="form-control" type="text" placeholder="Escribe tu direccion"  id='autocomplete' onBlur={evaldireccion}/>
-              </div>
-            </div>
-
-            {/* <button className="bttn btn-CB text-ups">crear cliente 
-              <Icon name="shoppingCart"/>
-            </button> */}
-          </form>
-        </div>
-      }
-             ></CardStep>,
-  },
-  {
-    content: <CardStep title="registro de cliente"
-                content={
-                <form action>
-                  <div className="separador">
-                    <span className="text-ups">datos del titular</span>
-                    <div className="ed-grid lg-grid-3">
-                      <div className="form-group">
-                        <label className="text-ups">run</label>
-                        <input type="text" name="rut" className="form-control" placeholder="12.672.579" value={datos.rut+'-'+datos.digito}/> 
-                      </div>
-                      <div className="form-group">
-                        <label className="text-ups">serie run</label>
-                        <input type="text" name="rut" className="form-control" />
-                      </div>
-                      <div className="form-group">
-                        <label className="text-ups">fecha de nacimiento</label>
-                        <input type="date" name="fNacimiento" className="form-control" placeholder={1} />
-                      </div>
-                    </div>
-
-                    <div className="ed-grid lg-grid-3">
-                      <div className="form-group">
-                        <label className="text-ups">Nombres</label>
-                        <input type="text" name="nombres" className="form-control" /> 
-                      </div>
-                      <div className="form-group">
-                        <label className="text-ups">apellido paterno</label>
-                        <input type="text" name="apPaterno" className="form-control" />
-                      </div>
-                      <div className="form-group">
-                        <label className="text-ups">apellido materno</label>
-                        <input type="text" name="apMaterno" className="form-control" />
-                      </div>
-                    </div>
-                    
-                    <div className="ed-grid lg-grid-2">
-                      <div className="form-group">
-                        <label className="text-ups">telefono</label>
-                        <input type="tel" name="phone" className="form-control" /> 
-                      </div>
-
-                      <div className="form-group">
-                        <label className="text-ups">correo electronico</label>
-                        <input type="email" name="email" className="form-control" />
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="separador">
-                    <span className="text-ups">datos de la direccion</span>
-                    <div className="ed-grid lg-grid-2">
-                      <div className="form-group">
-                        <label className="text-ups">block / manzana</label>
-                        <input type="text" name="blocManzana" className="form-control" /> 
+  content: <CardStep title="Evaluador"
+              content={
+                  <div>
+                    <form>
+                      <div className="form-group ed-grid">
+                        <label className="text-ups">Rut</label>
+                        <div className="ed-grid lg-grid-2">
+                          <div>
+                          <input type="text" name="rut" onChange={captarrut} className="form-control" placeholder="12.672.579" /> 
+                          </div>
+                          <div>
+                          {deudor()}
+                          <input type="text" name="digito"  onBlur={verificadorrut} onChange={captarrut} className="form-control" placeholder={1} />
+                          </div>
+                        </div>
                       </div>
                       
-                      <div className="form-group">
-                        <label className="text-ups">departamento / sitio</label>
-                        <input type="text" name="dptoSitio" className="form-control" />
+                      <div className="ed-grid">
+                        <div className="form-group">
+                          <label className="text-ups">Direcci&#243;n</label>
+                          
+                          <input name="direccion" className="form-control" type="text" placeholder="Escribe tu direccion"  id='autocomplete' onBlur={evaldireccion}/>
+                        </div>
                       </div>
-                    </div>
-
-                    <div className="ed-grid">
-                      <div className="form-group">
-                        <label className="text-ups">calle referencia</label>
-                        <input name="cReferencia" className="form-control" type="text" id='cReferencia'/>
-                      </div>
-                    </div>
+                    </form>
                   </div>
-                  
-                  <div className="separador">
-                    <span className="text-ups">plan a contratar</span>
-                    <div className="ed-grid">
-                      <div className="form-group">
-                        <br />
-                        <select name="plan" id="plan">
-                          <option>Lista de planes por velocidad</option>
-                          <option value={1}>1</option>
-                          <option value={2}>2</option>
-                          <option value={3}>3</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-  
-                  {/* <button className="bttn btn-CB text-ups">procesar</button> */}
-                </form>
                 }
-              ></CardStep>,
+            ></CardStep>,
+  },
+  {
+    content: <CardStep title="Registro de cliente"
+                        content={
+                          <form>
+                            <div className="separador">
+                              <span className="text-ups">Datos del titular</span>
+                              <div className="ed-grid lg-grid-3">
+                                <div className="form-group">
+                                  <label className="text-ups">Run</label>
+                                  <input type="text" name="rut" className="form-control" placeholder="12.672.579" value={datos.rut+'-'+datos.digito}/> 
+                                </div>
+                                <div className="form-group">
+                                  <label className="text-ups">Serie run</label>
+                                  <input type="text" name="rut" className="form-control" />
+                                </div>
+                                <div className="form-group">
+                                  <label className="text-ups">Fecha de nacimiento</label>
+                                  <input type="date" name="fNacimiento" className="form-control" placeholder={1} />
+                                </div>
+                              </div>
+
+                              <div className="ed-grid lg-grid-3">
+                                <div className="form-group">
+                                  <label className="text-ups">Nombres</label>
+                                  <input type="text" name="nombres" className="form-control" /> 
+                                </div>
+                                <div className="form-group">
+                                  <label className="text-ups">Apellido paterno</label>
+                                  <input type="text" name="apPaterno" className="form-control" />
+                                </div>
+                                <div className="form-group">
+                                  <label className="text-ups">Apellido materno</label>
+                                  <input type="text" name="apMaterno" className="form-control" />
+                                </div>
+                              </div>
+                              
+                              <div className="ed-grid lg-grid-2">
+                                <div className="form-group">
+                                  <label className="text-ups">Tel&#233;fono</label>
+                                  <input type="tel" name="phone" className="form-control" /> 
+                                </div>
+
+                                <div className="form-group">
+                                  <label className="text-ups">Correo electr&#243;nico</label>
+                                  <input type="email" name="email" className="form-control" />
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div className="separador">
+                              <span className="text-ups">Datos de la direcci&#243;n</span>
+                              <div className="ed-grid lg-grid-2">
+                                <div className="form-group">
+                                  <label className="text-ups">Block / Manzana</label>
+                                  <input type="text" name="blocManzana" className="form-control" /> 
+                                </div>
+                                
+                                <div className="form-group">
+                                  <label className="text-ups">Departamento / Sitio</label>
+                                  <input type="text" name="dptoSitio" className="form-control" />
+                                </div>
+                              </div>
+
+                              <div className="ed-grid">
+                                <div className="form-group">
+                                  <label className="text-ups">Calle referencia</label>
+                                  <input name="cReferencia" className="form-control" type="text" id='cReferencia'/>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div className="separador">
+                              <span className="text-ups">Plan a contratar</span>
+                              <div className="ed-grid">
+                                <div className="form-group">
+                                  <br />
+                                  <select name="plan" id="plan">
+                                    <option>Lista de planes por velocidad</option>
+                                    <option value={1}>1</option>
+                                    <option value={2}>2</option>
+                                    <option value={3}>3</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                        </form>
+                      }
+            ></CardStep>,
   },
   {
     content: <CardStep title="Estas a un paso"
-                content={
-                    <div className="step3">
-                    <Icon name="exito"/>
-                    </div>
-                }
-             ></CardStep>,
+                       content={
+                          <div className="step3">
+                          <Icon name="exito"/>
+                          </div>
+                       }
+            ></CardStep>,
   },
+  
 ];
 const [current, setCurrent]= useState(0);
 const next=()=> {
@@ -452,136 +437,6 @@ const prev =()=> {
             </Button>
           )}
         </div>
-            {/* <CardStep title="evaluador"
-              content={
-                <div>
-                  <form action>
-                    <div className="form-group ed-grid">
-                      <label className="text-ups">Rut</label>
-                      <div className="ed-grid lg-grid-2">
-                        <div>
-                          <input type="text" name="rut" onChange={captarrut} className="form-control" placeholder="12.672.579" /> 
-                        </div>
-                        <div>
-                        
-                          <input type="text" name="digito"  onBlur={verificadorrut} onChange={captarrut} className="form-control" placeholder={1} />
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="ed-grid">
-                      <div className="form-group">
-                        <label className="text-ups">Direccion</label>
-                        <input name="direccion" className="form-control" type="text" placeholder="Escribe tu direccion"  id='autocomplete'  onBlur={msgevaldirecc}/>
-                      </div>
-                    </div>
-
-                    <button className="bttn btn-CB text-ups">crear cliente 
-                      <Icon name="shoppingCart"/>
-                    </button>
-                  </form>
-                </div>
-              }
-            ></CardStep> */}
-
-            {/* <CardStep title="registro de cliente"
-              content={
-                <form action>
-                  <div className="separador">
-                    <span className="text-ups">datos del titular</span>
-                    <div className="ed-grid lg-grid-3">
-                      <div className="form-group">
-                        <label className="text-ups">run</label>
-                        <input type="text" name="rut" className="form-control" placeholder="12.672.579" value={datos.rut+"-"+datos.digito}/> 
-                      </div>
-                      <div className="form-group">
-                        <label className="text-ups">serie run</label>
-                        <input type="text" name="rut" className="form-control" />
-                      </div>
-                      <div className="form-group">
-                        <label className="text-ups">fecha de nacimiento</label>
-                        <input type="date" name="fNacimiento" className="form-control" placeholder={1} />
-                      </div>
-                    </div>
-
-                    <div className="ed-grid lg-grid-3">
-                      <div className="form-group">
-                        <label className="text-ups">Nombres</label>
-                        <input type="text" name="nombres" className="form-control" /> 
-                      </div>
-                      <div className="form-group">
-                        <label className="text-ups">apellido paterno</label>
-                        <input type="text" name="apPaterno" className="form-control" />
-                      </div>
-                      <div className="form-group">
-                        <label className="text-ups">apellido materno</label>
-                        <input type="text" name="apMaterno" className="form-control" />
-                      </div>
-                    </div>
-                    
-                    <div className="ed-grid lg-grid-2">
-                      <div className="form-group">
-                        <label className="text-ups">telefono</label>
-                        <input type="tel" name="phone" className="form-control" /> 
-                      </div>
-
-                      <div className="form-group">
-                        <label className="text-ups">correo electronico</label>
-                        <input type="email" name="email" className="form-control" />
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="separador">
-                    <span className="text-ups">datos de la direccion</span>
-                    <div className="ed-grid lg-grid-2">
-                      <div className="form-group">
-                        <label className="text-ups">block / manzana</label>
-                        <input type="text" name="blocManzana" className="form-control" /> 
-                      </div>
-                      
-                      <div className="form-group">
-                        <label className="text-ups">departamento / sitio</label>
-                        <input type="text" name="dptoSitio" className="form-control" />
-                      </div>
-                    </div>
-
-                    <div className="ed-grid">
-                      <div className="form-group">
-                        <label className="text-ups">calle referencia</label>
-                        <input name="cReferencia" id="cReferencia" className="form-control" type="text" />
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="separador">
-                    <span className="text-ups">plan a contratar</span>
-                    <div className="ed-grid">
-                      <div className="form-group">
-                        <br />
-                        <select name="plan" id="plan">
-                          <option>Lista de planes por velocidad</option>
-                          <option value={1}>1</option>
-                          <option value={2}>2</option>
-                          <option value={3}>3</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-  
-                  <button className="bttn btn-CB text-ups">procesar</button>
-                </form>
-
-              }
-            ></CardStep> */}
-        
-            {/* <CardStep title="¡cliente creado exitosamente!"
-              content={
-                <div class="step3">
-                  <Icon name="exito"/>
-                </div>
-          }
-            ></CardStep> */}
         </div>
 
         <Footer></Footer>

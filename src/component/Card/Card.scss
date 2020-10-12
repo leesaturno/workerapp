@@ -9,8 +9,6 @@
     box-shadow: 0 1px 15px rgba(0,0,0,.1),0 1px 8px rgba(0,0,0,.1);
     position: relative;
     text-align: center;
-    // margin-left: 6.5%;
-    // margin-right: 10%;
     padding: 10px 30px 10px 30px;
     @include respond('phone-land') {
         width: 80%;
@@ -20,8 +18,10 @@
         height: 60px;
         border-bottom: 1px solid $divider;
         width: 100%;
-        @include respond('phone-land') {
+        @media only screen and (max-width: 355px) {
             height: 130px;
+            text-align: center;
+            vertical-align: middle;
         }
         .card-title {
             margin-left: 30px;
@@ -38,13 +38,14 @@
 
 .cardAmplio {
     border-radius: .75rem;
+    margin: auto;
     display: block;
-    width: 95%;
+    width: 80%;
     box-shadow: 0 1px 15px rgba(0,0,0,.1),0 1px 8px rgba(0,0,0,.1);
     position: relative;
-    margin-left: 6.5%;
-    margin-right: 10%;
     padding: 10px;
+    vertical-align: middle;
+    text-align: center;
     @include respond('phone-land') {
         width: 80%;
         padding: 0;
@@ -67,6 +68,14 @@
         }
     }
 }
+
+// .ant-menu-inline-collapsed.ant-menu-vertical {
+//     background-color: red !important;
+//     @include respond('phone-land') {
+//         background-color: pink !important;
+//     }
+// }
+
 
 .card-step {
     border-radius: .75rem;
