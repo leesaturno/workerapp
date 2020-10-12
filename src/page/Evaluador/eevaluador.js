@@ -18,12 +18,11 @@ const steps = [
                   <input type="text" name="rut" className="form-control" placeholder="12.672.579" /> 
                 </div>
                 <div>
-                
                   <input type="text" name="digito" className="form-control" placeholder={1} />
                 </div>
               </div>
             </div>
-            
+
             <div className="ed-grid">
               <div className="form-group">
                 <label className="text-ups">Direccion</label>
@@ -31,9 +30,11 @@ const steps = [
               </div>
             </div>
 
-            {/* <button className="bttn btn-CB text-ups">crear cliente 
+            {/* 
+                <button className="bttn btn-CB text-ups">crear cliente
               <Icon name="shoppingCart"/>
-            </button> */}
+            </button>
+             */}
           </form>
         </div>
       }
