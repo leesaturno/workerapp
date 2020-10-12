@@ -121,10 +121,12 @@
                 &:focus {
                     border: 1px solid $primary;  
                 }
+            }
+            input {
                 &:read-only{
                     border: none;
                 }
-            }
+            }          
         }
     }
 }

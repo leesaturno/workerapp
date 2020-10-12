@@ -145,7 +145,7 @@ function EditUser() {
         </div>
         <ToastContainer/>
         <Footer></Footer>
-        <Segurity/>
+        {/* <Segurity/> */}
       </div>
   );
 }
