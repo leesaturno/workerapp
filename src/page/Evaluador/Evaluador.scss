@@ -44,6 +44,17 @@ background-color: $primary !important; }
     color: $text-L !important;
     outline: none;
 }
+
+.ant-btn-sm{
+    width: 3rem !important;
+}
+
+.ant-btn-default {
+    &:hover {
+        border-color: $primary !important;
+    }
+}
+
 .ant-btn-primary {
     color: $white !important;
     background: $primary !important;
@@ -76,6 +87,20 @@ background-color: $primary !important; }
         background: $error !important;   
     }
 }
+
+.ant-popover-buttons {
+    .ant-btn-primary {
+        background-color: $error !important;
+        border-color: $error !important;
+    }
+    button {
+        &:hover{
+            border-color: $primary !important; 
+        } 
+        
+    }
+}
+
 
 .btn-DT {
     width: 80px !important;

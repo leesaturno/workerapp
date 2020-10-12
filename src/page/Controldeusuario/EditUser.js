@@ -110,7 +110,7 @@ function EditUser() {
 
                     <div className="ed-grid lg-grid-3">
                         <div className="form-group">
-                            <label className="text-ups">Telefono</label>
+                            <label className="text-ups">Tel&#233;fono</label>
                             <input type="tel" name="phone" required onChange={cargadedatos} className="form-control"/> 
                         </div>
 

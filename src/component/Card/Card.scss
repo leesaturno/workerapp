@@ -137,6 +137,11 @@
     }
 }
 
+
+::selection {
+    color: $text-D !important;
+    background: $card-dark !important; }
+
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

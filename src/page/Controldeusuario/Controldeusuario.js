@@ -5,7 +5,7 @@ import Card from '../../component/Card/Card'
 import MuiDT from "../../component/Datatable/MuiDT"
 import Footer from '../../component/Footer/Footer'
 import Segurity from '../../component/Segurity/Segurity';
-
+import { UserDeleteOutlined } from '@ant-design/icons';
 import { ToastContainer, toast } from 'react-toastify';
 import { Button,Popconfirm, message } from 'antd';
 import Global from '../../Global'
@@ -68,7 +68,7 @@ componentDidMount(){
   
    cancel(e) {
     console.log(e);
-    message.error('Click on No');
+    message.error('Cancelado');
   }
 
   render(){
@@ -103,7 +103,7 @@ componentDidMount(){
                           },
                           {
                             name: "telefono",
-                            label: "Telefono",
+                            label: "Tel&#233;fono",
                             options: {
                               filter: true,
                               sort: false,
@@ -131,10 +131,11 @@ componentDidMount(){
                                     this.setState({ redirect: "/EditUser"});}}>Editar</Button>
 
                                     <Popconfirm
-                                      title="¿Seguro que desea eliminar?"
+                                      title="¿Seguro que desea eliminar este usuario?"
+                                      icon={<UserDeleteOutlined style={{ color: 'red' }} />}
                                       onConfirm={()=>{axios.get(this.url +'deleteusers/'+value)
                                       .then(res => {
-                                        message.success('Click on Yes');
+                                        message.success('Usuario eliminado exitosamente');
                                           console.log(res);
                                           
                                           axios.get(this.url + "users")
@@ -142,12 +143,12 @@ componentDidMount(){
                                               const users = res.data;
                                               this.setState({ users:users });
                                             })
-                                    })
-                                  }}
+                                          })
+                                        }}
                                       onCancel={this.cancel}
                                       okText="Si"
                                       cancelText="No"
-  >
+                                      >
                                       <Button type="danger" className="btn-DT">Eliminar</Button>
                                     </Popconfirm> 
                                   </>
