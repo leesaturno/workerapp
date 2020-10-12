@@ -11,6 +11,7 @@ import Bienvenida from './page/Bienvenida/Bienvenida';
 import Evaluador from './page/Evaluador/Evaluador';
 import Controldeusuario from './page/Controldeusuario/Controldeusuario';
 import NewUser from './page/Controldeusuario/NewUser';
+import EditUser from './page/Controldeusuario/EditUser';
 import Perfil from './page/Perfil/Perfil'
 //Redux
 import {Provider} from 'react-redux';
@@ -24,7 +25,7 @@ function App() {
   return (
     <Router>
       <Provider store={store}>
-        <Route path={["/bienvenida","/Evaluador","/Controldeusuario","/NewUser", "/Perfil"]} >
+        <Route path={["/bienvenida","/Evaluador","/Controldeusuario","/NewUser", "/EditUser", "/Perfil"]} >
           <Nav/>
           <Menua/>
         </Route>
@@ -41,6 +42,7 @@ function App() {
           <Route exact path='/Evaluador' component={Evaluador} /> 
           <Route exact path='/Controldeusuario' component={Controldeusuario} /> 
           <Route exact path='/NewUser' component={NewUser} />
+          <Route exact path='/EditUser' component={EditUser} />
           <Route exact path='/Perfil' component={Perfil} />
           <Route render={() => <h1>Not found!</h1>} />
           {/*ruta*/}
