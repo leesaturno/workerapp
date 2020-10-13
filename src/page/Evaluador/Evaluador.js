@@ -28,7 +28,7 @@ direccion:''});
   const [lng,setlng]= useState(0);
   const [FO,setFO]= useState(false);
   const [WL,setWL]= useState(false);
-  const [deuda,setdeuda]= useState(0);
+  const [cliente,setcliente]= useState({rut:"", deuda:0});
 const captarrut= (e)=>{
   setDatos({
     ...datos, 
@@ -44,11 +44,12 @@ const verificadorrut= async ()=>{
     const res= await axios.get("https://api.workerapp.cl/api/factibilidadrut/"+datos.rut+'-'+datos.digito);
     const timeout= 1000;
 
-    console.log(deuda);
+    
     res.data.forEach(cliente =>{
-      setdeuda(cliente.deuda)
+      
       setTimeout(() => {
         if (cliente.deuda >0) {
+          setcliente({rut:cliente.rut, deuda:cliente.deuda})
           message.error({content:' ¡Deudor!', icon:<img src={require("../../images/deudor.png")} width="28" height="28" alt=""/>, duration:5, style: {
             marginTop: '13vh', float: 'right',
           }})
@@ -326,7 +327,7 @@ const steps = [
                                 <div className="form-group">
                                   <label className="text-ups">Direcci&#243;n</label>
                                   
-                                  <input name="direccion" className="form-control" type="text"id='autocomplete' value={query.direccion} readOnly/>
+                                  <input name="direccion" className="form-control" type="text" value={query.direccion} readOnly/>
                                 </div>
                               </div>
 
@@ -346,7 +347,7 @@ const steps = [
                               <div className="ed-grid">
                                 <div className="form-group">
                                   <label className="text-ups">Calle referencia</label>
-                                  <input name="cReferencia" className="form-control" type="text" id='cReferencia'/>
+                                  <input name="cReferencia" className="form-control" type="text" id='cReferencia' onFocus={handleScriptLoad2}/>
                                 </div>
                               </div>
                             </div>
@@ -408,7 +409,9 @@ const prev =()=> {
         
         <div className="steps-action">
           {current < steps.length - 1 && (
-            <Button type="primary" onClick={() => next()}>
+            <Button type="primary" onClick={() =>  {if(cliente.deuda === 0) {if(WL ===true || FO=== true){    next()}}else {  message.error({content:' ¡Deudor no puedes avanzar!', icon:<img src={require("../../images/deudor.png")} width="28" height="28" alt=""/>, duration:5, style: {
+            marginTop: '13vh', float: 'right',
+          }})}}}>
               Siguiente 
             </Button>
           )}
