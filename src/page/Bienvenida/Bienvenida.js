@@ -10,7 +10,8 @@ function Bienvenida() {
   return (
       <div>
         <div className="main mt-10 ml-5">
-          <h1 className="text-ups">Bienvenido {user.user.map(Items=>{ return Items.nombre })}</h1>
+          <h1 className="text-ups">Bienvenido   <br/>
+           {user.user.map(Items=>{ return Items.nombre })}</h1>
         </div>
 
         <Footer></Footer>

@@ -18,7 +18,7 @@
         height: 60px;
         border-bottom: 1px solid $divider;
         width: 100%;
-        @media only screen and (max-width: 355px) {
+        @media only screen and (max-width: 367px) {
             height: 130px;
             text-align: center;
             vertical-align: middle;
@@ -69,13 +69,6 @@
     }
 }
 
-// .ant-menu-inline-collapsed.ant-menu-vertical {
-//     background-color: red !important;
-//     @include respond('phone-land') {
-//         background-color: pink !important;
-//     }
-// }
-
 
 .card-step {
     border-radius: .75rem;
@@ -102,6 +95,7 @@
         @include respond('phone-land') {
             padding: 0;
         }
+        
         form {
             label {
                 color: hsla(0,0%,56.1%,.7);
@@ -121,10 +115,12 @@
                 &:focus {
                     border: 1px solid $primary;  
                 }
+            }
+            input {
                 &:read-only{
                     border: none;
                 }
-            }
+            }          
         }
     }
 }
@@ -135,6 +131,72 @@
     }
 }
 
+.ant-select {
+    background-color: transparent;
+    border-radius: .3rem;
+    color: $text-D !important;
+    font-size: 13px !important;
+    height: 40px;
+    margin-bottom: 20px;
+    padding: 10px;
+    width: 100%;
+}
+
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+    background-color: $card-dark !important;
+    border: 1px solid$card-dark !important;
+    border-radius: .3rem !important;
+    height: 40px !important;
+    width: 100% !important;
+}
+
+.ant-select-selection-placeholder {
+    color: $text-D !important;
+}
+.ant-select-item {
+    color: $text-D !important;
+}
+
+.ant-select-arrow{
+    color: $text-D !important;
+}
+.ant-select-dropdown {
+    background-color: $card-dark !important;
+    box-shadow: 0 1px 15px rgba(0,0,0,.1),0 1px 8px rgba(0,0,0,.1) !important;
+}
+  
+.ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+    background-color: $divider !important;
+}     
+.ant-select-single.ant-select-open .ant-select-selection-item {
+color:$text-D !important }
+    
+.ant-select-focused:not(.ant-select-disabled).ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+    border-color: $primary;
+    box-shadow: 0 0 0 1px rgba(122, 138, 101, 0.75) !important; }
+
+.ant-empty-image svg {
+    fill: $muted !important; }
+    
+    .ant-empty-description {
+   color: $text-D !important; }
+
+.ant-select-show-search.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+cursor: pointer !important;
+border: 1px solid #424242 !important;
+}
+
+
+.ant-select-single .ant-select-selector .ant-select-selection-item, .ant-select-single .ant-select-selector .ant-select-selection-placeholder {
+    line-height: 38px !important;
+}
+
+.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+    font-weight:360 !important;
+    background-color: $text-L !important;
+}
+  
+ 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

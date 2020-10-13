@@ -3,6 +3,7 @@ import './Controldeusuario.scss';
 
 import CardStep from '../../component/Card/CardStep'
 import Footer from '../../component/Footer/Footer'
+import { Select } from 'antd';
 // Redux 
 import {useDispatch} from 'react-redux';
 import {usuarioinsertaction} from '../../Redux/Dusk/usuarioreducer';
@@ -56,6 +57,11 @@ function NewUser() {
                 });
          }
       }
+    const { Option } = Select;
+      
+    const onSearch=(val) => {
+        console.log('search:', val);
+    }
     
   return (
       <div>
@@ -110,7 +116,7 @@ function NewUser() {
 
                     <div className="ed-grid lg-grid-3">
                         <div className="form-group">
-                            <label className="text-ups">Telefono</label>
+                            <label className="text-ups">Tel&#233;fono</label>
                             <input type="tel" name="phone" required onChange={cargadedatos} className="form-control"/> 
                         </div>
 
@@ -120,11 +126,23 @@ function NewUser() {
                         </div>
                     
                         <div className="form-group">
-                            <label className="text-ups" required name="privilegios">Privilegios</label>
-                            <select name="privilegios" onChange={cargadedatos} id="privilegios">
-                                <option value="1">Admin</option>
-                                <option value="2">Usuario</option>
-                            </select>
+                            <label className="text-ups" required    >Privilegios</label>
+                            <Select 
+                                name="privilegios"
+                                showSearch
+                                placeholder="Selecciona un privilegio"
+                                title="privilegios"
+                                onChange={(value)=>{setClientes({...Clientes,
+                                    privilegios : value})}}
+                                onSearch={onSearch}
+                                defaultValue='Admin'
+                                filterOption={(input, option) =>
+                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                  }
+                            >
+                                <Option value="1">Admin</Option>
+                                <Option value="2">Usuario</Option>
+                            </Select>
                         </div>
                     </div>
 

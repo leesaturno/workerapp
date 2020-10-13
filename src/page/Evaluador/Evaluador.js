@@ -242,32 +242,32 @@ const { Step } = Steps;
 const steps = [
   {
     content: <CardStep title="Evaluador"
-    content={
-        <div>
-          <form>
-            <div className="form-group ed-grid">
-              <label className="text-ups">Rut</label>
-              <div className="ed-grid lg-grid-2">
-                <div>
-                <input type="text" name="rut" minLength="7" maxLength="8"  onChange={captarrut} className="form-control" placeholder="12672579" /> 
-                </div>
-                <div>
-               
-                <input type="text" name="digito" maxLength="1" onBlur={verificadorrut} onChange={captarrut} className="form-control" placeholder={1} />
-                </div>
-              </div>
-            </div>
-            
-            <div className="ed-grid">
-              <div className="form-group">
-                <label className="text-ups">Direcci&#243;n</label>
-                
-                <input name="direccion" className="form-control" type="text"  placeholder="Escribe tu direccion"  id='autocomplete' onBlur={evaldireccion}/>
-              </div>
-            </div>
-          </form>
-        </div>
-      }
+                        content={
+                            <div>
+                              <form>
+                                <div className="form-group ed-grid">
+                                  <label className="text-ups">Rut</label>
+                                  <div className="ed-grid lg-grid-2">
+                                    <div>
+                                    <input type="text" name="rut" minLength="7" maxLength="8"  onChange={captarrut} className="form-control" placeholder="12672579" /> 
+                                    </div>
+                                    <div>
+                                  
+                                    <input type="text" name="digito" maxLength="1" onBlur={verificadorrut} onChange={captarrut} className="form-control" placeholder={1} />
+                                    </div>
+                                  </div>
+                                </div>
+                                
+                                <div className="ed-grid">
+                                  <div className="form-group">
+                                    <label className="text-ups">Direcci&#243;n</label>
+                                    
+                                    <input name="direccion" className="form-control" type="text"  placeholder="Escribe tu direccion"  id='autocomplete' onBlur={evaldireccion}/>
+                                  </div>
+                                </div>
+                              </form>
+                            </div>
+                          }
              ></CardStep>,
   },
 

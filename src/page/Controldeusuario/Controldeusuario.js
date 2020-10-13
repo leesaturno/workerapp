@@ -5,12 +5,17 @@ import Card from '../../component/Card/Card'
 import MuiDT from "../../component/Datatable/MuiDT"
 import Footer from '../../component/Footer/Footer'
 import Segurity from '../../component/Segurity/Segurity';
-
+import { UserDeleteOutlined } from '@ant-design/icons';
 import { ToastContainer, toast } from 'react-toastify';
 import { Button,Popconfirm, message } from 'antd';
 import Global from '../../Global'
 import axios from 'axios';
-
+import {
+  
+  Link,
+  Redirect
+  
+} from "react-router-dom";
 
 export default class Controldeusuario extends Component {
 
@@ -18,12 +23,21 @@ export default class Controldeusuario extends Component {
     super(props);
 
     this.state = {
-        Users: []
+        Users: [],
+        redirect:''
     };
 
       this.url = Global.url;
+      this.confirm = this.confirm.bind(this);
+      this.cancel = this.cancel.bind(this);
   }
-
+componentDidMount(){
+  axios.get(this.url + "users")
+    .then(res => {
+      const users = res.data;
+      this.setState({ users:users });
+    })
+}
   componentWillMount(){
     axios.get(this.url + "users")
     .then(res => {
@@ -31,17 +45,36 @@ export default class Controldeusuario extends Component {
       this.setState({ users:users });
     })
    }
+
+   shouldComponentUpdate( nextState) {    
+    
+    // Si retornamos true, se volverá a renderizar el componente
+
+    // Si retornamos true, se volverá a renderizar el componente
+    if (this.state.users !== nextState.users) {
+      return true;
+    }    else return false;
+
+    // Si retornamos false, evitaremos el método render
+    
+  }
+
  confirm(e) {
     console.log(e);
-    message.success('Click on Yes');
+    
+
+    
   }
   
    cancel(e) {
     console.log(e);
-    message.error('Click on No');
+    message.error('Cancelado');
   }
 
   render(){
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect} />
+    }
     return (
         <div>
           <div class="main mt-5 ml-10">
@@ -94,16 +127,30 @@ export default class Controldeusuario extends Component {
                               customBodyRender: (value, row ) => {
                                 return (
                                   <>
-                                    <Button type="warning" className="btn-DT">Editar</Button>
+                                    <Button type="warning" className="btn-DT" onClick={()=> { 
+                                    this.setState({ redirect: "/EditUser"});}}>Editar</Button>
+
                                     <Popconfirm
-    title="Are you sure delete this task?"
-    onConfirm={this.confirm.bind(this)}
-    onCancel={this.cancel.bind(this)}
-    okText="Yes"
-    cancelText="No"
-  >
-                                    <Button type="danger" className="btn-DT">Eliminar</Button>
-                                    </Popconfirm>
+                                      title="¿Seguro que desea eliminar este usuario?"
+                                      icon={<UserDeleteOutlined style={{ color: 'red' }} />}
+                                      onConfirm={()=>{axios.get(this.url +'deleteusers/'+value)
+                                      .then(res => {
+                                        message.success('Usuario eliminado exitosamente');
+                                          console.log(res);
+                                          
+                                          axios.get(this.url + "users")
+                                            .then(res => {
+                                              const users = res.data;
+                                              this.setState({ users:users });
+                                            })
+                                          })
+                                        }}
+                                      onCancel={this.cancel}
+                                      okText="Si"
+                                      cancelText="No"
+                                      >
+                                      <Button type="danger" className="btn-DT">Eliminar</Button>
+                                    </Popconfirm> 
                                   </>
                                 );
                               }
@@ -128,7 +175,7 @@ export default class Controldeusuario extends Component {
           </div>
 
           <Footer></Footer>
-          <Segurity/>
+{/*           <Segurity/> */}
         </div>
     );
   }
