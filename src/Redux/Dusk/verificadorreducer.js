@@ -21,7 +21,7 @@ export default function Usuarioreducer(state=StateUsuariospecifi,action){
 //Acciones
 export const usuarioinsertaction = (username,password,index_privilegios,nombre,email,cumpleanos,direccion,cargo,telefono,telefono2,estado) => async (dispatch,getState) =>{
     try {
-        const res= await axios.get("http://api.workerapp.cl/apiv2/saveuser/"+username+"/"+password+"/"+index_privilegios+"/"+nombre+"/"+email+"/"+cumpleanos+"/"+direccion+"/"+cargo+"/"+telefono+"/"+telefono2+"/"+estado);
+        const res= await axios.get();
         dispatch({
             type:DATOS_USUARIOS_ESPECIFICO,
             payload: res.data
