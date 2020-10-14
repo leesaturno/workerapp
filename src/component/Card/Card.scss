@@ -36,6 +36,8 @@
     }
 }
 
+
+
 .cardAmplio {
     border-radius: .75rem;
     margin: auto;
@@ -214,7 +216,7 @@ input[type=number] {
     border: 1px solid $muted;
     padding: 15px;
     margin-bottom: 35px;
-    span {
+    .spanSeparador {
         color: $muted;
         background-color: $card-dark;
         margin-top: -35px;
@@ -222,6 +224,34 @@ input[type=number] {
         position: absolute;
         padding: 10px;
     }
+}
+
+.MuiButtonGroup-groupedTextPrimary:not(:last-child) {
+    border-color: rgba(122, 138, 101, 0.75) !important;
+}
+
+.MuiButton-containedPrimary {
+    background-color: $primary !important;
+    &:disabled {
+        background-color: $divider !important;
+    }
+    svg {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+.MuiButton-outlinedPrimary {
+    color: $primary !important;
+    border: 1px solid rgba(122, 138, 101, 0.75) !important;
+}
+
+.MuiButtonGroup-groupedOutlinedPrimary:hover {
+    border-color: $primary !important;
+}
+
+.MuiButtonGroup-contained {
+    height: 40px;
 }
 
 .step3 {
@@ -319,6 +349,25 @@ input[type=number] {
   position: relative;
   top: -2px;
   z-index: 100;
+}
+
+.cobertura {
+    margin-top: -3%;
+    clear: both;
+    min-height: 24px;
+    padding-top: 0;
+    color: $primary;
+    font-size: 12px;
+    line-height: 1.5715;
+    -webkit-transition: color .3s cubic-bezier(.215,.61,.355,1);
+    transition: color .3s cubic-bezier(.215,.61,.355,1);
+    @include respond('phone-land') {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+    @include respond('tab-port') {
+        margin-top: 3%;
+    }
 }
 
 .mb-3, .my-3 {

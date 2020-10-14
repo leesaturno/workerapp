@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './Evaluador.scss';
 
-import { Steps, Button, message, Select } from 'antd';
+import { Steps, Button as BTN, message, Select } from 'antd';
 import axios from 'axios';
 import CardStep from '../../component/Card/CardStep';
 
@@ -10,6 +10,8 @@ import Icon from '../../component/Icons/Icons';
 import Footer from '../../component/Footer/Footer';
 import Script from 'react-load-script';
 import verificador  from 'verificador-rut';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Button from '@material-ui/core/Button';
 
 //redux
 import {pointAction,ruttAction} from '../../Redux/Dusk/pointreducer';
@@ -254,22 +256,36 @@ const steps = [
                               <form>
                                 <div className="form-group ed-grid">
                                   <label className="text-ups">Rut</label>
-                                  <div className="ed-grid lg-grid-2">
-                                    <div>
+                                  <div className="ed-grid lg-grid-4">
+                                    <div class="lg-cols-3">
                                     <input type="text" name="rut" minLength="7" maxLength="8"  onChange={captarrut} className="form-control" placeholder="12672579" /> 
                                     </div>
-                                    <div>
-                                  
+
+                                    <div>                                  
                                     <input type="text" name="digito" maxLength="1" onBlur={verificadorrut} onChange={captarrut} className="form-control" placeholder={1} />
                                     </div>
                                   </div>
                                 </div>
+
+                                <div className="form-group ed-grid">
                                 
-                                <div className="ed-grid">
-                                  <div className="form-group">
-                                    <label className="text-ups">Direcci&#243;n</label>
-                                    
-                                    <input name="direccion" className="form-control" type="text"  placeholder="Escribe tu direccion"  id='autocomplete'/>
+                                  <label className="text-ups">Direcci&#243;n</label>
+
+                                  <div className="ed-grid lg-grid-4">
+                                    <div class="lg-cols-3">
+                                      <input name="direccion" className="form-control" type="text"  placeholder="Escribe tu direccion"  id='autocomplete'/>
+
+                                    </div>
+
+                                    <div>
+                                      <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
+                                        <Button disabled><Icon name="fibraOp"/></Button>
+                                        <Button disabled><Icon name="wifi"/></Button>
+                                      </ButtonGroup>
+                                    </div>
+
+                                    <span className="lg-cols-3 cobertura">Tu cobertura más cercana es: FIBRA OPTICA</span>
+
                                   </div>
                                 </div>
                               </form>
@@ -283,7 +299,7 @@ const steps = [
                         content={
                           <form>
                             <div className="separador">
-                              <span className="text-ups">Datos del titular</span>
+                              <span className="text-ups spanSeparador">Datos del titular</span>
                               <div className="ed-grid lg-grid-3">
                                 <div className="form-group">
                                   <label className="text-ups">Run</label>
@@ -328,7 +344,7 @@ const steps = [
                             </div>
                             
                             <div className="separador">
-                              <span className="text-ups">Datos de la direcci&#243;n</span>
+                              <span className="text-ups spanSeparador">Datos de la direcci&#243;n</span>
 
                               <div className="ed-grid">
                                 <div className="form-group">
@@ -360,27 +376,27 @@ const steps = [
                             </div>
                             
                             <div className="separador">
-                              <span className="text-ups">Plan a contratar</span>
+                              <span className="text-ups spanSeparador">Plan a contratar</span>
                               <div className="ed-grid">
                                 <div className="form-group">
-                                  <br />
+                                  {/* <br /> */}
                                   <Select 
-                                name="plan"
-                                showSearch
-                                placeholder="Selecciona un privilegio"
-                                title="plan"
-                                onChange={(value)=>{setClientes({...Clientes,
-                                  plan : value})}}
-                                onSearch={onSearch}
-                               
-                                filterOption={(input, option) =>
-                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                  }
-                            >
-                                <Option value="1">50 MB</Option>
-                                <Option value="2">200 MB</Option>
-                                <Option value="3">300 MB</Option>
-                            </Select>
+                                    name="plan"
+                                    showSearch
+                                    placeholder="Selecciona un plan"
+                                    title="plan"
+                                    onChange={(value)=>{setClientes({...Clientes,
+                                      plan : value})}}
+                                    onSearch={onSearch}
+                                  
+                                    filterOption={(input, option) =>
+                                        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                      }
+                                  >
+                                    <Option value="1">50 MB</Option>
+                                    <Option value="2">200 MB</Option>
+                                    <Option value="3">300 MB</Option>
+                                  </Select>
                                 </div>
                               </div>
                             </div>
@@ -426,7 +442,7 @@ const prev =()=> {
         
         <div className="steps-action">
           {current < steps.length - 1 && (
-            <Button type="primary" onClick={() =>  {if(datos.rutvalido=== true){if(cliente.deuda === 0) {if(WL ===true || FO=== true){    next()}message.error({content:' ¡Deudor no puedes avanzar!', icon:<img src={require("../../images/deudor.png")} width="28" height="28" alt=""/>, duration:5, style: {
+            <BTN type="primary" onClick={() =>  {if(datos.rutvalido=== true){if(cliente.deuda === 0) {if(WL ===true || FO=== true){    next()}message.error({content:' ¡Deudor no puedes avanzar!', icon:<img src={require("../../images/deudor.png")} width="28" height="28" alt=""/>, duration:5, style: {
             marginTop: '13vh', float: 'right',
           }})}else {  message.error({content:' ¡No puede avanzar si no tiene cobertura!', duration:5, style: {
             marginTop: '13vh', float: 'right',
@@ -434,18 +450,18 @@ const prev =()=> {
             marginTop: '13vh', float: 'right',
           }})}}>
               Siguiente 
-            </Button>
+            </BTN>
             
           )}
           {current === steps.length - 1 && (
-            <Button type="primary" onClick={() => message.success('¡Cliente creado exitosamente!')}>
+            <BTN type="primary" onClick={() => message.success('¡Cliente creado exitosamente!')}>
             Finalizar
-            </Button>
+            </BTN>
           )}
           {current > 0 && (
-            <Button style={{ margin: '10px 25px' }} onClick={() => prev()}>
+            <BTN style={{ margin: '10px 25px' }} onClick={() => prev()}>
               Anterior
-            </Button>
+            </BTN>
           )}
         </div>
         </div>
