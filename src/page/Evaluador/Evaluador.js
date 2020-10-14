@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './Evaluador.scss';
-import { ToastContainer, toast } from 'react-toastify';
-import { Steps, Button, message } from 'antd';
+
+import { Steps, Button, message, Select } from 'antd';
 import axios from 'axios';
 import CardStep from '../../component/Card/CardStep';
 
@@ -22,25 +22,44 @@ function Evaluador() {
 direccion:''});
   const [datos, setDatos] = useState({
     rut:'',
-    digito:''
+    digito:'', rutvalido: false
   });
    const [lat, setlat]= useState(0);
   const [lng,setlng]= useState(0);
   const [FO,setFO]= useState(false);
   const [WL,setWL]= useState(false);
   const [cliente,setcliente]= useState({rut:"", deuda:0});
+  const [Clientes,setClientes]= useState({rut:datos.rut+'-'+datos.digito, user:"",
+  email:"",
+  password:"",
+  password2:"",
+  fNacimiento:"",
+  cargo:"",
+  nombres:"",
+  apPaterno:"",
+  apMaterno:"",
+  phone:"",
+  plan:"",
+  direccion:""});
 const captarrut= (e)=>{
   setDatos({
     ...datos, 
     [e.target.name] : e.target.value
   })
 }
+const captadatos= (e)=>{
+  setClientes({
+    ...Clientes, 
+    [e.target.name] : e.target.value
+  })
+}
 const verificadorrut= async ()=>{
   if(verificador(datos.rut+'-'+datos.digito)) {
-    message.success({content:'¡Rut Valido!', icon:<img src={require("../../images/id-card.png")} width="28" height="28" alt=""/>, duration:3, onClose:evaldireccion,   style: {
+    setDatos({ ...datos, rutvalido:true})
+    message.success({content:'¡Rut Valido!', icon:<img src={require("../../images/id-card.png")} width="28" height="28" alt=""/>, duration:3, style: {
       marginTop: '13vh', float: 'right',
     }})
-    disparador(pointAction()); 
+   
     const res= await axios.get("https://api.workerapp.cl/api/factibilidadrut/"+datos.rut+'-'+datos.digito);
     const timeout= 1000;
 
@@ -176,8 +195,7 @@ setWL(WL);
     })
  
   
-    // Initialize Google Autocomplete
-    /*global google*/ // To disable any eslint 'google not defined' errors
+ 
 
 
  
@@ -205,11 +223,11 @@ const handleScriptLoad2 = ()=>{
     })
 }
 
-const  disparador= useDispatch();
+/* const  disparador= useDispatch(); */
 
 /* disparador(pointAction()); disparador(ruttAction('RUT')) */
 
-const evaluador=useSelector(store=>store.evaluador);
+/* const evaluador=useSelector(store=>store.evaluador); */
 
 /* useEffect(()=>{
 
@@ -219,23 +237,12 @@ const evaluador=useSelector(store=>store.evaluador);
 
 }) */
 
-const msgevaldirecc =()=>{
-  
-  
 
-  
-
- 
-
-}
-const evaldireccion = async()=>{
- 
-  
-  
- 
- 
-  }
-
+const { Option } = Select;
+      
+    const onSearch=(val) => {
+        console.log('search:', val);
+    }
 
 const { Step } = Steps;
 
@@ -262,7 +269,7 @@ const steps = [
                                   <div className="form-group">
                                     <label className="text-ups">Direcci&#243;n</label>
                                     
-                                    <input name="direccion" className="form-control" type="text"  placeholder="Escribe tu direccion"  id='autocomplete' onBlur={evaldireccion}/>
+                                    <input name="direccion" className="form-control" type="text"  placeholder="Escribe tu direccion"  id='autocomplete'/>
                                   </div>
                                 </div>
                               </form>
@@ -280,42 +287,42 @@ const steps = [
                               <div className="ed-grid lg-grid-3">
                                 <div className="form-group">
                                   <label className="text-ups">Run</label>
-                                  <input type="text" name="rut" className="form-control" placeholder="12.672.579" value={datos.rut+'-'+datos.digito} readOnly/> 
+                                  <input type="text" name="rut" className="form-control"  placeholder="12.672.579" value={datos.rut+'-'+datos.digito} readOnly/> 
                                 </div>
                                 <div className="form-group">
                                   <label className="text-ups">Serie run</label>
-                                  <input type="text" name="rut" className="form-control" />
+                                  <input type="text" name="run" className="form-control" onChange={captadatos}/>
                                 </div>
                                 <div className="form-group">
                                   <label className="text-ups">Fecha de nacimiento</label>
-                                  <input type="date" name="fNacimiento" className="form-control" placeholder={1} />
+                                  <input type="date" name="fNacimiento" className="form-control" onChange={captadatos} placeholder={1} />
                                 </div>
                               </div>
 
                               <div className="ed-grid lg-grid-3">
                                 <div className="form-group">
                                   <label className="text-ups">Nombres</label>
-                                  <input type="text" name="nombres" className="form-control" /> 
+                                  <input type="text" name="nombres" className="form-control" onChange={captadatos} /> 
                                 </div>
                                 <div className="form-group">
                                   <label className="text-ups">Apellido paterno</label>
-                                  <input type="text" name="apPaterno" className="form-control" />
+                                  <input type="text" name="apPaterno" className="form-control"  onChange={captadatos}/>
                                 </div>
                                 <div className="form-group">
                                   <label className="text-ups">Apellido materno</label>
-                                  <input type="text" name="apMaterno" className="form-control" />
+                                  <input type="text" name="apMaterno" className="form-control" onChange={captadatos}/>
                                 </div>
                               </div>
                               
                               <div className="ed-grid lg-grid-2">
                                 <div className="form-group">
                                   <label className="text-ups">Tel&#233;fono</label>
-                                  <input type="tel" name="phone" className="form-control" /> 
+                                  <input type="tel" name="phone" className="form-control" onChange={captadatos}/> 
                                 </div>
 
                                 <div className="form-group">
                                   <label className="text-ups">Correo electr&#243;nico</label>
-                                  <input type="email" name="email" className="form-control" />
+                                  <input type="email" name="email" className="form-control" onChange={captadatos}/>
                                 </div>
                               </div>
                             </div>
@@ -335,19 +342,19 @@ const steps = [
                               <div className="ed-grid lg-grid-2">
                                 <div className="form-group">
                                   <label className="text-ups">Block / Manzana</label>
-                                  <input type="text" name="blocManzana" className="form-control" /> 
+                                  <input type="text" name="blocManzana" className="form-control" onChange={captadatos}/> 
                                 </div>
                                 
                                 <div className="form-group">
                                   <label className="text-ups">Departamento / Sitio</label>
-                                  <input type="text" name="dptoSitio" className="form-control" />
+                                  <input type="text" name="dptoSitio" className="form-control" onChange={captadatos}/>
                                 </div>
                               </div>
 
                               <div className="ed-grid">
                                 <div className="form-group">
                                   <label className="text-ups">Calle referencia</label>
-                                  <input name="cReferencia" className="form-control" type="text" id='cReferencia' onFocus={handleScriptLoad2}/>
+                                  <input name="cReferencia" className="form-control" type="text" id='cReferencia' onFocus={handleScriptLoad2} />
                                 </div>
                               </div>
                             </div>
@@ -357,12 +364,23 @@ const steps = [
                               <div className="ed-grid">
                                 <div className="form-group">
                                   <br />
-                                  <select name="plan" id="plan">
-                                    <option>Lista de planes por velocidad</option>
-                                    <option value={1}>1</option>
-                                    <option value={2}>2</option>
-                                    <option value={3}>3</option>
-                                  </select>
+                                  <Select 
+                                name="plan"
+                                showSearch
+                                placeholder="Selecciona un privilegio"
+                                title="plan"
+                                onChange={(value)=>{setClientes({...Clientes,
+                                  plan : value})}}
+                                onSearch={onSearch}
+                               
+                                filterOption={(input, option) =>
+                                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                  }
+                            >
+                                <Option value="1">50 MB</Option>
+                                <Option value="2">200 MB</Option>
+                                <Option value="3">300 MB</Option>
+                            </Select>
                                 </div>
                               </div>
                             </div>
@@ -397,8 +415,7 @@ const prev =()=> {
           url="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBMNPzyCUNfyF9hFDMBspwZhOkDvUQamp8"
           onLoad={handleScriptLoad}
         />
-       
-        <ToastContainer/>
+    
         <div className="main mt-5 ml-10">
         <Steps current={current}>
           {steps.map(item => (
@@ -409,11 +426,16 @@ const prev =()=> {
         
         <div className="steps-action">
           {current < steps.length - 1 && (
-            <Button type="primary" onClick={() =>  {if(cliente.deuda === 0) {if(WL ===true || FO=== true){    next()}}else {  message.error({content:' ¡Deudor no puedes avanzar!', icon:<img src={require("../../images/deudor.png")} width="28" height="28" alt=""/>, duration:5, style: {
+            <Button type="primary" onClick={() =>  {if(datos.rutvalido=== true){if(cliente.deuda === 0) {if(WL ===true || FO=== true){    next()}message.error({content:' ¡Deudor no puedes avanzar!', icon:<img src={require("../../images/deudor.png")} width="28" height="28" alt=""/>, duration:5, style: {
             marginTop: '13vh', float: 'right',
-          }})}}}>
+          }})}else {  message.error({content:' ¡No puede avanzar si no tiene cobertura!', duration:5, style: {
+            marginTop: '13vh', float: 'right',
+          }})}}else message.error({content:' ¡Por favor ingresa un rut valido!', icon:<img src={require("../../images/invalidrut.png")} width="28" height="28" alt=""/>, duration:5, style: {
+            marginTop: '13vh', float: 'right',
+          }})}}>
               Siguiente 
             </Button>
+            
           )}
           {current === steps.length - 1 && (
             <Button type="primary" onClick={() => message.success('¡Cliente creado exitosamente!')}>

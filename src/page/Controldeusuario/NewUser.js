@@ -11,7 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import Segurity from '../../component/Segurity/Segurity';
 function NewUser() {
     const disparador=useDispatch();
-    const [Clientes,setClientes]=useState({
+    const [Users,setUsers]=useState({
         user:"",
         email:"",
         password:"",
@@ -26,15 +26,15 @@ function NewUser() {
       })
       
       const cargadedatos = (e)=>{
-            setClientes({
-              ...Clientes,
+            setUsers({
+              ...Users,
               [e.target.name] : e.target.value
           })
       }
     
       const enviarDatos = (e) => {
          e.preventDefault();
-         if(Clientes.password==Clientes.password2){
+         if(Users.password==Users.password2){
             toast.success('Usuario registrado con exito', {
                 position: "top-right",
                 autoClose: 2000,
@@ -44,7 +44,7 @@ function NewUser() {
                 draggable: true,
                 progress: undefined,
                 });
-            disparador(usuarioinsertaction(Clientes.user,Clientes.password,Clientes.privilegios,Clientes.name,Clientes.email,Clientes.fNacimiento,Clientes.direccion,Clientes.cargo,Clientes.phone,Clientes.cel,"1"));
+            disparador(usuarioinsertaction(Users.user,Users.password,Users.privilegios,Users.name,Users.email,Users.fNacimiento,Users.direccion,Users.cargo,Users.phone,Users.cel,Users.privilegios));
          }else{
             toast.warn('¡las contraseñas no son iguales!', {
                 position: "top-right",
@@ -126,19 +126,20 @@ function NewUser() {
                         </div>
                     
                         <div className="form-group">
-                            <label className="text-ups" required    >Privilegios</label>
+                            <label className="text-ups" >Privilegios</label>
                             <Select 
                                 name="privilegios"
                                 showSearch
                                 placeholder="Selecciona un privilegio"
                                 title="privilegios"
-                                onChange={(value)=>{setClientes({...Clientes,
+                                onChange={(value)=>{setUsers({...Users,
                                     privilegios : value})}}
                                 onSearch={onSearch}
-                                defaultValue='Admin'
+                                defaultValue='1'
                                 filterOption={(input, option) =>
                                     option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                   }
+                                 
                             >
                                 <Option value="1">Admin</Option>
                                 <Option value="2">Usuario</Option>
