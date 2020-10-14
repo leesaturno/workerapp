@@ -47,7 +47,6 @@ function Verificador() {
         screenshotFormat="image/jpeg"
         videoConstraints={videoConstraints}
       />
-      
       <img src={imageSrc} ></img>
       {ocr}
       <button onClick={()=>{capture();}}>capture</button>
