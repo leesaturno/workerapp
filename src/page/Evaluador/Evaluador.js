@@ -28,13 +28,12 @@ direccion:''});
   });
    const [lat, setlat]= useState(0);
   const [lng,setlng]= useState(0);
-  const [FO,setFO]= useState(false);
-  const [WL,setWL]= useState(false);
+  const [FO,setFO]= useState({mensaje: false, cercano:false});
+  const [WL,setWL]= useState({mensaje: false, cercano:false});
   const [cliente,setcliente]= useState({rut:"", deuda:0});
-  const [Clientes,setClientes]= useState({rut:datos.rut+'-'+datos.digito, user:"",
+  const [Clientes,setClientes]= useState({rut:"",
   email:"",
-  password:"",
-  password2:"",
+ 
   fNacimiento:"",
   cargo:"",
   nombres:"",
@@ -42,6 +41,7 @@ direccion:''});
   apMaterno:"",
   phone:"",
   plan:"",
+  cReferencia:'',
   direccion:""});
 const captarrut= (e)=>{
   setDatos({
@@ -57,8 +57,14 @@ const captadatos= (e)=>{
 }
 const verificadorrut= async ()=>{
   if(verificador(datos.rut+'-'+datos.digito)) {
-    setDatos({ ...datos, rutvalido:true})
-    message.success({content:'¡Rut Valido!', icon:<img src={require("../../images/id-card.png")} width="28" height="28" alt=""/>, duration:3, style: {
+    setDatos({ ...datos, rutvalido:true })
+    setClientes({
+      ...Clientes, 
+      rut:datos.rut+'-'+datos.digito
+    })
+    message.success({content:'¡Rut Valido!', 
+    icon:<Icon name="valido"/>,
+     duration:3, style: {
       marginTop: '13vh', float: 'right',
     }})
    
@@ -71,7 +77,9 @@ const verificadorrut= async ()=>{
       setTimeout(() => {
         if (cliente.deuda >0) {
           setcliente({rut:cliente.rut, deuda:cliente.deuda})
-          message.error({content:' ¡Deudor!', icon:<img src={require("../../images/deudor.png")} width="28" height="28" alt=""/>, duration:5, style: {
+          message.error({content:' ¡Deudor!', 
+          icon:<Icon name="deudor"/>,
+           duration:5, style: {
             marginTop: '13vh', float: 'right',
           }})
         } 
@@ -81,7 +89,9 @@ const verificadorrut= async ()=>{
    
 
   
-  } else return ( message.error({content:'¡Rut invalido!', icon:<img src={require("../../images/invalidrut.png")} width="32" height="32" alt=""/>, duration:3, style: {
+  } else return ( message.error({content:'¡Rut invalido!', 
+  icon:<Icon name="invalido"/>,
+   duration:3, style: {
     marginTop: '13vh', float: 'right',
   }}))
 }
@@ -102,7 +112,8 @@ const  handleScriptLoad =  () => {
  
   
     // Check if address is valid
-  
+  let distancesWL= [];
+  let distancesFO= [];
       const query3= addressObject.formatted_address;
       const lttd= addressObject.geometry.location.lat();
       const lngtd =addressObject.geometry.location.lng();
@@ -129,11 +140,13 @@ const  handleScriptLoad =  () => {
          var a1 = Math.sin(dLat1/2) * Math.sin(dLat1/2) + Math.cos(rad(lttd)) * Math.cos(rad(point.latitud)) * Math.sin(dLong1/2) * Math.sin(dLong1/2);
 var circunferencia = 2 * Math.atan2(Math.sqrt(a1), Math.sqrt(1-a1));
 var d1 = R * circunferencia;
-d1.toFixed(3)
-if(d1.toFixed(3) <= 0.300){
-FO=true;
+var dist=d1.toFixed(3);
 
-  setFO(FO);
+if(dist <= 0.300){
+  distancesFO.push(dist);
+
+
+  setFO({...FO, mensaje:true});
  
 
 
@@ -143,65 +156,46 @@ console.log(d1.toFixed(3)+"soy fibra");
 
 } /* else if (d1.toFixed(3) >  0.350  ){
 FO= false;
-} */ }
+} */ }else 
     if (point.INDEX_tecnologia==="2") {
     
      
       
-        var dLat = rad( lat - point.latitud );
-        var dLong = rad( lng- point.longitud );
-        var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(rad(lat)) * Math.cos(rad(point.latitud)) * Math.sin(dLong/2) * Math.sin(dLong/2);
+        var dLat = rad( lttd - point.latitud );
+        var dLong = rad( lngtd- point.longitud );
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(rad(lttd)) * Math.cos(rad(point.latitud)) * Math.sin(dLong/2) * Math.sin(dLong/2);
 var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 var d = R * c;
-d.toFixed(3)
-if(d.toFixed(3) <= 0.350){
-console.log(d.toFixed(3)+"soy WL");
-WL= true;
-
-setWL(WL);
+var distWL=d.toFixed(3);
+if(distWL <= 0.350){
+  setWL({...WL, mensaje:true});
+  distancesWL.push(distWL);
+  
+console.log(distWL+"soy WL");
 
 } 
        
     }
   });
-  if (WL && FO) {
-    message.success({content:<img src={require("../../images/optica-fiber.png")} width="32" height="32" alt=""/>, icon:<img src={require("../../images/wifi-signal (1).png")} width="28" height="28" alt=""/>, duration:3, style: {
-      marginTop: '13vh', float: 'right',
-    }}) 
-    
-    
-    
-  }else if (WL) {
-    message.success({content:<img src={require("../../images/wifi-signal (1).png")} width="28" height="28" alt=""/>,icon: "", duration:3, style: {
-      marginTop: '13vh', float: 'right',
-    }})
-      
-    
-    } else if (FO) {
-      
-      message.success({content:<img src={require("../../images/optica-fiber.png")} width="32" height="32" alt=""/>,icon: "" , duration:3, style: {
-        marginTop: '13vh', float: 'right',
-      }}) 
-  } else if (lat && lng) 
-    
-  {
-    
-    message.error({content:<img src={require("../../images/no-optica-fiber.png")} width="32" height="32" alt=""/>, icon:<img src={require("../../images/no-wifi.png")} width="32" height="32" alt=""/> , duration:3, style: {
-      marginTop: '13vh', float: 'right',
-    }})
-  }
+/*  distancesFO.sort(ordenar);
+  distancesWL.sort(ordenar);
+  var DWL=distancesWL[0];
+  var DFO=distancesFO[0];
+if(DFO > 0){
+  setFO({...FO, cercano:true});
+}else if(DWL > 0){
+  setWL({...WL, cercano:true});
+} */
+ 
   })
  
     
   
-    })
- 
-  
- 
+    })  
+}
 
-
- 
-  
+const ordenar= (valor1,valor2)=>{
+  return valor1 - valor2
 }
 const handleScriptLoad2 = ()=>{
   const options = {
@@ -279,12 +273,12 @@ const steps = [
 
                                     <div>
                                       <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-                                        <Button disabled><Icon name="fibraOp"/></Button>
-                                        <Button disabled><Icon name="wifi"/></Button>
+                                        <Button disabled={FO.mensaje===true? false:true} ><Icon name="fibraOp"/></Button>
+                                        <Button disabled={WL.mensaje===true? false:true}><Icon name="wifi"/></Button>
                                       </ButtonGroup>
                                     </div>
 
-                                    <span className="lg-cols-3 cobertura">Tu cobertura más cercana es: FIBRA OPTICA</span>
+                                    <span className="lg-cols-3 cobertura"> {WL.mensaje=== true? "Tu cobertura más cercana es: WIRELESS": "" || FO.mensaje=== true? "Tu cobertura más cercana es: FIBRA OPTICA":"" }</span>
 
                                   </div>
                                 </div>
@@ -393,9 +387,9 @@ const steps = [
                                         option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                       }
                                   >
-                                    <Option value="1">50 MB</Option>
-                                    <Option value="2">200 MB</Option>
-                                    <Option value="3">300 MB</Option>
+                                    <Option value="1">{WL.mensaje===true? "6 BM":"" || FO.mensaje===true? "50 MB": ""}</Option>
+                                    <Option value="2">{WL.mensaje===true? "8 BM":"" || FO.mensaje===true? "200 MB": ""}</Option>
+                                    <Option value="3">{WL.mensaje===true? "10 BM":"" || FO.mensaje===true? "300 MB": ""}</Option>
                                   </Select>
                                 </div>
                               </div>
@@ -442,11 +436,29 @@ const prev =()=> {
         
         <div className="steps-action">
           {current < steps.length - 1 && (
-            <BTN type="primary" onClick={() =>  {if(datos.rutvalido=== true){if(cliente.deuda === 0) {if(WL ===true || FO=== true){    next()}message.error({content:' ¡Deudor no puedes avanzar!', icon:<img src={require("../../images/deudor.png")} width="28" height="28" alt=""/>, duration:5, style: {
+            <BTN type="primary" onClick={() =>  { if(datos.rutvalido=== true){if(cliente.deuda === 0) 
+            {
+             if(query !== "") {if(WL.mensaje ===true || FO.mensaje=== true){ next()}
+               else message.error({content:' ¡Sin cobertura! ¡imposible avanzar!', 
+              duration:5, style: {
             marginTop: '13vh', float: 'right',
-          }})}else {  message.error({content:' ¡No puede avanzar si no tiene cobertura!', duration:5, style: {
+               }})
+           }else message.error({content:' ¡Tiene que escribir una dirección!', 
+              duration:5, style: {
             marginTop: '13vh', float: 'right',
-          }})}}else message.error({content:' ¡Por favor ingresa un rut valido!', icon:<img src={require("../../images/invalidrut.png")} width="28" height="28" alt=""/>, duration:5, style: {
+               }})}
+          else {  message.error({content:' ¡Deudor no puedes avanzar!',
+             icon:<Icon name="deudor"/>,
+              duration:5, 
+              style: {
+            marginTop: 
+            '13vh', 
+            float: 'right',            
+          }
+          }
+          ) }}else message.error({content:' ¡Por favor ingresa un rut valido!', 
+          icon:<Icon name="invalido"/>,
+           duration:5, style: {
             marginTop: '13vh', float: 'right',
           }})}}>
               Siguiente 
