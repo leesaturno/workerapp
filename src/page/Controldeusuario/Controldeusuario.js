@@ -218,7 +218,7 @@ componentDidMount(){
           </div>
 
           <Footer></Footer>
-{/*           <Segurity/> */}
+          <Segurity/>
         </div>
     );
   }

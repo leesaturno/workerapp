@@ -121,7 +121,8 @@ const  handleScriptLoad =  () => {
     var  rad = function(x) {return x*Math.PI/180;}
     var FO= false;
     var WL= false;
-
+    setFO({...FO, mensaje:false});
+    setWL({...WL, mensaje:false});
     pointservice.forEach(point => {
      
       if(point.INDEX_tecnologia==="1"){
@@ -147,9 +148,9 @@ if(dist <= 0.300){
 console.log(d1.toFixed(3)+"soy fibra");
 
 
-} /* else if (d1.toFixed(3) >  0.350  ){
-FO= false;
-} */ }else 
+}
+}else { setFO({...FO, cercano:true}); }
+
     if (point.INDEX_tecnologia==="2") {
     
      
@@ -168,8 +169,10 @@ console.log(distWL+"soy WL");
 
 } 
        
-    }
+    }else { setWL({...WL, cercano:true});}
   });
+ 
+  
 /*  distancesFO.sort(ordenar);
   distancesWL.sort(ordenar);
   var DWL=distancesWL[0];
@@ -246,10 +249,16 @@ const loading= ()=>{
  
   if (query.direccion !== ""){
   do {
-    if(FO.mensaje === true ){break}
-    return <Spin indicator={antIcon} />
-  } while (FO.mensaje === false);
+    if(FO.mensaje === true || WL.mensaje === true ){break}
+ 
+    if(FO.cercano === true && WL.cercano === true ){break}
+    
+      return  <Spin indicator={antIcon} />
+    
+  } while (FO.mensaje === false || WL.mensaje === false);
+ 
   }
+  
 }
 const { Option } = Select;
       
@@ -307,7 +316,7 @@ const steps = [
                                       </ButtonGroup>
                                     </div>
 
-                                    <span className="lg-cols-3 cobertura" id="cobertura"> {loading()} {WL.mensaje=== true? " Tu cobertura más cercana es: WIRELESS": "" || FO.mensaje=== true? " Tu cobertura más cercana es: FIBRA OPTICA":""}</span>
+                                    <span className="lg-cols-3 cobertura" id="cobertura"> {loading()} {WL.mensaje=== true? " Tu cobertura más cercana es: WIRELESS": "" || FO.mensaje=== true? " Tu cobertura más cercana es: FIBRA OPTICA":"" || (FO.cercano === true && WL.cercano === true)? "!No hay Cobertura¡": "" }</span>
 
                                   </div>
                                 </div>
