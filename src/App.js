@@ -14,6 +14,7 @@ import NewUser from './page/Controldeusuario/NewUser';
 import EditUser from './page/Controldeusuario/EditUser';
 import Perfil from './page/Perfil/Perfil'
 import Verificador from './page/Verificador/Verificador'
+import Error from './page/Error/Error'
 //Redux
 import {Provider} from 'react-redux';
 import GenerateStore from './Redux/store';
@@ -46,7 +47,7 @@ function App() {
           <Route exact path='/EditUser' component={EditUser} />
           <Route exact path='/Perfil' component={Perfil} />
           <Route exact path='/Verificador' component={Verificador} />
-          <Route render={() => <h1>Not found!</h1>} />
+          <Route render={() => <Error/>} />
           {/*ruta*/}
         </AnimatedSwitch>
       </Provider>
