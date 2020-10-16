@@ -94,7 +94,13 @@
     .card-body {
         padding: 20px;
         text-align: left;
+        margin-right: 8%;
         @include respond('phone-land') {
+            margin-right: 0;
+            padding: 0;
+        }
+        @include respond('tab-port') {
+            margin-right: 0;
             padding: 0;
         }
         
@@ -292,6 +298,29 @@ input[type=number] {
 .btn-CB {
     width: 100%;
     margin-top: 25px;
+}
+
+.btn-SVG {
+    background-color: $primary;
+    border: none;
+    border-radius: .5rem;
+    color: $white;
+    font-size: 13px;
+    height: 45px;
+    width: 10rem;
+    text-align: center;
+    cursor: pointer;
+    line-height: 2;
+    outline: none;
+    &:hover {
+        background-color: $primary;
+    }
+    svg {
+        fill: $white;
+        width: 1.5em;
+        height: 1.5em;
+        vertical-align: middle;
+    }
 }
 
 .form-progress {
