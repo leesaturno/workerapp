@@ -44,7 +44,7 @@ function Verificador() {
         <div className="main mt-5">
 
           <CardStep
-            title="WorkerApp desea verificar sus datos"
+            title="Stel desea verificar sus datos"
             content= {
               
               <div>
@@ -92,12 +92,25 @@ function Verificador() {
                     <div className="ed-grid lg-grid-2">
                       <div>
                         <Button type="primary" onClick={showModal} className="btn-CB">
-                          Cedula de identidad
+                          Cedula de identidad frente
                         </Button>
                       </div>
 
                       <div>
-                        <span>Tome una foto de su cedula de identidad</span>
+                        <span>Tome una foto de su cedula de identidad por el frente</span>
+                      </div>
+                    </div>
+
+                    <br/><br/><br/>
+                    <div className="ed-grid lg-grid-2">
+                      <div>
+                        <Button type="primary" onClick={showModal} className="btn-CB">
+                          Cedula de identidad trasero
+                        </Button>
+                      </div>
+
+                      <div>
+                        <span>Tome una foto de su cedula de identidad por el reverso</span>
                       </div>
                     </div>
 

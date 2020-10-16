@@ -7,6 +7,9 @@
     @include respond('phone') {
         width: 50% !important;
     }
+    @media only screen and (max-width: 367px) {
+        width: 60% !important;
+    }
   }
 
 .ant-steps-item-finish .ant-steps-item-icon {
