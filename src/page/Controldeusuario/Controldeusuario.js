@@ -84,6 +84,7 @@ componentDidMount(){
                 href="/NewUser" 
                 content={
                   <MuiDT
+                  
                       columns= {[
                           {
                             name: "nombre",
@@ -91,6 +92,9 @@ componentDidMount(){
                             options: {
                               filter: true,
                               sort: true,
+                              onDownload: (buildHead, buildBody, columns, data) => {
+    return "\uFEFF" + buildHead(columns) + buildBody(data); 
+} 
                             }
                           },
                           {
@@ -98,7 +102,9 @@ componentDidMount(){
                             label: "Email",
                             options: {
                               filter: true,
-                              sort: false,
+                              sort: false,onDownload: (buildHead, buildBody, columns, data) => {
+    return "\uFEFF" + buildHead(columns) + buildBody(data); 
+} 
                             }
                           },
                           {
@@ -107,6 +113,9 @@ componentDidMount(){
                             options: {
                               filter: true,
                               sort: false,
+                              onDownload: (buildHead, buildBody, columns, data) => {
+    return "\uFEFF" + buildHead(columns) + buildBody(data); 
+} 
                             }
                           },
                           {
@@ -115,20 +124,26 @@ componentDidMount(){
                             options: {
                               filter: true,
                               sort: false,
+                              onDownload: (buildHead, buildBody, columns, data) => {
+    return "\uFEFF" + buildHead(columns) + buildBody(data); 
+} 
                             }
                           },
                           {
-                            name: "username",
+                            name: "id_users",
                             label: "Acciones",
                             options: {
                               filter: true,
                               sort: false,
                               empty: true,
+                              onDownload: (buildHead, buildBody, columns, data) => {
+    return "\uFEFF" + buildHead(columns) + buildBody(data); 
+} ,
                               customBodyRender: (value, row ) => {
                                 return (
                                   <>
                                     <Button type="warning" className="btn-DT" onClick={()=> { 
-                                    this.setState({ redirect: "/EditUser"});}}>Editar</Button>
+                                    this.setState({ redirect: "/EditUser?id="+value});}}>Editar</Button>
 
                                     <Popconfirm
                                       title="¿Seguro que desea eliminar este usuario?"
@@ -166,9 +181,37 @@ componentDidMount(){
                         filter: true,
                         filterType: 'dropdown',
                         responsive: 'vertical',
-                        tableBodyHeight: '400px',
+                        tableBodyHeight: '400px', textLabels: {
+                        pagination: {
+      next: "Siguiente",
+      previous: "Anterior",
+      rowsPerPage: "Filas por pagina:",
+      displayRows: "de",
+    },  filter: {
+      all: "TODOS",
+      title: "FILTROS",
+      reset: "REINICIAR",
+    }, body: {
+      noMatch: "Lo sentimos, sin registros encontrados",
+      toolTip: "Filtrar",
+      columnHeaderTooltip: column => `Filtrar por ${column.label}`
+    },toolbar: {
+      search: "Buscar",
+      downloadCsv: "Descargar CSV",
+      print: "Imprimir",
+      viewColumns: "Ver columnas",
+      filterTable: "Filtrar Tablas",
+    },viewColumns: {
+      title: "Mostrar Columnas",
+      titleAria: "Mostrar/Ocultar Columnas",
+    },
+    selectedRows: {
+      text: "Filas Seleccionadas",
+      delete: "Elimiar",
+      deleteAria: "Eliminar Filas Seleccionadas",
+    },
                         // tableBodyMaxHeight: ''
-                      }}
+                      }}}
                   />
                 }
               />
