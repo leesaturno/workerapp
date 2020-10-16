@@ -5,7 +5,7 @@ function Footer() {
   return (
     <div>
         <footer>
-            <p className="text-ups">T-work Copyright  &copy; 2020. All rights reserved</p>
+            <p className="text-ups">&copy; T-work Chile 2020. Todos los derechos reservados</p>
         </footer>
     </div>
   );
