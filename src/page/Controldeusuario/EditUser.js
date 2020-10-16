@@ -66,7 +66,7 @@ function EditUser() {
   return (
       <div>
         <div className="main mt-5 ml-10">
-            <CardStep title="Nuevo usuario"
+            <CardStep title="Editar usuario"
               content={
                 <form onSubmit={enviarDatos}>
                     <div className="ed-grid lg-grid-2">
