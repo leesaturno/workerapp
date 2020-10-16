@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import './Evaluador.scss';
 
-import { Steps, Button as BTN, message, Select } from 'antd';
+import { Steps, Button as BTN, message, Select, Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+
 import axios from 'axios';
 import CardStep from '../../component/Card/CardStep';
 
@@ -19,7 +21,7 @@ import {useDispatch,useSelector} from 'react-redux';
 
 function Evaluador() {
   
- 
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
   const [query, setQuery] = useState({cReferencia:'',
 direccion:''});
   const [datos, setDatos] = useState({
@@ -97,7 +99,7 @@ const verificadorrut= async ()=>{
 }
 
 const  handleScriptLoad =  () => {
-
+  
   // Declare Options For Autocomplete
   const options = {
     componentRestrictions: {country: "cl"}
@@ -278,7 +280,7 @@ const steps = [
                                       </ButtonGroup>
                                     </div>
 
-                                    <span className="lg-cols-3 cobertura"> {WL.mensaje=== true? "Tu cobertura más cercana es: WIRELESS": "" || FO.mensaje=== true? "Tu cobertura más cercana es: FIBRA OPTICA":"" }</span>
+                                    <span className="lg-cols-3 cobertura" id="cobertura"> {query.direccion !== ''? <Spin indicator={antIcon} />:'' } {WL.mensaje=== true? "Tu cobertura más cercana es: WIRELESS": "" || FO.mensaje=== true? "Tu cobertura más cercana es: FIBRA OPTICA":""}</span>
 
                                   </div>
                                 </div>
