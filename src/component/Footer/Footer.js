@@ -5,7 +5,7 @@ function Footer() {
   return (
     <div>
         <footer>
-            <p className="text-ups">Copyright © 2020. All rights reserved</p>
+            <p className="text-ups">T-Work Copyright © 2020. All rights reserved</p>
         </footer>
     </div>
   );
