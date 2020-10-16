@@ -253,13 +253,24 @@ const steps = [
                                 <div className="form-group ed-grid">
                                   <label className="text-ups">Rut</label>
                                   <div className="ed-grid lg-grid-4">
-                                    <div class="lg-cols-3">
+                                    <div class="lg-cols-2">
                                     <input type="text" name="rut" minLength="7" maxLength="8"  onChange={captarrut} className="form-control" placeholder="12672579" /> 
                                     </div>
 
                                     <div>                                  
                                     <input type="text" name="digito" maxLength="1" onBlur={verificadorrut} onChange={captarrut} className="form-control" placeholder={1} />
                                     </div>
+
+                                    <div>
+                                      <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
+                                        <Button disabled={FO.mensaje===true? false:true} ><Icon name="valido"/></Button>
+                                        <Button disabled={WL.mensaje===true? false:true}><Icon name="invalido"/></Button>
+                                      </ButtonGroup>
+                                    </div>
+
+                                    <span className="lg-cols-3 cobertura" id="cobertura"> {query.direccion !== ''? <Spin indicator={antIcon} />:'' } {WL.mensaje=== true? "Tu cobertura más cercana es: WIRELESS": "" || FO.mensaje=== true? "Tu cobertura más cercana es: FIBRA OPTICA":""}</span>
+
+
                                   </div>
                                 </div>
 
