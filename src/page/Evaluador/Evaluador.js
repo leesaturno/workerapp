@@ -16,14 +16,14 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 
 //redux
-import {pointAction,ruttAction} from '../../Redux/Dusk/pointreducer';
+/* import {pointAction,ruttAction} from '../../Redux/Dusk/pointreducer'; */
 import {useDispatch,useSelector} from 'react-redux';
 
 function Evaluador() {
-  
+
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
-  const [query, setQuery] = useState({cReferencia:'',
-direccion:''});
+  const [query, setQuery] = useState('');
+const [cReferencia, setcReferencia] = useState('');
   const [datos, setDatos] = useState({
     rut:'',
     digito:'', rutvalido: false,  rutivalido: false
@@ -37,14 +37,15 @@ direccion:''});
   email:"",
  
   fNacimiento:"",
-  cargo:"",
+  user:"",
   nombres:"",
   apPaterno:"",
   apMaterno:"",
   phone:"",
   plan:"",
   cReferencia:'',
-  direccion:""});
+  blocManzana:"",
+  dptoSitio:""});
 const captarrut= (e)=>{
   setDatos({
     ...datos, 
@@ -57,14 +58,22 @@ const captadatos= (e)=>{
     [e.target.name] : e.target.value
   })
 }
+const usr=useSelector(store=>store.session);
 const verificadorrut= async ()=>{
   if(verificador(datos.rut+'-'+datos.digito)) {
     setDatos({ ...datos, rutvalido:true, rutinvalido:false })
     setClientes({
       ...Clientes, 
       rut:datos.rut+'-'+datos.digito
-    })
-
+    });
+usr.user.forEach(user =>{
+  setClientes({
+    ...Clientes, 
+    user:user.INDEX_users
+  });
+  }
+  
+)
    
     const res= await axios.get("https://api.workerapp.cl/api/factibilidadrut/"+datos.rut+'-'+datos.digito);
     const timeout= 1000;
@@ -86,6 +95,7 @@ const verificadorrut= async ()=>{
   
   } else { 
     setDatos({ ...datos, rutinvalido:true,rutvalido:false })
+    setcliente({rut:cliente.rut, deuda:null})
   }
 }
 
@@ -111,7 +121,7 @@ const  handleScriptLoad =  () => {
       const lttd= addressObject.geometry.location.lat();
       const lngtd =addressObject.geometry.location.lng();
       //aqui deberian almacenarse en el estado pero no logro hacerlo
-      setQuery({direccion: query3});
+      setQuery({...query, query3});
       setlat(lttd);
   setlng(lngtd);
   axios.get(`https://api.workerapp.cl/api/v2/pointservice`)
@@ -208,7 +218,7 @@ const handleScriptLoad2 = ()=>{
       const query2= addressObject2.formatted_address;
      
       //aqui deberian almacenarse en el estado pero no logro hacerlo
-      setQuery({cReferencia: query2});
+      setcReferencia({...cReferencia, query2});
 
 
   
@@ -247,7 +257,7 @@ const loading= ()=>{
     } while ( cliente.deuda === null);
     }  */
  
-  if (query.direccion !== ""){
+  if (query !== ""){
   do {
     if(FO.mensaje === true || WL.mensaje === true ){break}
  
@@ -287,13 +297,13 @@ const steps = [
 
                                     <div>
                                       <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-                                        <Button disabled={datos.rutvalido===true? false:true} ><Icon name="valido"/></Button>
-                                        <Button disabled={datos.rutinvalido===true? false:true}><Icon name="invalido"/></Button>
-                                        <Button disabled={cliente.deuda > 0? false:true}><Icon name="deudor"/></Button>
+                                        <Button disabled={datos.rutvalido===true? false:true} ><Icon name={datos.rutvalido===true? "valido":"validoF"}/></Button>
+                                        <Button disabled={datos.rutinvalido===true? false:true}><Icon name={datos.rutinvalido===true? "invalido":"invalidoF"}/></Button>
+                                        <Button disabled={cliente.deuda > 0? false:true}><Icon name={cliente.deuda > 0? "deudor":"deudorF"}/></Button>
                                       </ButtonGroup>
                                     </div>
 
-                                    <span className="lg-cols-3 cobertura" id="cobertura"> {loading2() } {cliente.deuda > 0? <span>¡Rut deudor!</span>:""}</span>
+                                    <span className="lg-cols-3 cobertura" id="cobertura"> {loading2() } {datos.rutinvalido===true? "Rut invalido ":"" || datos.rutvalido===true? "Rut Valido ":""}{cliente.deuda > 0? <span>¡Rut deudor!</span>:""}</span>
 
 
                                   </div>
@@ -311,8 +321,8 @@ const steps = [
 
                                     <div>
                                       <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-                                        <Button disabled={FO.mensaje===true? false:true} ><Icon name="fibraOp"/></Button>
-                                        <Button disabled={WL.mensaje===true? false:true}><Icon name="wifi"/></Button>
+                                        <Button disabled={FO.mensaje===true? false:true} ><Icon name={FO.mensaje===true? "fibraOp":"fibraOpF"}/></Button>
+                                        <Button disabled={WL.mensaje===true? false:true}><Icon name={WL.mensaje===true? "wifi":"wifiF"}/></Button>
                                       </ButtonGroup>
                                     </div>
 
@@ -335,7 +345,7 @@ const steps = [
                               <div className="ed-grid lg-grid-3">
                                 <div className="form-group">
                                   <label className="text-ups">Run</label>
-                                  <input type="text" name="rut" className="form-control"  placeholder="12.672.579" value={datos.rut+'-'+datos.digito} readOnly/> 
+                                  <input type="text" name="rut" className="form-control"  placeholder="12672579" value={datos.rut+'-'+datos.digito} readOnly/> 
                                 </div>
                                 <div className="form-group">
                                   <label className="text-ups">Serie run</label>
@@ -382,7 +392,7 @@ const steps = [
                                 <div className="form-group">
                                   <label className="text-ups">Direcci&#243;n</label>
                                   
-                                  <input name="direccion" className="form-control" type="text" value={query.direccion} readOnly/>
+                                  <input name="direccion" className="form-control" type="text" value={query} readOnly/>
                                 </div>
                               </div>
 
@@ -502,7 +512,21 @@ const next=()=> {
   }})
  
 }
+const final =()=>{
+  axios.get('https://api.workerapp.cl/api/subscripcion/'+Clientes.nombres+'/'+Clientes.apPaterno+'/'+Clientes.apMaterno+'/'+Clientes.run+'/'+Clientes.phone+'/'+Clientes.email+'/'+Clientes.fNacimiento+'/'+query+', '+Clientes.blocManzana+', '+Clientes.dptoSitio+'/'+cReferencia+'/'+Clientes.plan+'/'+Clientes.user)
 
+.then(res => {
+  
+  message.success('¡Cliente creado exitosamente!')
+  axios.get('/api/sms/'+Clientes.phone+'/'+Clientes.run)
+
+.then(res => {
+  
+  message.success('¡Cliente creado exitosamente!')
+
+})
+})
+}
 const prev =()=> {
   
   setCurrent(current-1 );
@@ -533,7 +557,7 @@ const [procesar, setprocesar]= useState(false);
             
           )}
           {current === steps.length - 1 && (
-            <BTN type="primary" onClick={() => message.success('¡Cliente creado exitosamente!')}>
+            <BTN type="primary" onClick={() => {final()}}>
             Finalizar
             </BTN>
           )}
