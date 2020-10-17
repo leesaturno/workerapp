@@ -26,13 +26,13 @@ function Evaluador() {
 direccion:''});
   const [datos, setDatos] = useState({
     rut:'',
-    digito:'', rutvalido: false
+    digito:'', rutvalido: false,  rutivalido: false
   });
    const [lat, setlat]= useState(0);
   const [lng,setlng]= useState(0);
   const [FO,setFO]= useState({mensaje: false, cercano:false});
   const [WL,setWL]= useState({mensaje: false, cercano:false});
-  const [cliente,setcliente]= useState({rut:"", deuda:0});
+  const [cliente,setcliente]= useState({rut:"", deuda:null});
   const [Clientes,setClientes]= useState({rut:"",
   email:"",
  
@@ -59,43 +59,34 @@ const captadatos= (e)=>{
 }
 const verificadorrut= async ()=>{
   if(verificador(datos.rut+'-'+datos.digito)) {
-    setDatos({ ...datos, rutvalido:true })
+    setDatos({ ...datos, rutvalido:true, rutinvalido:false })
     setClientes({
       ...Clientes, 
       rut:datos.rut+'-'+datos.digito
     })
-    message.success({content:'¡Rut Valido!', 
-    icon:<Icon name="valido"/>,
-     duration:3, style: {
-      marginTop: '13vh', float: 'right',
-    }})
+
    
     const res= await axios.get("https://api.workerapp.cl/api/factibilidadrut/"+datos.rut+'-'+datos.digito);
     const timeout= 1000;
 
-    
-    res.data.forEach(cliente =>{
+   if(res.data.length===0){
+    setcliente({...cliente, deuda:0})
+  } else   res.data.forEach(cliente =>{
       
-      setTimeout(() => {
-        if (cliente.deuda >0) {
-          setcliente({rut:cliente.rut, deuda:cliente.deuda})
-          message.error({content:' ¡Deudor!', 
-          icon:<Icon name="deudor"/>,
-           duration:5, style: {
-            marginTop: '13vh', float: 'right',
-          }})
-        } 
-       
-      }, timeout);
-    });
+    setTimeout(() => {
+      if (cliente.deuda >0) {
+        setcliente({rut:cliente.rut, deuda:cliente.deuda})
+    
+      } else {setcliente({rut:cliente.rut, deuda:0})}
+     
+    }, timeout);
+  });
    
 
   
-  } else return ( message.error({content:'¡Rut invalido!', 
-  icon:<Icon name="invalido"/>,
-   duration:3, style: {
-    marginTop: '13vh', float: 'right',
-  }}))
+  } else { 
+    setDatos({ ...datos, rutinvalido:true,rutvalido:false })
+  }
 }
 
 const  handleScriptLoad =  () => {
@@ -130,7 +121,8 @@ const  handleScriptLoad =  () => {
     var  rad = function(x) {return x*Math.PI/180;}
     var FO= false;
     var WL= false;
-
+    setFO({...FO, mensaje:false});
+    setWL({...WL, mensaje:false});
     pointservice.forEach(point => {
      
       if(point.INDEX_tecnologia==="1"){
@@ -156,9 +148,9 @@ if(dist <= 0.300){
 console.log(d1.toFixed(3)+"soy fibra");
 
 
-} /* else if (d1.toFixed(3) >  0.350  ){
-FO= false;
-} */ }else 
+}
+}else { setFO({...FO, cercano:true}); }
+
     if (point.INDEX_tecnologia==="2") {
     
      
@@ -177,8 +169,10 @@ console.log(distWL+"soy WL");
 
 } 
        
-    }
+    }else { setWL({...WL, cercano:true});}
   });
+ 
+  
 /*  distancesFO.sort(ordenar);
   distancesWL.sort(ordenar);
   var DWL=distancesWL[0];
@@ -234,8 +228,38 @@ const handleScriptLoad2 = ()=>{
 
 
 }) */
+const loading2= ()=>{
+    if (datos.rutvalido===true){
+     do {
+       if(cliente.deuda === 0){break}
+       if(cliente.deuda > 0){break}
+       return <Spin indicator={antIcon} />
+     } while ( cliente.deuda === null);
+     }  
+  
 
-
+ }
+const loading= ()=>{
+ /*  if (datos.rutvalido===true){
+    do {
+      if(cliente.deuda === 0){break}
+      return <Spin indicator={antIcon} />
+    } while ( cliente.deuda === null);
+    }  */
+ 
+  if (query.direccion !== ""){
+  do {
+    if(FO.mensaje === true || WL.mensaje === true ){break}
+ 
+    if(FO.cercano === true && WL.cercano === true ){break}
+    
+      return  <Spin indicator={antIcon} />
+    
+  } while (FO.mensaje === false || WL.mensaje === false);
+ 
+  }
+  
+}
 const { Option } = Select;
       
     const onSearch=(val) => {
@@ -252,8 +276,8 @@ const steps = [
                               <form>
                                 <div className="form-group ed-grid">
                                   <label className="text-ups">Rut</label>
-                                  <div className="ed-grid lg-grid-4">
-                                    <div class="lg-cols-2">
+                                  <div className="ed-grid lg-grid-6">
+                                    <div class="lg-cols-3">
                                     <input type="text" name="rut" minLength="7" maxLength="8"  onChange={captarrut} className="form-control" placeholder="12672579" /> 
                                     </div>
 
@@ -263,12 +287,13 @@ const steps = [
 
                                     <div>
                                       <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-                                        <Button disabled={FO.mensaje===true? false:true} ><Icon name="valido"/></Button>
-                                        <Button disabled={WL.mensaje===true? false:true}><Icon name="invalido"/></Button>
+                                        <Button disabled={datos.rutvalido===true? false:true} ><Icon name="valido"/></Button>
+                                        <Button disabled={datos.rutinvalido===true? false:true}><Icon name="invalido"/></Button>
+                                        <Button disabled={cliente.deuda > 0? false:true}><Icon name="deudor"/></Button>
                                       </ButtonGroup>
                                     </div>
 
-                                    <span className="lg-cols-3 cobertura" id="cobertura"> {query.direccion !== ''? <Spin indicator={antIcon} />:'' } {WL.mensaje=== true? "Tu cobertura más cercana es: WIRELESS": "" || FO.mensaje=== true? "Tu cobertura más cercana es: FIBRA OPTICA":""}</span>
+                                    <span className="lg-cols-3 cobertura" id="cobertura"> {loading2() } {cliente.deuda > 0? <span>¡Rut deudor!</span>:""}</span>
 
 
                                   </div>
@@ -291,7 +316,7 @@ const steps = [
                                       </ButtonGroup>
                                     </div>
 
-                                    <span className="lg-cols-3 cobertura" id="cobertura"> {query.direccion !== ''? <Spin indicator={antIcon} />:'' } {WL.mensaje=== true? "Tu cobertura más cercana es: WIRELESS": "" || FO.mensaje=== true? "Tu cobertura más cercana es: FIBRA OPTICA":""}</span>
+                                    <span className="lg-cols-3 cobertura" id="cobertura"> {loading()} {WL.mensaje=== true? " Tu cobertura más cercana es: WIRELESS": "" || FO.mensaje=== true? " Tu cobertura más cercana es: FIBRA OPTICA":"" || (FO.cercano === true && WL.cercano === true)? "!No hay Cobertura¡": "" }</span>
 
                                   </div>
                                 </div>
@@ -424,14 +449,67 @@ const steps = [
 ];
 const [current, setCurrent]= useState(0);
 const next=()=> {
-
-  setCurrent(current+1 );
+  if(datos.rutvalido=== true){if(cliente.deuda === 0) 
+    {
+     if(query !== "") 
+     {
+          if(WL.mensaje ===true || FO.mensaje=== true)
+          { 
+               setprocesar(true);  setCurrent(current+1 );
+          }
+       else 
+       message.error(
+         {
+                        content:' ¡Sin cobertura! ¡imposible avanzar!', 
+                        duration:5, 
+                        style: 
+                        {
+                           marginTop: '13vh', float: 'right',
+                        }
+         }
+                    )
+   }
+   else message.error(
+     {
+     content:' ¡Tiene que escribir una dirección!', 
+      duration:5, style:
+       {
+         marginTop: '13vh', float: 'right',
+       }
+      }
+       )
+      }
+  else { 
+     message.error({
+       content:' ¡Deudor no puedes avanzar!',
+     icon:<Icon name="deudor"/>,
+      duration:5, 
+      style: 
+      {
+        marginTop: 
+        '13vh', 
+        float: 'right',            
+      }
+  }
+  
+  ) 
+}
+}
+  else message.error({content:' ¡Por favor ingresa un rut valido!', 
+  icon:<Icon name="invalido"/>,
+   duration:5, style: {
+    marginTop: '13vh', float: 'right',
+  }})
+ 
 }
 
 const prev =()=> {
- 
+  
   setCurrent(current-1 );
+  if(current===1){
+  setprocesar(false);}
 }
+const [procesar, setprocesar]= useState(false);
   return (
       <div>
         <Script
@@ -449,32 +527,8 @@ const prev =()=> {
         
         <div className="steps-action">
           {current < steps.length - 1 && (
-            <BTN type="primary" onClick={() =>  { if(datos.rutvalido=== true){if(cliente.deuda === 0) 
-            {
-             if(query !== "") {if(WL.mensaje ===true || FO.mensaje=== true){ next()}
-               else message.error({content:' ¡Sin cobertura! ¡imposible avanzar!', 
-              duration:5, style: {
-            marginTop: '13vh', float: 'right',
-               }})
-           }else message.error({content:' ¡Tiene que escribir una dirección!', 
-              duration:5, style: {
-            marginTop: '13vh', float: 'right',
-               }})}
-          else {  message.error({content:' ¡Deudor no puedes avanzar!',
-             icon:<Icon name="deudor"/>,
-              duration:5, 
-              style: {
-            marginTop: 
-            '13vh', 
-            float: 'right',            
-          }
-          }
-          ) }}else message.error({content:' ¡Por favor ingresa un rut valido!', 
-          icon:<Icon name="invalido"/>,
-           duration:5, style: {
-            marginTop: '13vh', float: 'right',
-          }})}}>
-              Siguiente 
+            <BTN type="primary" className="btn-SVG" onClick={() =>  {next()}}>
+              { procesar === false? <span>CREAR CLIENTE <Icon name="shoppingCart"/></span> : "PROCESAR"}
             </BTN>
             
           )}
