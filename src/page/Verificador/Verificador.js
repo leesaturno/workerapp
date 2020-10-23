@@ -2,14 +2,27 @@ import React,{useRef,useCallback,useState,useEffect} from 'react';
 import './Verificador.scss';
 import CardStep from '../../component/Card/CardStep';
 import Camera from './WebCam'
-
+import {useParams} from 'react-router-dom';
 import Footer from '../../component/Footer/Footer';
 import { Modal, Button } from 'antd';
 import Logo from '../../images/logo.png'
-
-
+import {useDispatch,useSelector} from 'react-redux';
+import {rutsaction} from '../../Redux/Dusk/verificadorreducer';
 
 function Verificador() {
+  let { id } = useParams();
+  let or=1;
+  const [cam,setCam]=useState("environment");
+  const disparador=useDispatch();
+  const cliente=useSelector(store=>store.rutespecifico);
+  const [clienterut,setClienterut]=useState();
+
+
+  useEffect(()=>{
+    disparador(rutsaction(id));
+    or=2
+  },[or]);
+
   const [ViewModal, setViewModal]= useState(
     {
       loading:false,
@@ -44,9 +57,7 @@ function Verificador() {
           </div>
         </div>
       </nav>
-
       <div className="main mt-5">
-
         <CardStep
           title="Stel desea verificar sus datos"
           content= { 
@@ -55,73 +66,63 @@ function Verificador() {
                   <div className="ed-grid lg-grid-2">
                     <div className="form-group">
                       <label className="text-ups">Run</label>
-                      <input type="text" name="rut" className="form-control"  placeholder="12.672.579" value={'Hola'} readOnly/> 
+                      <input type="text" name="rut" className="form-control"  placeholder={cliente.registro.map(Item=>{ return Item.rut })} value={cliente.registro.map(Item=>{ return Item.rut })} readOnly/> 
                     </div>
-                    
                     <div className="form-group">
                       <label className="text-ups">Fecha de nacimiento</label>
-                      <input type="date" name="fNacimiento" className="form-control"  value={'10/12/2020'} readOnly />
+                      <input type="date" name="fNacimiento" className="form-control"  value={cliente.registro.map(Item=>{ return Item.fechanacimiento })} readOnly />
                     </div>
                   </div>
-
                   <div className="ed-grid lg-grid-3">
                     <div className="form-group">
                       <label className="text-ups">Nombres</label>
-                      <input type="text" name="nombres" className="form-control"  value={'Hola'} readOnly /> 
+                      <input type="text" name="nombres" className="form-control"  value={cliente.registro.map(Item=>{ return Item.nombres })} readOnly /> 
                     </div>
                     <div className="form-group">
                       <label className="text-ups">Apellido paterno</label>
-                      <input type="text" name="apPaterno" className="form-control" value={'Hola'} readOnly  />
+                      <input type="text" name="apPaterno" className="form-control" value={cliente.registro.map(Item=>{ return Item.apPaterno })} readOnly  />
                     </div>
                     <div className="form-group">
                       <label className="text-ups">Apellido materno</label>
-                      <input type="text" name="apMaterno" className="form-control" value={'Hola'} readOnly />
+                      <input type="text" name="apMaterno" className="form-control" value={cliente.registro.map(Item=>{ return Item.apMaterno })} readOnly />
                     </div>
                   </div>  
                   <br/>
                   <div className="ed-grid lg-grid-2">
                     <div>
-                      <Button type="primary" onClick={showModal} className="btn-CB">
+                      <Button type="primary" onClick={()=>{setCam("user"); showModal()}} className="btn-CB">
                         Tomar selfie
                       </Button>
                     </div>
-
                     <div>
                       <span>Necesitamos una selfie para verificar su identidad</span>
                     </div>
                   </div>
-
                     <br/><br/><br/>
                   <div className="ed-grid lg-grid-2">
                     <div>
-                      <Button type="primary" onClick={showModal} className="btn-CB">
+                      <Button type="primary" onClick={()=>{setCam("environment"); showModal()}} className="btn-CB">
                         Cedula de identidad frente
                       </Button>
                     </div>
-
                     <div>
                       <span>Tome una foto de su cedula de identidad por el frente</span>
                     </div>
                   </div>
-
                   <br/><br/><br/>
                   <div className="ed-grid lg-grid-2">
                     <div>
-                      <Button type="primary" onClick={showModal} className="btn-CB">
+                      <Button type="primary"  onClick={()=>{setCam("environment"); showModal()}} className="btn-CB">
                         Cedula de identidad trasero
                       </Button>
                     </div>
-
                     <div>
                       <span>Tome una foto de su cedula de identidad por el reverso</span>
                     </div>
                   </div>
-
                   <br/><br/>
-
-                  <button className="bttn btn-CB text-ups">Procesar</button>
-              
               </form>
+                  <button className="bttn btn-CB text-ups" onClick={()=>{console.log(clienterut)}}>Procesar</button>
 
               <Modal
               visible={ViewModal.visible}
@@ -137,7 +138,7 @@ function Verificador() {
                 </Button>,
               ]}
               >
-                <Camera></Camera>
+                <Camera modecam={cam} rut={cliente.registro.map(Item=>{ return Item.rut })} ></Camera>
               </Modal>
             
             </div>

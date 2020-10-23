@@ -2,14 +2,15 @@ import React,{useRef,useCallback,useState,useEffect} from 'react';
 import './Verificador.scss';
 import { createWorker } from 'tesseract.js';
 import Webcam from "react-webcam";
+import { OmitProps } from 'antd/lib/transfer/ListBody';
 
 
 
-function Camera() {
+function Camera(props) {
   const webcamRef = useRef(null);
   const [imageSrc,setImgSrc] = useState(null);
   const videoConstraints = {
-    facingMode: "environment",
+    facingMode: props.modecam,
     width: { min: 400 },
     height: { min: 720 },
     aspectRatio: 0.6666666667
@@ -38,8 +39,9 @@ function Camera() {
     doOCR()
   });
 
-  return (
-    <>
+  function webcamp(){
+    if(imageSrc==null){return(
+      <>
       <Webcam
         audio={false}
         ref={webcamRef}
@@ -49,8 +51,21 @@ function Camera() {
         <div className="controls">
             <button onClick={()=>{capture();}} className="btnCapture snap"></button>
         </div>
-      <img src={imageSrc} ></img>
-      {ocr}
+    </>
+    )}else{
+      return(
+        <>
+          <img src={imageSrc} ></img>
+          <br/>
+          {ocr}
+          <div>El reconocimiento puede tardar minutos por favor no recarge la pagina ni apage su pantalla </div>
+      </>)
+    }
+  }
+
+  return (
+    <>
+      {webcamp()}
     </>
   );
   

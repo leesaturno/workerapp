@@ -9,7 +9,7 @@ const StateUsuariospecifi={
 const DATOS_USUARIOS_ESPECIFICO="DATOS_USUARIOS_ESPECIFICO";
 
 //reducer
-export default function Usuarioreducer(state=StateUsuariospecifi,action){
+export default function verificadoreducer(state=StateUsuariospecifi,action){
     switch (action.type) {
         case DATOS_USUARIOS_ESPECIFICO:
             return {...state,registro:action.payload}
@@ -19,9 +19,9 @@ export default function Usuarioreducer(state=StateUsuariospecifi,action){
 }
 
 //Acciones
-export const usuarioinsertaction = (username,password,index_privilegios,nombre,email,cumpleanos,direccion,cargo,telefono,telefono2,estado) => async (dispatch,getState) =>{
+export const rutsaction = (ruts) => async (dispatch,getState) =>{
     try {
-        const res= await axios.get();
+        const res= await axios.get('https://api.workerapp.cl/apiv2/verificador/'+ruts);
         dispatch({
             type:DATOS_USUARIOS_ESPECIFICO,
             payload: res.data
