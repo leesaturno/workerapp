@@ -53,13 +53,24 @@ function Camera(props) {
         </div>
     </>
     )}else{
+      let ote= "Reconociendo...";
+      if(ocr.toLowerCase().indexOf(props.rut) >= 0){
+        ote="datos verificados con exito";
+      }
+      if(props.modecam!="user"){
       return(
         <>
           <img src={imageSrc} ></img>
           <br/>
-          {ocr}
+          {
+           ote
+          }
           <div>El reconocimiento puede tardar minutos por favor no recarge la pagina ni apage su pantalla </div>
-      </>)
+      </>)}else{        
+        return <div>Su retrato a sido un exito</div>
+        setImgSrc(null)
+      }
+
     }
   }
 
