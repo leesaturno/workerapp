@@ -150,7 +150,7 @@ componentDidMount(){
                                       icon={<UserDeleteOutlined style={{ color: 'red' }} />}
                                       onConfirm={()=>{axios.get(this.url +'deleteusers/'+value)
                                       .then(res => {
-                                        message.success({'Usuario eliminado exitosamente', 
+                                        message.success({ content:'Usuario eliminado exitosamente', 
  
  style: {
    marginTop: '13vh', float: 'right',
