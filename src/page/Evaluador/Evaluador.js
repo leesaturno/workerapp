@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './Evaluador.scss';
 
 import { Steps, Button as BTN, message, Select, Spin, Modal } from 'antd';
@@ -14,7 +14,7 @@ import verificador  from 'verificador-rut';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 import Camera from '../Verificador/WebCam'
-
+import Segurity from '../../component/Segurity/Segurity';
 //redux
 /* import {pointAction,ruttAction} from '../../Redux/Dusk/pointreducer'; */
 import {useDispatch,useSelector} from 'react-redux';
@@ -76,7 +76,7 @@ function Evaluador() {
       usr.user.forEach(user =>{
         setClientes({
           ...Clientes, 
-          user:user.INDEX_users
+          user:user.INDEX_user
         });
       })
    
@@ -126,7 +126,7 @@ function Evaluador() {
       const lttd= addressObject.geometry.location.lat();
       const lngtd =addressObject.geometry.location.lng();
       //aqui deberian almacenarse en el estado pero no logro hacerlo
-      setQuery({...query, query3});
+      setQuery(query3);
       setlat(lttd);
       setlng(lngtd);
       axios.get(`https://api.workerapp.cl/api/v2/pointservice`)
@@ -221,7 +221,7 @@ function Evaluador() {
       const query2= addressObject2.formatted_address;
      
       //aqui deberian almacenarse en el estado pero no logro hacerlo
-      setcReferencia({...cReferencia, query2});
+      setcReferencia(query2);
 
 
   
@@ -574,7 +574,7 @@ function Evaluador() {
   }
 
   const final =()=>{
-    axios.get('https://api.workerapp.cl/api/subscripcion/'+Clientes.nombres+'/'+Clientes.apPaterno+'/'+Clientes.apMaterno+'/'+Clientes.run+'/'+Clientes.phone+'/'+Clientes.email+'/'+Clientes.fNacimiento+'/'+query+', '+Clientes.blocManzana+', '+Clientes.dptoSitio+'/'+cReferencia+'/'+Clientes.plan+'/'+Clientes.user)
+    axios.get('https://api.workerapp.cl/api/subscripcion/'+Clientes.nombres+'/'+Clientes.apPaterno+'/'+Clientes.apMaterno+'/'+Clientes.run+'/'+'+569'+Clientes.phone+'/'+Clientes.email+'/'+Clientes.fNacimiento+'/'+query+', '+Clientes.blocManzana+', '+Clientes.dptoSitio+'/'+cReferencia+'/'+Clientes.plan+'/'+Clientes.user)
 
     .then(res => {
       
@@ -634,7 +634,7 @@ function Evaluador() {
           )}
         </div>
       </div>
-
+      <Segurity/>
       <Footer></Footer>
     </div>
   );

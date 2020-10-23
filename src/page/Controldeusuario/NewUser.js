@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import './Controldeusuario.scss';
-
+import {
+ 
+    useHistory,
+  } from "react-router-dom";
 import CardStep from '../../component/Card/CardStep'
 import Footer from '../../component/Footer/Footer'
 import { Select } from 'antd';
@@ -11,6 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import Segurity from '../../component/Segurity/Segurity';
 function NewUser() {
     const disparador=useDispatch();
+    let history = useHistory();
     const [Users,setUsers]=useState({
         user:"",
         email:"",
@@ -45,6 +49,10 @@ function NewUser() {
                 progress: undefined,
                 });
             disparador(usuarioinsertaction(Users.user,Users.password,Users.privilegios,Users.name,Users.email,Users.fNacimiento,Users.direccion,Users.cargo,Users.phone,Users.cel,Users.privilegios));
+            let timeout=2000;
+           setTimeout(() => {
+            history.push("/Controldeusuario")
+           }, timeout);
          }else{
             toast.warn('¡las contraseñas no son iguales!', {
                 position: "top-right",

@@ -6,7 +6,7 @@ import MuiDT from "../../component/Datatable/MuiDT"
 import Footer from '../../component/Footer/Footer'
 import Segurity from '../../component/Segurity/Segurity';
 import { UserDeleteOutlined } from '@ant-design/icons';
-import { ToastContainer, toast } from 'react-toastify';
+
 import { Button,Popconfirm, message } from 'antd';
 import Global from '../../Global'
 import axios from 'axios';
@@ -41,8 +41,8 @@ componentDidMount(){
   componentWillMount(){
     axios.get(this.url + "users")
     .then(res => {
-      const users = res.data;
-      this.setState({ users:users });
+      const users1 = res.data;
+      this.setState({ users:users1 });
     })
    }
 
@@ -130,7 +130,7 @@ componentDidMount(){
                             }
                           },
                           {
-                            name: "id_users",
+                            name: "username",
                             label: "Acciones",
                             options: {
                               filter: true,
@@ -150,13 +150,18 @@ componentDidMount(){
                                       icon={<UserDeleteOutlined style={{ color: 'red' }} />}
                                       onConfirm={()=>{axios.get(this.url +'deleteusers/'+value)
                                       .then(res => {
-                                        message.success('Usuario eliminado exitosamente');
+                                        message.success({'Usuario eliminado exitosamente', 
+ 
+ style: {
+   marginTop: '13vh', float: 'right',
+ }
+});
                                           console.log(res);
                                           
                                           axios.get(this.url + "users")
                                             .then(res => {
-                                              const users = res.data;
-                                              this.setState({ users:users });
+                                              const users2 = res.data;
+                                              this.setState({ users:users2 });
                                             })
                                           })
                                         }}

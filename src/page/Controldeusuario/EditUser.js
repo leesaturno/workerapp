@@ -1,16 +1,24 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './Controldeusuario.scss';
-
+import {
+    useHistory,
+    useLocation
+  } from "react-router-dom";
+  import axios from 'axios';
 import CardStep from '../../component/Card/CardStep'
 import Footer from '../../component/Footer/Footer'
 import { Select } from 'antd';
 // Redux 
 import {useDispatch} from 'react-redux';
-import {usuarioinsertaction} from '../../Redux/Dusk/usuarioreducer';
+import {usuarioUpdateaction} from '../../Redux/Dusk/usuarioreducer';
 import { ToastContainer, toast } from 'react-toastify';
 import Segurity from '../../component/Segurity/Segurity';
 function EditUser() {
     const disparador=useDispatch();
+    let history = useHistory();
+    const useQuery =()=> {
+        return new URLSearchParams(useLocation().search);
+      }
     const [Clientes,setClientes]=useState({
         user:"",
         email:"",
@@ -24,8 +32,60 @@ function EditUser() {
         privilegios:"",
         direccion:""
       })
-      
-      const cargadedatos = (e)=>{
+     const [stop, setStop] = useState(false);
+      const query = useQuery();
+
+      useEffect(() => {
+        if(stop=== false){
+          axios.get(`https://api.workerapp.cl/api/users/`+query.get("id"))
+          .then(res => {
+              const user = res.data;
+              user.forEach(element => {
+                  let username= element.username;       
+                  
+                  let email= element.email;
+                  
+                  let telefono= element.telefono;
+                  
+                  let cargo= element.cargo;
+                  
+                  let password= element.password;
+    
+       let cumpleanos= element.cumpleanos;
+       
+       let direccion= element.direccion;
+       
+       let telefono2= element.telefono2;
+       
+       let nombre= element.nombre;
+       
+       let privilegios= element.INDEX_privilegio;
+       setClientes({...Clientes, user:username,
+           email:email,
+       password:password,
+       password2:password,
+       fNacimiento:cumpleanos,
+       cargo:cargo,
+       name:nombre,
+       phone:telefono,
+       cel:telefono2,
+       privilegios:privilegios,
+       direccion:direccion})
+       console.log(user)
+     });
+  
+    
+    
+   
+     
+   })
+  
+        }
+          return () =>   setStop(true);
+      }, [setStop, stop, setClientes, Clientes, query]);
+  
+  
+        const cargadedatos = (e)=>{
             setClientes({
               ...Clientes,
               [e.target.name] : e.target.value
@@ -33,9 +93,10 @@ function EditUser() {
       }
     
       const enviarDatos = (e) => {
+          
          e.preventDefault();
          if(Clientes.password==Clientes.password2){
-            toast.success('Usuario registrado con exito', {
+            toast.success('Usuario actualizado con exito', {
                 position: "top-right",
                 autoClose: 2000,
                 hideProgressBar: false,
@@ -44,7 +105,11 @@ function EditUser() {
                 draggable: true,
                 progress: undefined,
                 });
-            disparador(usuarioinsertaction(Clientes.user,Clientes.password,Clientes.privilegios,Clientes.name,Clientes.email,Clientes.fNacimiento,Clientes.direccion,Clientes.cargo,Clientes.phone,Clientes.cel,"1"));
+            disparador(usuarioUpdateaction(query.get("id"),Clientes.user,Clientes.password,Clientes.privilegios,Clientes.name,Clientes.email,Clientes.fNacimiento,Clientes.direccion,Clientes.cargo,Clientes.phone,Clientes.cel,"43"));
+            let timeout=2000;
+            setTimeout(() => {
+             history.push("/Controldeusuario")
+            }, timeout);
          }else{
             toast.warn('¡las contraseñas no son iguales!', {
                 position: "top-right",
@@ -62,22 +127,22 @@ function EditUser() {
     const onSearch=(val) => {
         console.log('search:', val);
     }
-    
-  return (
+     return (
       <div>
         <div className="main mt-5 ml-10">
+    
             <CardStep title="Editar usuario"
               content={
                 <form onSubmit={enviarDatos}>
                     <div className="ed-grid lg-grid-2">
                         <div className="form-group">
                             <label className="text-ups">Usuario</label>
-                            <input type="text" name="user" required onChange={cargadedatos} className="form-control"/> 
+                            <input type="text" name="user" required onChange={cargadedatos} value={Clientes.user} className="form-control"/> 
                         </div>
 
                         <div className="form-group">
                             <label className="text-ups">Correo electr&#243;nico</label>
-                            <input type="email" name="email" onChange={cargadedatos} required className="form-control" />
+                            <input type="email" name="email" onChange={cargadedatos} required value={Clientes.email} className="form-control" />
                         </div>
                     </div>
 
@@ -86,12 +151,12 @@ function EditUser() {
                     <div className="ed-grid lg-grid-2">
                         <div className="form-group">
                             <label className="text-ups">Contraseña</label>
-                            <input type="password" name="password" required onChange={cargadedatos} className="form-control"/> 
+                            <input type="password" name="password" required onChange={cargadedatos} value={Clientes.password} className="form-control"/> 
                         </div>
 
                         <div className="form-group">
                             <label className="text-ups">Confirmar contraseña</label>
-                            <input type="password" name="password2" required onChange={cargadedatos} className="form-control" />
+                            <input type="password" name="password2" required onChange={cargadedatos} value={Clientes.password2} className="form-control" />
                         </div>
                     </div>
 
@@ -100,29 +165,29 @@ function EditUser() {
                     <div className="ed-grid lg-grid-3">
                         <div className="form-group">
                             <label className="text-ups">Fecha de nacimiento</label>
-                            <input type="date" name="fNacimiento" required onChange={cargadedatos} className="form-control"/> 
+                            <input type="date" name="fNacimiento" required onChange={cargadedatos} value={Clientes.fNacimiento} className="form-control"/> 
                         </div>
 
                         <div className="form-group">
                             <label className="text-ups">Cargo</label>
-                            <input type="text" name="cargo" required onChange={cargadedatos} className="form-control" />
+                            <input type="text" name="cargo" required onChange={cargadedatos} value={Clientes.cargo} className="form-control" />
                         </div>
 
                         <div className="form-group">
                             <label className="text-ups">Nombre</label>
-                            <input type="text" name="name" required onChange={cargadedatos} className="form-control" />
+                            <input type="text" name="name" required onChange={cargadedatos} value={Clientes.name} className="form-control" />
                         </div>
                     </div>
 
                     <div className="ed-grid lg-grid-3">
                         <div className="form-group">
                             <label className="text-ups">Tel&#233;fono</label>
-                            <input type="tel" name="phone" required onChange={cargadedatos} className="form-control"/> 
+                            <input type="tel" name="phone" required onChange={cargadedatos} value={Clientes.phone} className="form-control"/> 
                         </div>
 
                         <div className="form-group">
                             <label className="text-ups">Celular</label>
-                            <input type="tel" name="cel" required onChange={cargadedatos} className="form-control" />
+                            <input type="tel" name="cel" required onChange={cargadedatos} value={Clientes.cel} className="form-control" />
                         </div>
                     
                         <div className="form-group">
@@ -135,7 +200,8 @@ function EditUser() {
                                 onChange={(value)=>{setClientes({...Clientes,
                                     privilegios : value})}}
                                 onSearch={onSearch}
-                                defaultValue='Admin'
+                                value={Clientes.privilegios=== '1'? 'Admin': "Usuario"}
+                                
                                 filterOption={(input, option) =>
                                     option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                   }
@@ -150,7 +216,7 @@ function EditUser() {
                     <div className="ed-grid">
                         <div className="form-group">
                             <label className="text-ups">Direcci&#243;n</label>
-                            <input type="text" name="direccion" required onChange={cargadedatos} className="form-control" />
+                            <input type="text" name="direccion" required onChange={cargadedatos} value={Clientes.direccion} className="form-control" />
                         </div>
                     </div>
                   
