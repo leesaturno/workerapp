@@ -17,21 +17,15 @@ function Login(props){
     password:""
   })
 
+  const [bandera,setbandera]= useState(true);
+
   useEffect(() => {
-    if(user.atividad==true){
-        toast.success('¡Usuario verificado con exito!', {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          });
-          setTimeout(() => {
-            props.history.push("/Bienvenida");
-          }, 3000);
-    }
+      if(user.atividad==true){
+            setTimeout(() => {
+              setbandera(true);
+              props.history.push("/Bienvenida");
+            }, 3000);
+      }
   });
   
   const cargadedatos = (e)=>{
@@ -55,7 +49,7 @@ function Login(props){
           <img src={Logo} alt="Logo" />
         </div>
         {/*Contenido*/}
-        <form onSubmit={(e)=>{enviarDatos(e);}} className="s-pxy-3">
+        <form onSubmit={(e)=>{enviarDatos(e); setbandera(false)}} className="s-pxy-3">
           <div className="form-group">
             <label>Usuario</label>
             <input type="text" name="usuario" onChange={cargadedatos} required  className="form-control" />
@@ -74,7 +68,7 @@ function Login(props){
               <span className="custom-radio-checkbox__text">Recuerdame</span>
             </label>
           </div>
-          <button className="bttn">Autenticar</button>
+          <button className="bttn" disabled={()=> {return bandera}}>Autenticar</button>
         </form>
       </article>
       <ToastContainer/>

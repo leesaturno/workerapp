@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { toast } from 'react-toastify';
 //Constanes
 const LoginState={
     user:[],
@@ -28,6 +28,27 @@ export default function Loginreducer(state=LoginState,action){
 export const LoginAction = (user,pass) => async (dispatch,getState) =>{
     try {
         const res= await axios.get("https://api.workerapp.cl/apiv2/auth/"+user+"/"+pass);
+        if(res.data!=""){
+            toast.success('¡Usuario verificado con exito!', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }else{
+            toast.error('Usuario o contraseña incorrecta', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
         dispatch({
             type:OPTENER_Y_VALIDAR_USUARIOS,
             payload: res.data
