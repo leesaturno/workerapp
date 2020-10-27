@@ -31,9 +31,10 @@ function Evaluador() {
   const [lat, setlat]= useState(0);
   const [lng,setlng]= useState(0);
   const [FO,setFO]= useState({mensaje: false, cercano:false});
-  const [WL,setWL]= useState({mensaje: false, cercano:false});
+  const [WLess,setWLess]= useState({mensaje: false, cercano:false});
   const [cliente,setcliente]= useState({rut:"", deuda:null});
-  
+  const [cercanoFO, setcercanoFO]= useState({distancia:"",dispositivo:""});
+  const [cercanoWL, setcercanoWL]= useState({distancia:"",dispositivo:""});
   const [Clientes,setClientes]= useState({
     rut:"",
     email:"",
@@ -120,7 +121,7 @@ function Evaluador() {
   
       // Check if address is valid
       let distancesWL= [];
-      let distancesFO= [];
+      let distancesFO=[];
 
       const query3= addressObject.formatted_address;
       const lttd= addressObject.geometry.location.lat();
@@ -134,10 +135,9 @@ function Evaluador() {
         const pointservice = res.data;
         var R = 6371
         var  rad = function(x) {return x*Math.PI/180;}
-        var FO= false;
-        var WL= false;
-        setFO({...FO, mensaje:false});
-        setWL({...WL, mensaje:false});
+       
+  /*       setFO({...FO, mensaje:false});
+        setWL({...WL, mensaje:false}); */
         pointservice.forEach(point => {
       
           if(point.INDEX_tecnologia==="1"){
@@ -153,13 +153,18 @@ function Evaluador() {
 
             if(dist <= 0.300){
               distancesFO.push(dist);
-
-
+           
+              distancesFO.sort(ordenar);
+             
+              
               setFO({...FO, mensaje:true});
-  
-              console.log(d1.toFixed(3)+"soy fibra");
+              console.log(dist+"soy fibra");
+              if(point.dispositivo !== ""){
 
-
+                setcercanoFO({...cercanoFO, distancia:distancesFO[0], dispositivo: point.dispositivo});
+              }
+/* 
+              console.log(cercano); */
             }
           }else { setFO({...FO, cercano:true}); }
 
@@ -174,14 +179,21 @@ function Evaluador() {
             var d = R * c;
             var distWL=d.toFixed(3);
             if(distWL <= 0.350){
-              setWL({...WL, mensaje:true});
-              distancesWL.push(distWL);
               
+               distancesWL.push(distWL);
+              distancesWL.sort(ordenar); 
+            setTimeout(() => {
+              console.log(distWL+"soy WL");
+              setWLess({...WLess, mensaje:true});
+            }, 1000);
             console.log(distWL+"soy WL");
+             if(point.dispositivo !== ""){
 
+              setcercanoWL({...cercanoWL, distancia:distancesWL[0], dispositivo: point.dispositivo});
+            } 
             } 
         
-          }else { setWL({...WL, cercano:true});}
+          }else { setWLess({...WLess, cercano:true});}
         });
   
     
@@ -194,10 +206,11 @@ function Evaluador() {
         }else if(DWL > 0){
           setWL({...WL, cercano:true});
         } */
-  
+        
+        
+       /*  setcercano({...cercano, distancia:distancesWL[0][0], dispositivo:distancesWL[0][1]}) */
       })
-  
-    
+ 
   
     })  
   }
@@ -264,13 +277,13 @@ function Evaluador() {
   
     if (query !== ""){
     do {
-      if(FO.mensaje === true || WL.mensaje === true ){break}
+      if(FO.mensaje === true || WLess.mensaje === true ){break}
   
-      if(FO.cercano === true && WL.cercano === true ){break}
+      if(FO.cercano === true && WLess.cercano === true ){break}
       
         return  <Spin indicator={antIcon} />
       
-    } while (FO.mensaje === false || WL.mensaje === false);
+    } while (FO.mensaje === false || WLess.mensaje === false);
   
     }
     
@@ -322,11 +335,11 @@ function Evaluador() {
                                 <label className="text-ups">Rut</label>
                                 <div className="ed-grid lg-grid-6">
                                   <div class="lg-cols-3">
-                                  <input type="text" name="rut" minLength="7" maxLength="8"  onChange={captarrut} className="form-control" placeholder="12672579" /> 
+                                    <input type="number" name="rut" minLength="7" maxLength="8"  onChange={captarrut} className="form-control" placeholder="12672579" /> 
                                   </div>
 
                                   <div>                                  
-                                  <input type="text" name="digito" maxLength="1" onBlur={verificadorrut} onChange={captarrut} className="form-control" placeholder={1} />
+                                    <input type="number" name="digito" maxLength="1" onBlur={verificadorrut} onChange={captarrut} className="form-control" placeholder={1} />
                                   </div>
 
                                   <div>
@@ -356,18 +369,18 @@ function Evaluador() {
                                   <div>
                                     <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
                                       <Button disabled={FO.mensaje===true? false:true} ><Icon name={FO.mensaje===true? "fibraOp":"fibraOpF"}/></Button>
-                                      <Button disabled={WL.mensaje===true? false:true}><Icon name={WL.mensaje===true? "wifi":"wifiF"}/></Button>
+                                      <Button disabled={WLess.mensaje===true? false:true}><Icon name={WLess.mensaje===true? "wifi":"wifiF"}/></Button>
                                     </ButtonGroup>
                                   </div>
-
-                                  <span className="lg-cols-3 cobertura" id="cobertura"> {loading()} {WL.mensaje=== true? " Tu cobertura más cercana es: WIRELESS": "" || FO.mensaje=== true? " Tu cobertura más cercana es: FIBRA OPTICA":"" || (FO.cercano === true && WL.cercano === true)? "!No hay Cobertura¡": "" }</span>
-
+                                  
+                                  <span className="lg-cols-3 cobertura" id="cobertura"> {loading()} {WLess.mensaje=== true? <span>Tu cobertura más cercana es: WIRELESS Nodo: {cercanoWL.dispositivo}</span>: "" || FO.mensaje=== true? <span>Tu cobertura más cercana es: FIBRA OPTICA Nodo: {cercanoFO.dispositivo}</span> :"" || (FO.cercano === true && WLess.cercano === true)? "!No hay Cobertura¡": "" }</span>
+                                 
                                 </div>
                               </div>
                             </form>
                           }
               ></CardStep>,
-    },
+    }, 
 
     {
       content: <CardStep title="Registro de cliente"
@@ -405,40 +418,56 @@ function Evaluador() {
                                   </div>
                                   <div className="form-group">
                                     <label className="text-ups">Serie run</label>
-                                    <input type="text" name="run" className="form-control" onChange={captadatos}/>
+                                    <input type="text" name="run" className="form-control" value={Clientes.run} onChange={captadatos} required/>
                                   </div>
                                   <div className="form-group">
                                     <label className="text-ups">Fecha de nacimiento</label>
-                                    <input type="date" name="fNacimiento" className="form-control" onChange={captadatos} placeholder={1} />
+                                    <input type="date" name="fNacimiento" className="form-control" value={Clientes.fNacimiento} onChange={captadatos} placeholder={1} required/>
                                   </div>
                                 </div>
 
                                 <div className="ed-grid lg-grid-3">
                                   <div className="form-group">
                                     <label className="text-ups">Nombres</label>
-                                    <input type="text" name="nombres" className="form-control" onChange={captadatos} /> 
+                                    <input type="text" name="nombres" className="form-control" value={Clientes.nombres} onChange={captadatos} required/> 
                                   </div>
                                   <div className="form-group">
                                     <label className="text-ups">Apellido paterno</label>
-                                    <input type="text" name="apPaterno" className="form-control"  onChange={captadatos}/>
+                                    <input type="text" name="apPaterno" className="form-control" value={Clientes.apPaterno}  onChange={captadatos} required/>
                                   </div>
                                   <div className="form-group">
                                     <label className="text-ups">Apellido materno</label>
-                                    <input type="text" name="apMaterno" className="form-control" onChange={captadatos}/>
+                                    <input type="text" name="apMaterno" className="form-control" value={Clientes.apMaterno} onChange={captadatos} required/>
                                   </div>
                                 </div>
                                 
                                 <div className="ed-grid lg-grid-2">
                                   <div className="form-group">
                                     <label className="text-ups">Tel&#233;fono</label>
-                                    <input type="tel" name="phone" className="form-control" onChange={captadatos}/> 
-                                  </div>
+                                    <div className="ed-grid lg-grid-6">
+                                      <div className="lg-cols-2">                                  
+                                        <input type="tel" className="form-control" value="+569" readOnly/>
+                                      </div>
 
+                                      <div className="lg-cols-4">
+                                        <input type="number" name="phone" className="form-control" value={Clientes.phone} onChange={captadatos} minLength="8" maxLength="8" required/>
+                                      </div>
+                                    </div>
+                                  </div>
                                   <div className="form-group">
                                     <label className="text-ups">Correo electr&#243;nico</label>
-                                    <input type="email" name="email" className="form-control" onChange={captadatos}/>
+                                    <input type="email" name="email" className="form-control" onBlur={(e)=>{if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(e.target.value)){return (true)} message.error( {
+              content:' ¡escriba un correo valido!', 
+              duration:5, 
+              style: 
+              {
+                  marginTop: '13vh', float: 'right',
+              }
+            }); return (false)}} onChange={captadatos} required title="Por favor, solo proporciona una dirección de correoᵉ valida"/>
                                   </div>
+
                                 </div>
+
                               </div>
                               
                               <div className="separador">
@@ -456,19 +485,19 @@ function Evaluador() {
                                 <div className="ed-grid lg-grid-2">
                                   <div className="form-group">
                                     <label className="text-ups">Block / Manzana</label>
-                                    <input type="text" name="blocManzana" className="form-control" onChange={captadatos}/> 
+                                    <input type="text" name="blocManzana" className="form-control" value={Clientes.blocManzana} onChange={captadatos}/> 
                                   </div>
                                   
                                   <div className="form-group">
                                     <label className="text-ups">Departamento / Sitio</label>
-                                    <input type="text" name="dptoSitio" className="form-control" onChange={captadatos}/>
+                                    <input type="text" name="dptoSitio" className="form-control" value={Clientes.dptoSitio} onChange={captadatos}/>
                                   </div>
                                 </div>
 
                                 <div className="ed-grid">
                                   <div className="form-group">
                                     <label className="text-ups">Calle referencia</label>
-                                    <input name="cReferencia" className="form-control" type="text" id='cReferencia' onFocus={handleScriptLoad2} />
+                                    <input name="cReferencia" className="form-control" value={cReferencia} type="text" id='cReferencia' onFocus={handleScriptLoad2} required/>
                                   </div>
                                 </div>
                               </div>
@@ -483,6 +512,7 @@ function Evaluador() {
                                       showSearch
                                       placeholder="Selecciona un plan"
                                       title="plan"
+                                      required
                                       onChange={(value)=>{setClientes({...Clientes,
                                         plan : value})}}
                                       onSearch={onSearch}
@@ -491,9 +521,9 @@ function Evaluador() {
                                           option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                         }
                                     >
-                                      <Option value="1">{WL.mensaje===true? "6 BM":"" || FO.mensaje===true? "50 MB": ""}</Option>
-                                      <Option value="2">{WL.mensaje===true? "8 BM":"" || FO.mensaje===true? "200 MB": ""}</Option>
-                                      <Option value="3">{WL.mensaje===true? "10 BM":"" || FO.mensaje===true? "300 MB": ""}</Option>
+                                      <Option value="1">{WLess.mensaje===true? "6 BM":"" || FO.mensaje===true? "50 MB": ""}</Option>
+                                      <Option value="2">{WLess.mensaje===true? "8 BM":"" || FO.mensaje===true? "200 MB": ""}</Option>
+                                      <Option value="3">{WLess.mensaje===true? "10 BM":"" || FO.mensaje===true? "300 MB": ""}</Option>
                                     </Select>
                                   </div>
                                 </div>
@@ -521,9 +551,110 @@ function Evaluador() {
       {
         if(query !== "") 
         {
-          if(WL.mensaje ===true || FO.mensaje=== true)
+          if(WLess.mensaje ===true || FO.mensaje=== true)
           { 
-            setprocesar(true);  setCurrent(current+1 );
+            setprocesar(true);  
+            if(current===1 && procesar=== true){
+              if (Clientes.run !== "") {
+                if (Clientes.fNacimiento !== "" ) {
+                  if (Clientes.nombres !== "" ) {
+                    if (Clientes.apPaterno !== "" ) {
+                      if (Clientes.apMaterno !== "") {
+                        if (Clientes.phone !== "") {
+                          if (Clientes.email !== "" ) {
+                            if (cReferencia !== "" ) {
+                              if (Clientes.plan!== "") {
+                                setCurrent(current+1 );
+                              } else{ 
+                                      message.error(
+                                        {
+                                          content:' ¡Debe seleccionar un plan!', 
+                                          duration:5, 
+                                           style:{
+                                              marginTop: '13vh', float: 'right',
+                                           }
+                                        }
+                                      ) 
+                                  }
+                            }  else{ 
+                                  message.error(
+                                    {
+                                      content:' ¡Debe proporcionar una calle de referencia!', 
+                                      duration:5, 
+                                      style:{
+                                          marginTop: '13vh', float: 'right',
+                                      }
+                                    }
+                                  ) 
+                               }
+                            } else{ 
+                                        message.error(
+                                          {
+                                            content:' ¡Debe proporcionar un email!', 
+                                            duration:5, 
+                                            style:{
+                                              marginTop: '13vh', float: 'right',
+                                            }
+                                          }
+                                          ) 
+                                        }
+                                      }     else{ 
+                                        message.error(
+                                          {
+                                            content:' ¡Debe proporcionar un numero de telefono!', 
+                                            duration:5, 
+                                            style:{
+                                                marginTop: '13vh', float: 'right',
+                                            }
+                                  }
+                                ) 
+                             }
+                      }    else { 
+                              message.error(
+                                {
+                                  content:' ¡Debe proporcionar un Apellido materno!', 
+                                  duration:5, 
+                                  style:{
+                                      marginTop: '13vh', float: 'right',
+                                  }
+                                }
+                              ) 
+                           }
+                    }     else { 
+                                  message.error(
+                                    {
+                                      content:' ¡Debe proporcionar un Apellido paterno!', 
+                                      duration:5, 
+                                      style:{
+                                          marginTop: '13vh', float: 'right',
+                                      }
+                                    }
+                                  ) 
+                           }
+                    }   else { 
+                                message.error(
+                                  {
+                                    content:' ¡ Debe proporcionar un nombre o nombres!', 
+                                    duration:5, 
+                                    style:{
+                                        marginTop: '13vh', float: 'right',
+                                    }
+                                  }
+                                ) 
+                          }
+                }
+              }    else { 
+                        message.error(
+                          {
+                            content:' ¡Debe proporcionar una Serie run!', 
+                            duration:5, 
+                            style:{
+                                marginTop: '13vh', float: 'right',
+                            }
+                          }
+                        ) 
+                   }
+            } else{ setCurrent(current+1 );}
           }
           else 
           message.error(
@@ -574,18 +705,33 @@ function Evaluador() {
   }
 
   const final =()=>{
-    axios.get('https://api.workerapp.cl/api/subscripcion/'+Clientes.nombres+'/'+Clientes.apPaterno+'/'+Clientes.apMaterno+'/'+Clientes.run+'/'+'+569'+Clientes.phone+'/'+Clientes.email+'/'+Clientes.fNacimiento+'/'+query+', '+Clientes.blocManzana+', '+Clientes.dptoSitio+'/'+cReferencia+'/'+Clientes.plan+'/'+Clientes.user)
+    axios.get('https://api.workerapp.cl/api/subscripcion/'+Clientes.nombres+'/'+Clientes.apPaterno+'/'+Clientes.apMaterno+'/'+datos.rut+'-'+datos.digito+'/'+Clientes.run+'/'+'+569'+Clientes.phone+'/'+Clientes.email+'/'+Clientes.fNacimiento+'/'+query+', '+Clientes.blocManzana+', '+Clientes.dptoSitio+'/'+cReferencia+'/'+Clientes.plan+'/'+Clientes.user)
 
     .then(res => {
       
-      message.success('¡Cliente creado exitosamente!')
-      axios.get('/api/sms/'+Clientes.phone+'/'+Clientes.run)
+      message.success({ content:'¡Cliente creado exitosamente!', 
+ 
+      style: {
+        marginTop: '13vh', float: 'right',
+      }
+     });
+     setTimeout(() => {
+      axios.get('https://api.workerapp.cl/api/sms/'+'+569'+Clientes.phone+'/'+datos.rut+'-'+datos.digito)
 
       .then(res => {
         
-        message.success('¡Cliente creado exitosamente!')
-
+        message.success({ content:'¡mensaje de verificacion enviado exitosamente!', 
+ 
+        style: {
+          marginTop: '13vh', float: 'right',
+        }
+       });
+       setCurrent(0);
+      
+       setprocesar(false);
       })
+     }, 3000);
+      
     })
   }
 
@@ -634,7 +780,7 @@ function Evaluador() {
           )}
         </div>
       </div>
-      <Segurity/>
+      {/* <Segurity/> */}
       <Footer></Footer>
     </div>
   );

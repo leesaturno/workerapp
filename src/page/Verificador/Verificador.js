@@ -102,18 +102,18 @@ function Verificador() {
                   <div className="ed-grid lg-grid-2">
                     <div>
                       <Button type="primary" onClick={()=>{setCam("environment"); showModal()}} className="btn-CB">
-                        Cedula de identidad frente
+                        Cedula de Identidad Anverso
                       </Button>
                     </div>
                     <div>
-                      <span>Tome una foto de su cedula de identidad por el frente</span>
+                      <span>Tome una foto de su cedula de identidad por el anverso</span>
                     </div>
                   </div>
                   <br/><br/><br/>
                   <div className="ed-grid lg-grid-2">
                     <div>
                       <Button type="primary"  onClick={()=>{setCam("environment"); showModal()}} className="btn-CB">
-                        Cedula de identidad trasero
+                       Cedula de Identidad Reverso
                       </Button>
                     </div>
                     <div>
