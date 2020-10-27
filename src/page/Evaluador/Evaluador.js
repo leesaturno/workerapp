@@ -32,14 +32,14 @@ function Evaluador() {
   const [lng, setlng] = useState(0);
   const [FO, setFO] = useState({ mensaje: false, cercano: false });
   const [WLess, setWLess] = useState({ mensaje: false, cercano: false });
-  const [cliente, setcliente] = useState({ rut: "", deuda: null });
+  const [cliente, setcliente] = useState({ rut: "", deuda: null }); //estado para el cliente que se trae si hay coincidencia para verficar deuda
   const [cercanoFO, setcercanoFO] = useState({ distancia: "", dispositivo: "" });
   const [cercanoWL, setcercanoWL] = useState({ distancia: "", dispositivo: "" });
   const [Clientes, setClientes] = useState({
     rut: "",
     email: "",
-
-    fNacimiento: "",
+    run:"",
+    fNacimiento: null,
     user: "",
     nombres: "",
     apPaterno: "",
@@ -47,6 +47,7 @@ function Evaluador() {
     phone: "",
     plan: "",
     cReferencia: '',
+    direccion: '',
     blocManzana: "",
     dptoSitio: ""
   });
@@ -103,7 +104,7 @@ function Evaluador() {
       setcliente({ rut: cliente.rut, deuda: null })
     }
   }
-
+//autocompletado de la direccion de cobertura y verificador de cobertura
   const handleScriptLoad = () => {
 
     // Declare Options For Autocomplete
@@ -120,14 +121,14 @@ function Evaluador() {
       const addressObject = autocomplete.getPlace();
 
 
-      // Check if address is valid
+      
       let distancesWL = [];
       let distancesFO = [];
 
       const query3 = addressObject.formatted_address;
       const lttd = addressObject.geometry.location.lat();
       const lngtd = addressObject.geometry.location.lng();
-      //aqui deberian almacenarse en el estado pero no logro hacerlo
+      
       setQuery(query3);
       setlat(lttd);
       setlng(lngtd);
@@ -137,10 +138,10 @@ function Evaluador() {
           var R = 6371
           var rad = function (x) { return x * Math.PI / 180; }
 
-          /*       setFO({...FO, mensaje:false});
-                setWL({...WL, mensaje:false}); */
+             setFO({...FO, mensaje:false});
+                setWLess({...WLess, mensaje:false}); 
           pointservice.forEach(point => {
-
+//verifica cobertura Fibra optica
             if (point.INDEX_tecnologia === "1") {
 
 
@@ -164,11 +165,10 @@ function Evaluador() {
 
                   setcercanoFO({ ...cercanoFO, distancia: distancesFO[0], dispositivo: point.dispositivo });
                 }
-                /* 
-                              console.log(cercano); */
+               
               }
             } else { setFO({ ...FO, cercano: true }); }
-
+//verifica cobertura wifi
             if (point.INDEX_tecnologia === "2") {
 
 
@@ -198,28 +198,16 @@ function Evaluador() {
           });
 
 
-          /*  distancesFO.sort(ordenar);
-            distancesWL.sort(ordenar);
-            var DWL=distancesWL[0];
-            var DFO=distancesFO[0];
-          if(DFO > 0){
-            setFO({...FO, cercano:true});
-          }else if(DWL > 0){
-            setWL({...WL, cercano:true});
-          } */
-
-
-          /*  setcercano({...cercano, distancia:distancesWL[0][0], dispositivo:distancesWL[0][1]}) */
         })
 
 
     })
   }
-
+//ordenador de las distancias para cobertura 
   const ordenar = (valor1, valor2) => {
     return valor1 - valor2
   }
-
+//autocompletado de la calle de referencia 
   const handleScriptLoad2 = () => {
     const options = {
       componentRestrictions: { country: "cl" }
@@ -235,7 +223,6 @@ function Evaluador() {
 
       const query2 = addressObject2.formatted_address;
 
-      //aqui deberian almacenarse en el estado pero no logro hacerlo
       setcReferencia(query2);
 
 
@@ -249,14 +236,8 @@ function Evaluador() {
 
   /* const evaluador=useSelector(store=>store.evaluador); */
 
-  /* useEffect(()=>{
 
-    if(datos.digito && evaluador.filled===false) {disparador(pointAction()); }
-
-
-
-  }) */
-
+//loading de la deuda en el rut step 1
   const loading2 = () => {
     if (datos.rutvalido === true) {
       do {
@@ -268,14 +249,9 @@ function Evaluador() {
 
 
   }
-
+//loading de la cobertura step 1
   const loading = () => {
-    /*  if (datos.rutvalido===true){
-        do {
-          if(cliente.deuda === 0){break}
-          return <Spin indicator={antIcon} />
-        } while ( cliente.deuda === null);
-        }  */
+
 
     if (query !== "") {
       do {
@@ -373,7 +349,7 @@ function Evaluador() {
 
               <div className="ed-grid lg-grid-4">
                 <div class="lg-cols-3">
-                  <input name="direccion" className="form-control" type="text" placeholder="Escribe tu direccion" id='autocomplete' />
+                  <input name="direccion" className="form-control" type="text" value={Clientes.direccion} onChange={captadatos} placeholder="Escribe tu direccion" id='autocomplete' />
 
                 </div>
 
@@ -425,7 +401,7 @@ function Evaluador() {
               <div className="ed-grid lg-grid-3">
                 <div className="form-group">
                   <label className="text-ups">Run</label>
-                  <input type="number" name="rut"  className="form-control" placeholder="12672579" value={datos.rut + '-' + datos.digito} readOnly />
+                  <input type="text" name="rut"  className="form-control" placeholder="" value={datos.rut+'-'+ datos.digito} readOnly />
                 </div>
                 <div className="form-group">
                   <label className="text-ups">Serie run</label>
@@ -461,7 +437,7 @@ function Evaluador() {
                     </div>
 
                     <div className="lg-cols-4">
-                      <input type="number" onInput={LengthCheck} name="phone" className="form-control" value={Clientes.phone} onChange={captadatos} minLength="8" maxLength="8" required />
+                      <input type="number" onInput={LengthCheck} name="phone"  className="form-control" value={Clientes.phone} onChange={captadatos} minLength="8" maxLength="8" required />
                     </div>
                   </div>
                 </div>
@@ -510,7 +486,7 @@ function Evaluador() {
               <div className="ed-grid">
                 <div className="form-group">
                   <label className="text-ups">Calle referencia</label>
-                  <input name="cReferencia" className="form-control" value={cReferencia} type="text" id='cReferencia' onFocus={handleScriptLoad2} required />
+                  <input name="cReferencia" className="form-control" value={Clientes.cReferencia} onChange={captadatos} type="text" id='cReferencia' onFocus={handleScriptLoad2} required />
                 </div>
               </div>
             </div>
@@ -569,9 +545,9 @@ function Evaluador() {
         if (query !== "") {
           if (WLess.mensaje === true || FO.mensaje === true) {
             setprocesar(true);
-            if (current === 1 && procesar === true) {
+            if (current === 1) {
               if (Clientes.run !== "") {
-                if (Clientes.fNacimiento !== "") {
+                if (Clientes.fNacimiento !== null) {
                   if (Clientes.nombres !== "") {
                     if (Clientes.apPaterno !== "") {
                       if (Clientes.apMaterno !== "") {
@@ -657,6 +633,16 @@ function Evaluador() {
                       }
                     )
                   }
+                }else {
+                  message.error(
+                    {
+                      content: ' ¡Debe proporcionar una fecha de nacimiento!',
+                      duration: 5,
+                      style: {
+                        marginTop: '13vh', float: 'right',
+                      }
+                    }
+                  )
                 }
               } else {
                 message.error(
@@ -725,7 +711,7 @@ function Evaluador() {
       .then(res => {
 
         message.success({
-          content: '¡Cliente creado exitosamente!', duration: 10,
+          content: '¡Cliente creado exitosamente!', duration: 5,
 
           style: {
             marginTop: '13vh', float: 'right',
@@ -737,15 +723,39 @@ function Evaluador() {
             .then(res => {
 
               message.success({
-                content: '¡mensaje de verificacion enviado exitosamente!', duration: 10,
+                content: '¡mensaje de verificacion enviado exitosamente!', duration: 5,
 
                 style: {
                   marginTop: '13vh', float: 'right',
                 }
               });
-              setCurrent(0);
-
-              setprocesar(false);
+              setTimeout(() => {
+                
+                setClientes({
+                  rut: "",
+                  email: "",
+                  run:"",
+                  fNacimiento: null,
+                  user: "",
+                  nombres: "",
+                  apPaterno: "",
+                  apMaterno: "",
+                  phone: "",
+                  plan: "",
+                  cReferencia: '',
+                  direccion:"",
+                  blocManzana: "",
+                  dptoSitio: ""
+                });
+                setCurrent(0);
+  
+                setprocesar(false);
+                setFO({ mensaje: false, cercano: false });
+                setWLess({ mensaje: false, cercano: false });
+                setcliente({ rut: "", deuda: null });
+                setcercanoFO({ distancia: "", dispositivo: "" });
+                setcercanoWL({ distancia: "", dispositivo: "" });
+              }, 2000);
             })
         }, 3000);
 
