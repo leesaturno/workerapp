@@ -709,7 +709,7 @@ function Evaluador() {
 
     .then(res => {
       
-      message.success({ content:'¡Cliente creado exitosamente!', 
+      message.success({ content:'¡Cliente creado exitosamente!',  duration:10, 
  
       style: {
         marginTop: '13vh', float: 'right',
@@ -720,7 +720,7 @@ function Evaluador() {
 
       .then(res => {
         
-        message.success({ content:'¡mensaje de verificacion enviado exitosamente!', 
+        message.success({ content:'¡mensaje de verificacion enviado exitosamente!',  duration:10, 
  
         style: {
           marginTop: '13vh', float: 'right',
