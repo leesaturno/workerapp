@@ -15,9 +15,12 @@
         padding: 0;
     }
     .card-header {
-        height: 60px;
+        height: 70px;
         border-bottom: 1px solid $divider;
         width: 100%;
+        @include respond('phone-land') {
+            height: 60px;
+        }
         @media only screen and (max-width: 367px) {
             height: 130px;
             text-align: center;
@@ -95,21 +98,32 @@
         padding: 20px;
         text-align: left;
         @include respond('phone-land') {
-            margin-right: 0;
-            padding: 0;
+            margin-right: 0 !important;
+            padding: 10px !important;
         }
         @include respond('tab-port') {
+            margin-right: 0 !important;
+            padding: 0;
+        }
+        @include respond('tab') {
             margin-right: 0;
             padding: 0;
         }
         .ml-8 {
             margin-right: 8%;
             @include respond('tab-port') {
-                margin-right: 0;
+                margin-right: 0 !important;
+            }
+            @include respond('tab') {
+                margin-right: 22%;
+                margin-left: -10px;
             }
         }
         
         form {
+            @include respond('tab') {
+                padding: 0;
+            }
             label {
                 color: hsla(0,0%,56.1%,.7);
                 font-size: 12px;
@@ -446,6 +460,10 @@ input[type=number] {
   position: relative;
   top: -2px;
   z-index: 100;
+}
+
+.steps-action {
+    padding: 35px 0 25px 0 !important;
 }
 
 .cobertura {

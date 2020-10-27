@@ -22,10 +22,6 @@ $white: #ffffff;
     padding: 0;
 }
 
-.bg-card-dark{
-    color: red;
-}
-
 body {
     background-color: $bg-dark;
     color: $text-D;
@@ -56,6 +52,13 @@ h1 {
     right: 5%;
     text-align: center;
     margin: 0 auto;
+    min-height: calc(60vh - 10px);
+    @media only screen and (max-width: 767px) {
+        min-height: calc(75vh - 10px);
+    }
+    @media only screen and (max-width: 1199px) {
+        min-height: calc(80vh - 10px);
+    }
 }
 
 .bxs {
@@ -216,6 +219,12 @@ form {
     }
     @if($breakpoint=="tab-land") {
         @media only screen and (max-width: 1199px) {
+            @content;
+        }
+    }
+
+    @if($breakpoint=="tab") {
+        @media (min-width: 1024px) and (max-width: 1199px)  {
             @content;
         }
     }
