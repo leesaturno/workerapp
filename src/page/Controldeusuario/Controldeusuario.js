@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './Controldeusuario.scss';
-
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import Card from '../../component/Card/Card'
 import MuiDT from "../../component/Datatable/MuiDT"
 import Footer from '../../component/Footer/Footer'
@@ -58,7 +58,32 @@ componentDidMount(){
     // Si retornamos false, evitaremos el método render
     
   }
-
+  getMuiTheme = () => createMuiTheme({
+    overrides: {
+      MUIDataTableFilter: {
+        root:{
+          
+            background: "#242224 !important"
+        
+          
+        },
+        title:{
+          color: "#8F8F8F !important"
+        },
+        resetLink:{
+          color: "#8F8F8F !important"
+        }
+      },
+      MuiFormLabel: {
+        root:{
+          
+          color: "#8F8F8F !important"
+        
+          
+        },
+      }
+    }
+  })
  confirm(e) {
     console.log(e);
     
@@ -83,6 +108,7 @@ componentDidMount(){
                 btn="Nuevo usuario " 
                 href="/NewUser" 
                 content={
+                  <MuiThemeProvider theme={this.getMuiTheme()}>
                   <MuiDT
                   
                       columns= {[
@@ -217,7 +243,7 @@ componentDidMount(){
     },
                         // tableBodyMaxHeight: ''
                       }}}
-                  />
+                  /> </MuiThemeProvider>
                 }
               />
           </div>
