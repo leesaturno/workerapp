@@ -1,5 +1,20 @@
 @import "../../App.scss";
 
+.navbar {
+    .user {
+        margin-right: 50px;
+        img {
+            border-radius: 0;
+            width: 100px;
+            margin-top: 25px;
+            @include respond('phone-land') {
+                height: auto;
+                width: 70px;
+                margin-top: -12px;
+            }
+        }
+    }
+}
 .ant-modal {
     color: $text-D !important;
     font-size: 12px !important; }
