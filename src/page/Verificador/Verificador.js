@@ -5,7 +5,7 @@ import Camera from './WebCam'
 import {useParams} from 'react-router-dom';
 import Footer from '../../component/Footer/Footer';
 import { Modal, Button } from 'antd';
-import Logo from '../../images/logo.png'
+import Logo from '../../images/logo.png';
 import {useDispatch,useSelector} from 'react-redux';
 import {rutsaction} from '../../Redux/Dusk/verificadorreducer';
 
@@ -48,6 +48,18 @@ function Verificador() {
     setViewModal({...ViewModal, visible: false });
   };
   
+  function botonandverso() {
+    if(cliente.role=="ocultar1"){
+      
+      return (<>Informacion enviada con exito</>);
+      
+    }else{
+      return (<><Button type="primary" onClick={()=>{setCam("environment"); showModal()}} className="btn-CB">
+      Cedula de Identidad Anverso
+    </Button></>);
+    }
+  }
+
   return (
     <>
       <nav className="navbar">
@@ -101,23 +113,10 @@ function Verificador() {
                     <br/><br/><br/>
                   <div className="ed-grid lg-grid-2">
                     <div>
-                      <Button type="primary" onClick={()=>{setCam("environment"); showModal()}} className="btn-CB">
-                        Cedula de Identidad Anverso
-                      </Button>
+                      {botonandverso()}
                     </div>
                     <div>
                       <span>Tome una foto de su cedula de identidad por el anverso</span>
-                    </div>
-                  </div>
-                  <br/><br/><br/>
-                  <div className="ed-grid lg-grid-2">
-                    <div>
-                      <Button type="primary"  onClick={()=>{setCam("environment"); showModal()}} className="btn-CB">
-                       Cedula de Identidad Reverso
-                      </Button>
-                    </div>
-                    <div>
-                      <span>Tome una foto de su cedula de identidad por el reverso</span>
                     </div>
                   </div>
                   <br/><br/>
@@ -132,13 +131,10 @@ function Verificador() {
               footer={[
                 <Button key="back" onClick={handleCancel}>
                   Cancelar
-                </Button>,
-                <Button key="submit" type="primary" loading={ViewModal.loading} onClick={handleOk}>
-                  Enviar
-                </Button>,
+                </Button>
               ]}
               >
-                <Camera modecam={cam} rut={cliente.registro.map(Item=>{ return Item.rut })} ></Camera>
+                <Camera modecam={cam} rut={cliente.registro.map(Item=>{ return Item.rut })} fcn={cliente.registro.map(Item=>{ return Item.fechanacimiento })} nombres={cliente.registro.map(Item=>{ return Item.nombres })} apellidosP={cliente.registro.map(Item=>{ return Item.apPaterno })} apellidosM={cliente.registro.map(Item=>{ return Item.apMaterno })} ></Camera>
               </Modal>
             
             </div>
