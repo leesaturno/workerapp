@@ -5,7 +5,7 @@ import Camera from './WebCam'
 import {useParams} from 'react-router-dom';
 import Footer from '../../component/Footer/Footer';
 import { Modal, Button } from 'antd';
-import Logo from '../../images/logo.png';
+import Logo from '../../images/logo-stel.png'
 import {useDispatch,useSelector} from 'react-redux';
 import {rutsaction} from '../../Redux/Dusk/verificadorreducer';
 
