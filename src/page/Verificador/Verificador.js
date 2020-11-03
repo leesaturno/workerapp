@@ -67,14 +67,13 @@ function Verificador() {
           title="Stel desea verificar sus datos"
           content= { 
             <div>
+              <div className="s-to-center center">
+                <div className="user d-inline-block">
+                  <img src={Logo} alt="Logo" />
+                </div>
+              </div>
               <form>
                   <div className="ed-grid lg-grid-2">
-                  <div className="s-to-center ">
-                    <div className="user d-inline-block">
-                      <img src={Logo} alt="Logo" />
-                    </div>
-                  </div>
-                  <br/><br/>
                     <div className="form-group">
                       <label className="text-ups">Run</label>
                       <input type="text" name="rut" className="form-control"  placeholder={cliente.registro.map(Item=>{ return Item.rut })} value={cliente.registro.map(Item=>{ return Item.rut })} readOnly/> 
