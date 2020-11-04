@@ -7,7 +7,7 @@ import { Button } from 'antd';
 import {cam2} from '../../Redux/Dusk/verificadorreducer';
 
 
-function Camera1() {
+function Camera1(props) {
   const disparador=useDispatch();
 
   const webcamRef = useRef(null);
@@ -33,12 +33,24 @@ function Camera1() {
     await worker.loadLanguage('eng');
     await worker.initialize('eng');
     const { data: { text } } = await worker.recognize(imageSrc);
-    setOcr(text)
+    var nombres = "LEE MARK CLAUDE";
+    var apellidos = "SATURNO YNOJOSA";
+    var dni="20.958.067"
+    var indexnombres = text.search(nombres);
+    var indexapellidos = text.search(apellidos);
+    var indexdni = text.search(dni);
+    var textnombres = text.substr(indexnombres,nombres.length);
+    var textapellidos = text.substr(indexapellidos,nombres.length);
+    var textdni = text.substr(indexdni,dni.length);
+    setOcr("nombres: "+textnombres+" Apellidos: "+textapellidos+" DNI: "+textdni);
     await worker.terminate();
+  
   }
   useEffect(()=>{
     doOCR()
+   
   });
+ 
 
   function ord() {
     if(imageSrc==null){
@@ -51,7 +63,9 @@ function Camera1() {
             videoConstraints={videoConstraints}
           />
             <div className="controls">
-                <button onClick={()=>{capture();}} className="btnCapture snap"></button>
+                <button onClick={()=>{capture(); setTimeout(()=>{  var myVar =setInterval(() => {
+      ;props.doc(ocr)
+    }, 1000);setTimeout(()=>{ clearInterval(myVar)},300000)},10000) }}  className="btnCapture snap"></button>
             </div>
         </>
       );

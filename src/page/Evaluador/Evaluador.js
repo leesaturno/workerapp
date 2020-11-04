@@ -284,19 +284,11 @@ function Evaluador() {
   }
 
   // modal
-const doc = (ocr,e)=>{
+const doc = (ocr)=>{
 
-  var nombres = "LEE MARK CLAUDE";
-var apellidos = "SATURNO YNOJOSA";
-var dni="20.958.067"
-var indexnombres = ocr.search(nombres);
-var indexapellidos = ocr.search(apellidos);
-var indexdni = ocr.search(dni);
-var textnombres = ocr.substr(indexnombres,nombres.length);
-var textapellidos = ocr.substr(indexapellidos,nombres.length);
-var textdni = ocr.substr(indexdni,dni.length);
-  console.log("nombres: "+textnombres+" Apellidos: "+textapellidos+" DNI: "+textdni);
-  console.log(e);
+
+  console.log(Object.values(ocr));
+  console.log("evaluador:"+ocr);
 }
   const [ViewModal, setViewModal] = useState(
     {
@@ -343,7 +335,7 @@ var textdni = ocr.substr(indexdni,dni.length);
   const { Step } = Steps;
 
   const steps = [
-    {
+  /*   {
       content: <CardStep title="Evaluador"
         content={
           <form className="ml-8">
@@ -396,7 +388,7 @@ var textdni = ocr.substr(indexdni,dni.length);
           </form>
         }
       ></CardStep>,
-    },
+    }, */
 
     {
       content: <CardStep title="Registro de cliente"
