@@ -13,7 +13,7 @@ import Script from 'react-load-script';
 import verificador from 'verificador-rut';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
-import Camera from '../Verificador/WebCam'
+import Camera1 from '../Verificador/WebCam1'
 import Segurity from '../../component/Segurity/Segurity';
 //redux
 /* import {pointAction,ruttAction} from '../../Redux/Dusk/pointreducer'; */
@@ -30,8 +30,8 @@ function Evaluador() {
   });
   const [lat, setlat] = useState(0);
   const [lng, setlng] = useState(0);
-  const [FO, setFO] = useState({ mensaje: false, cercano: false });
-  const [WLess, setWLess] = useState({ mensaje: false, cercano: false });
+  const [FO, setFO] = useState({ mensaje: false, sinFO: false });
+  const [WLess, setWLess] = useState({ mensaje: false, sinWL: false });
   const [cliente, setcliente] = useState({ rut: "", deuda: null }); //estado para el cliente que se trae si hay coincidencia para verficar deuda
   const [cercanoFO, setcercanoFO] = useState({ distancia: "", dispositivo: "" });
   const [cercanoWL, setcercanoWL] = useState({ distancia: "", dispositivo: "" });
@@ -60,10 +60,12 @@ function Evaluador() {
   }
 
   const captadatos = (e) => {
+       
     setClientes({
       ...Clientes,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value.toLocaleUpperCase()
     })
+    return e.target.value.toLocaleUpperCase()
   }
 
   const usr = useSelector(store => store.session);
@@ -73,7 +75,7 @@ function Evaluador() {
       setDatos({ ...datos, rutvalido: true, rutinvalido: false })
       setClientes({
         ...Clientes,
-        rut: datos.rut + '-' + datos.digito
+        rut: datos.rut + '-' + datos.digito.toLocaleUpperCase()
       });
       usr.user.forEach(user => {
         setClientes({
@@ -129,17 +131,17 @@ function Evaluador() {
       const lttd = addressObject.geometry.location.lat();
       const lngtd = addressObject.geometry.location.lng();
       
-      setQuery(query3);
+      setQuery(query3.toLocaleUpperCase());
       setlat(lttd);
       setlng(lngtd);
       axios.get(`https://api.workerapp.cl/api/v2/pointservice`)
         .then(res => {
           const pointservice = res.data;
-          var R = 6371
+          var R =6378;
           var rad = function (x) { return x * Math.PI / 180; }
 
              setFO({...FO, mensaje:false});
-                setWLess({...WLess, mensaje:false}); 
+             
           pointservice.forEach(point => {
 //verifica cobertura Fibra optica
             if (point.INDEX_tecnologia === "1") {
@@ -152,22 +154,28 @@ function Evaluador() {
               var circunferencia = 2 * Math.atan2(Math.sqrt(a1), Math.sqrt(1 - a1));
               var d1 = R * circunferencia;
               var dist = d1.toFixed(3);
+            
 
-              if (dist <= 0.300) {
-                distancesFO.push(dist);
-
+              distancesFO.sort(ordenar);
+              if (dist <= point.distancia) {  ;
+                distancesFO.push({ id: dist, nombre: point.dispositivo});
+              
                 distancesFO.sort(ordenar);
-
+               
 
                 setFO({ ...FO, mensaje: true });
-                console.log(dist + "soy fibra");
-                if (point.dispositivo !== "") {
-
-                  setcercanoFO({ ...cercanoFO, distancia: distancesFO[0], dispositivo: point.dispositivo });
-                }
+                console.log(dist + "soy fibra "+lttd+","+lngtd+" Base de datos: "+point.latitud+", "+point.longitud);
+                
+                
+                 setTimeout(() => {
+                   
+                   setcercanoFO({ ...cercanoFO, distancia: distancesFO[0].id, dispositivo: distancesFO[0].nombre });
+                 }, 1000);
+                
                
-              }
-            } else { setFO({ ...FO, cercano: true }); }
+               
+              } else  console.log(dist + "soy fibra "+lttd+","+lngtd);
+            } else { setFO({ ...FO, sinFO: true }); }
 //verifica cobertura wifi
             if (point.INDEX_tecnologia === "2") {
 
@@ -179,24 +187,34 @@ function Evaluador() {
               var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
               var d = R * c;
               var distWL = d.toFixed(3);
-              if (distWL <= 0.350) {
+              if (distWL <= point.distancia) {
 
-                distancesWL.push(distWL);
+                distancesWL.push({ id: distWL, nombre: point.dispositivo});
                 distancesWL.sort(ordenar);
+                console.log(distWL + "soy WL "+lttd+","+lngtd);
+                setWLess({ ...WLess, mensaje: true });
                 setTimeout(() => {
-                  console.log(distWL + "soy WL");
-                  setWLess({ ...WLess, mensaje: true });
+                  setcercanoWL({ ...cercanoWL, distancia: distancesWL[0].id, dispositivo: distancesWL[0].nombre });
                 }, 1000);
-                console.log(distWL + "soy WL");
-                if (point.dispositivo !== "") {
+               
+               
 
-                  setcercanoWL({ ...cercanoWL, distancia: distancesWL[0], dispositivo: point.dispositivo });
-                }
+              
               }
 
-            } else { setWLess({ ...WLess, cercano: true }); }
+            } else { setWLess({ ...WLess, sinWL: true }); }
           });
-
+          if (FO.mensaje === true && WLess.mensaje === true) {
+            
+            if  (cercanoFO.distancia<cercanoWL.distancia)  {
+              setFO({ ...FO, mensaje: false });
+              
+            }else if (cercanoWL.distancia<cercanoFO.distancia) {
+              setWLess({ ...WLess, mensaje: false });
+              
+              
+            }
+          }
 
         })
 
@@ -205,7 +223,7 @@ function Evaluador() {
   }
 //ordenador de las distancias para cobertura 
   const ordenar = (valor1, valor2) => {
-    return valor1 - valor2
+    return valor1.id - valor2.id
   }
 //autocompletado de la calle de referencia 
   const handleScriptLoad2 = () => {
@@ -223,7 +241,7 @@ function Evaluador() {
 
       const query2 = addressObject2.formatted_address;
 
-      setcReferencia(query2);
+      setcReferencia(query2.toLocaleUpperCase());
 
 
 
@@ -257,7 +275,7 @@ function Evaluador() {
       do {
         if (FO.mensaje === true || WLess.mensaje === true) { break }
 
-        if (FO.cercano === true && WLess.cercano === true) { break }
+        if (FO.sinFO === true && WLess.sinWL === true) { break }
 
         return <Spin indicator={antIcon} />
 
@@ -268,7 +286,12 @@ function Evaluador() {
   }
 
   // modal
+const doc = (ocr)=>{
 
+
+  console.log(Object.values(ocr));
+  console.log("evaluador:"+ocr);
+}
   const [ViewModal, setViewModal] = useState(
     {
       loading: false,
@@ -349,7 +372,7 @@ function Evaluador() {
 
               <div className="ed-grid lg-grid-4">
                 <div class="lg-cols-3">
-                  <input name="direccion" className="form-control" type="text" value={Clientes.direccion} onChange={captadatos} placeholder="Escribe tu direccion" id='autocomplete' />
+                  <input name="direccion" className="form-control" type="text" placeholder="Escribe tu direccion" id='autocomplete' />
 
                 </div>
 
@@ -360,14 +383,14 @@ function Evaluador() {
                   </ButtonGroup>
                 </div>
 
-                <span className="lg-cols-3 cobertura" id="cobertura"> {loading()} {WLess.mensaje === true ? <span>Tu cobertura más cercana es: WIRELESS Nodo: {cercanoWL.dispositivo}</span> : "" || FO.mensaje === true ? <span>Tu cobertura más cercana es: FIBRA OPTICA Nodo: {cercanoFO.dispositivo}</span> : "" || (FO.cercano === true && WLess.cercano === true) ? "!No hay Cobertura¡" : ""}</span>
+                <span className="lg-cols-3 cobertura" id="cobertura"> {loading()} {WLess.mensaje === true ? <span>Tu cobertura más cercana es: WIRELESS Nodo: {cercanoWL.dispositivo}</span> : "" || FO.mensaje === true ? <span>Tu cobertura más cercana es: FIBRA OPTICA Nodo: {cercanoFO.dispositivo}  </span> : "" || (FO.sinFO === true && WLess.sinWL === true) ? "!No hay Cobertura¡" : ""}</span>
 
               </div>
             </div>
           </form>
         }
       ></CardStep>,
-    },
+    }, 
 
     {
       content: <CardStep title="Registro de cliente"
@@ -392,7 +415,7 @@ function Evaluador() {
                                     </BTN>,
                 ]}
               >
-                <Camera></Camera>
+                <Camera1 doc={doc}></Camera1>
               </Modal>
             </div>
 
@@ -401,30 +424,30 @@ function Evaluador() {
               <div className="ed-grid lg-grid-3">
                 <div className="form-group">
                   <label className="text-ups">Run</label>
-                  <input type="text" name="rut"  className="form-control" placeholder="" value={datos.rut+'-'+ datos.digito} readOnly />
+                  <input type="text" name="rut"  className="form-control" placeholder="" value={datos.rut+'-'+ datos.digito.toLocaleUpperCase()} readOnly />
                 </div>
                 <div className="form-group">
                   <label className="text-ups">Serie run</label>
-                  <input type="text" name="run" className="form-control" value={Clientes.run} onChange={captadatos} required />
+                  <input type="text" name="run" className="form-control"  onChange={captadatos} required />
                 </div>
                 <div className="form-group">
                   <label className="text-ups">Fecha de nacimiento</label>
-                  <input type="date" name="fNacimiento" className="form-control" value={Clientes.fNacimiento} onChange={captadatos} placeholder={1} required />
+                  <input type="date" name="fNacimiento" className="form-control"  onChange={captadatos} placeholder={1} required />
                 </div>
               </div>
 
               <div className="ed-grid lg-grid-3">
                 <div className="form-group">
                   <label className="text-ups">Nombres</label>
-                  <input type="text" name="nombres" className="form-control" value={Clientes.nombres} onChange={captadatos} required />
+                  <input type="text" name="nombres" className="form-control"  onChange={captadatos} required />
                 </div>
                 <div className="form-group">
                   <label className="text-ups">Apellido paterno</label>
-                  <input type="text" name="apPaterno" className="form-control" value={Clientes.apPaterno} onChange={captadatos} required />
+                  <input type="text" name="apPaterno" className="form-control"  onChange={captadatos} required />
                 </div>
                 <div className="form-group">
                   <label className="text-ups">Apellido materno</label>
-                  <input type="text" name="apMaterno" className="form-control" value={Clientes.apMaterno} onChange={captadatos} required />
+                  <input type="text" name="apMaterno" className="form-control"  onChange={captadatos} required />
                 </div>
               </div>
 
@@ -437,7 +460,7 @@ function Evaluador() {
                     </div>
 
                     <div className="lg-cols-4">
-                      <input type="number" onInput={LengthCheck} name="phone"  className="form-control" value={Clientes.phone} onChange={captadatos} minLength="8" maxLength="8" required />
+                      <input type="number" onInput={LengthCheck} name="phone"  className="form-control"  onChange={captadatos} minLength="8" maxLength="8" required />
                     </div>
                   </div>
                 </div>
@@ -474,19 +497,19 @@ function Evaluador() {
               <div className="ed-grid lg-grid-2">
                 <div className="form-group">
                   <label className="text-ups">Block / Manzana</label>
-                  <input type="text" name="blocManzana" className="form-control" value={Clientes.blocManzana} onChange={captadatos} />
+                  <input type="text" name="blocManzana" className="form-control"  onChange={captadatos} />
                 </div>
 
                 <div className="form-group">
                   <label className="text-ups">Departamento / Sitio</label>
-                  <input type="text" name="dptoSitio" className="form-control" value={Clientes.dptoSitio} onChange={captadatos} />
+                  <input type="text" name="dptoSitio" className="form-control"  onChange={captadatos} />
                 </div>
               </div>
 
               <div className="ed-grid">
                 <div className="form-group">
                   <label className="text-ups">Calle referencia</label>
-                  <input name="cReferencia" className="form-control" value={Clientes.cReferencia} onChange={captadatos} type="text" id='cReferencia' onFocus={handleScriptLoad2} required />
+                  <input name="cReferencia" className="form-control" onChange={captadatos} type="text" id='cReferencia' onFocus={handleScriptLoad2} required />
                 </div>
               </div>
             </div>
@@ -706,7 +729,7 @@ function Evaluador() {
   }
 
   const final = () => {
-    axios.get('https://api.workerapp.cl/api/subscripcion/' + Clientes.nombres + '/' + Clientes.apPaterno + '/' + Clientes.apMaterno + '/' + datos.rut + '-' + datos.digito + '/' + Clientes.run + '/' + '+569' + Clientes.phone + '/' + Clientes.email + '/' + Clientes.fNacimiento + '/' + query + ', ' + Clientes.blocManzana + ', ' + Clientes.dptoSitio + '/' + cReferencia + '/' + Clientes.plan + '/' + Clientes.user)
+    axios.get('https://api.workerapp.cl/api/subscripcion/' + Clientes.nombres + '/' + Clientes.apPaterno + '/' + Clientes.apMaterno + '/' + Clientes.rut + '/' + Clientes.run + '/+569' + Clientes.phone + '/' + Clientes.email + '/' + Clientes.fNacimiento + '/' + query + ', ' + Clientes.blocManzana + ', ' + Clientes.dptoSitio + '/' + cReferencia + '/' + Clientes.plan + '/' + Clientes.user)
 
       .then(res => {
 
@@ -718,7 +741,7 @@ function Evaluador() {
           }
         });
         setTimeout(() => {
-          axios.get('https://api.workerapp.cl/api/sms/' + '+569' + Clientes.phone + '/' + datos.rut + '-' + datos.digito)
+          axios.get('https://api.workerapp.cl/api/sms/+569' + Clientes.phone + '/' + Clientes.rut)
 
             .then(res => {
 
@@ -750,8 +773,8 @@ function Evaluador() {
                 setCurrent(0);
   
                 setprocesar(false);
-                setFO({ mensaje: false, cercano: false });
-                setWLess({ mensaje: false, cercano: false });
+                setFO({ mensaje: false, sinFO: false });
+                setWLess({ mensaje: false, sinFO: false });
                 setcliente({ rut: "", deuda: null });
                 setcercanoFO({ distancia: "", dispositivo: "" });
                 setcercanoWL({ distancia: "", dispositivo: "" });

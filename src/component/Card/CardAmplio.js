@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './Card.scss';
 
-import Icon from '../Icons/Icons'
-import {NavLink} from 'react-router-dom';
+
+
   
 const CardAmplio = ({ title, content }) => (
   <div className="cardAmplio card-dark mb-3">
