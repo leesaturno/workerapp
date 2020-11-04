@@ -65,7 +65,7 @@ function Evaluador() {
       ...Clientes,
       [e.target.name]: e.target.value.toLocaleUpperCase()
     })
-    return e.target.value.toLocaleUpperCase()
+   
   }
 
   const usr = useSelector(store => store.session);
@@ -730,7 +730,7 @@ const doc = (ocr)=>{
   }
 
   const final = () => {
-    axios.get('https://api.workerapp.cl/api/subscripcion/' + Clientes.nombres + '/' + Clientes.apPaterno + '/' + Clientes.apMaterno + '/' + Clientes.rut + '/' + Clientes.run + '/+569' + Clientes.phone + '/' + Clientes.email + '/' + Clientes.fNacimiento + '/' + query + ', ' + Clientes.blocManzana + ', ' + Clientes.dptoSitio + '/' + cReferencia + '/' + Clientes.plan + '/' + Clientes.user)
+    axios.get('https://api.workerapp.cl/api/subscripcion/' + Clientes.nombres + '/' + Clientes.apPaterno + '/' + Clientes.apMaterno + '/' + datos.rut + '-' + datos.digito.toUpperCase() + '/' + Clientes.run + '/+569' + Clientes.phone + '/' + Clientes.email + '/' + Clientes.fNacimiento + '/' + query + ', ' + Clientes.blocManzana + ', ' + Clientes.dptoSitio + '/' + cReferencia + '/' + Clientes.plan + '/' + Clientes.user)
 
       .then(res => {
 
@@ -742,7 +742,7 @@ const doc = (ocr)=>{
           }
         });
         setTimeout(() => {
-          axios.get('https://api.workerapp.cl/api/sms/+569' + Clientes.phone + '/' + Clientes.rut)
+          axios.get('https://api.workerapp.cl/api/sms/+569' + Clientes.phone + '/' + datos.rut + '-' + datos.digito.toUpperCase())
 
             .then(res => {
 
