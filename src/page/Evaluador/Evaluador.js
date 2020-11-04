@@ -13,7 +13,7 @@ import Script from 'react-load-script';
 import verificador from 'verificador-rut';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
-import Camera from '../Verificador/WebCam'
+import Camera1 from '../Verificador/WebCam1'
 import Segurity from '../../component/Segurity/Segurity';
 //redux
 /* import {pointAction,ruttAction} from '../../Redux/Dusk/pointreducer'; */
@@ -30,8 +30,8 @@ function Evaluador() {
   });
   const [lat, setlat] = useState(0);
   const [lng, setlng] = useState(0);
-  const [FO, setFO] = useState({ mensaje: false, cercano: false });
-  const [WLess, setWLess] = useState({ mensaje: false, cercano: false });
+  const [FO, setFO] = useState({ mensaje: false, sinFO: false });
+  const [WLess, setWLess] = useState({ mensaje: false, sinWL: false });
   const [cliente, setcliente] = useState({ rut: "", deuda: null }); //estado para el cliente que se trae si hay coincidencia para verficar deuda
   const [cercanoFO, setcercanoFO] = useState({ distancia: "", dispositivo: "" });
   const [cercanoWL, setcercanoWL] = useState({ distancia: "", dispositivo: "" });
@@ -135,11 +135,11 @@ function Evaluador() {
       axios.get(`https://api.workerapp.cl/api/v2/pointservice`)
         .then(res => {
           const pointservice = res.data;
-          var R = 6371
+          var R =6378;
           var rad = function (x) { return x * Math.PI / 180; }
 
              setFO({...FO, mensaje:false});
-                setWLess({...WLess, mensaje:false}); 
+             
           pointservice.forEach(point => {
 //verifica cobertura Fibra optica
             if (point.INDEX_tecnologia === "1") {
@@ -152,22 +152,28 @@ function Evaluador() {
               var circunferencia = 2 * Math.atan2(Math.sqrt(a1), Math.sqrt(1 - a1));
               var d1 = R * circunferencia;
               var dist = d1.toFixed(3);
+            
 
-              if (dist <= 0.300) {
-                distancesFO.push(dist);
-
+              distancesFO.sort(ordenar);
+              if (dist <= point.distancia) {  ;
+                distancesFO.push({ id: dist, nombre: point.dispositivo});
+              
                 distancesFO.sort(ordenar);
-
+               
 
                 setFO({ ...FO, mensaje: true });
-                console.log(dist + "soy fibra");
-                if (point.dispositivo !== "") {
-
-                  setcercanoFO({ ...cercanoFO, distancia: distancesFO[0], dispositivo: point.dispositivo });
-                }
+                console.log(dist + "soy fibra "+lttd+","+lngtd+" Base de datos: "+point.latitud+", "+point.longitud);
+                
+                
+                 setTimeout(() => {
+                   
+                   setcercanoFO({ ...cercanoFO, distancia: distancesFO[0].id, dispositivo: distancesFO[0].nombre });
+                 }, 1000);
+                
                
-              }
-            } else { setFO({ ...FO, cercano: true }); }
+               
+              } else  console.log(dist + "soy fibra "+lttd+","+lngtd);
+            } else { setFO({ ...FO, sinFO: true }); }
 //verifica cobertura wifi
             if (point.INDEX_tecnologia === "2") {
 
@@ -179,24 +185,34 @@ function Evaluador() {
               var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
               var d = R * c;
               var distWL = d.toFixed(3);
-              if (distWL <= 0.350) {
+              if (distWL <= point.distancia) {
 
-                distancesWL.push(distWL);
+                distancesWL.push({ id: distWL, nombre: point.dispositivo});
                 distancesWL.sort(ordenar);
+                console.log(distWL + "soy WL "+lttd+","+lngtd);
+                setWLess({ ...WLess, mensaje: true });
                 setTimeout(() => {
-                  console.log(distWL + "soy WL");
-                  setWLess({ ...WLess, mensaje: true });
+                  setcercanoWL({ ...cercanoWL, distancia: distancesWL[0].id, dispositivo: distancesWL[0].nombre });
                 }, 1000);
-                console.log(distWL + "soy WL");
-                if (point.dispositivo !== "") {
+               
+               
 
-                  setcercanoWL({ ...cercanoWL, distancia: distancesWL[0], dispositivo: point.dispositivo });
-                }
+              
               }
 
-            } else { setWLess({ ...WLess, cercano: true }); }
+            } else { setWLess({ ...WLess, sinWL: true }); }
           });
-
+          if (FO.mensaje === true && WLess.mensaje === true) {
+            
+            if  (cercanoFO.distancia<cercanoWL.distancia)  {
+              setFO({ ...FO, mensaje: false });
+              
+            }else if (cercanoWL.distancia<cercanoFO.distancia) {
+              setWLess({ ...WLess, mensaje: false });
+              
+              
+            }
+          }
 
         })
 
@@ -205,7 +221,7 @@ function Evaluador() {
   }
 //ordenador de las distancias para cobertura 
   const ordenar = (valor1, valor2) => {
-    return valor1 - valor2
+    return valor1.id - valor2.id
   }
 //autocompletado de la calle de referencia 
   const handleScriptLoad2 = () => {
@@ -257,7 +273,7 @@ function Evaluador() {
       do {
         if (FO.mensaje === true || WLess.mensaje === true) { break }
 
-        if (FO.cercano === true && WLess.cercano === true) { break }
+        if (FO.sinFO === true && WLess.sinWL === true) { break }
 
         return <Spin indicator={antIcon} />
 
@@ -268,7 +284,20 @@ function Evaluador() {
   }
 
   // modal
+const doc = (ocr,e)=>{
 
+  var nombres = "LEE MARK CLAUDE";
+var apellidos = "SATURNO YNOJOSA";
+var dni="20.958.067"
+var indexnombres = ocr.search(nombres);
+var indexapellidos = ocr.search(apellidos);
+var indexdni = ocr.search(dni);
+var textnombres = ocr.substr(indexnombres,nombres.length);
+var textapellidos = ocr.substr(indexapellidos,nombres.length);
+var textdni = ocr.substr(indexdni,dni.length);
+  console.log("nombres: "+textnombres+" Apellidos: "+textapellidos+" DNI: "+textdni);
+  console.log(e);
+}
   const [ViewModal, setViewModal] = useState(
     {
       loading: false,
@@ -349,7 +378,7 @@ function Evaluador() {
 
               <div className="ed-grid lg-grid-4">
                 <div class="lg-cols-3">
-                  <input name="direccion" className="form-control" type="text" value={Clientes.direccion} onChange={captadatos} placeholder="Escribe tu direccion" id='autocomplete' />
+                  <input name="direccion" className="form-control" type="text" placeholder="Escribe tu direccion" id='autocomplete' />
 
                 </div>
 
@@ -360,7 +389,7 @@ function Evaluador() {
                   </ButtonGroup>
                 </div>
 
-                <span className="lg-cols-3 cobertura" id="cobertura"> {loading()} {WLess.mensaje === true ? <span>Tu cobertura más cercana es: WIRELESS Nodo: {cercanoWL.dispositivo}</span> : "" || FO.mensaje === true ? <span>Tu cobertura más cercana es: FIBRA OPTICA Nodo: {cercanoFO.dispositivo}</span> : "" || (FO.cercano === true && WLess.cercano === true) ? "!No hay Cobertura¡" : ""}</span>
+                <span className="lg-cols-3 cobertura" id="cobertura"> {loading()} {WLess.mensaje === true ? <span>Tu cobertura más cercana es: WIRELESS Nodo: {cercanoWL.dispositivo}</span> : "" || FO.mensaje === true ? <span>Tu cobertura más cercana es: FIBRA OPTICA Nodo: {cercanoFO.dispositivo}</span> : "" || (FO.sinFO === true && WLess.sinWL === true) ? "!No hay Cobertura¡" : ""}</span>
 
               </div>
             </div>
@@ -392,7 +421,7 @@ function Evaluador() {
                                     </BTN>,
                 ]}
               >
-                <Camera></Camera>
+                <Camera1 doc={doc}></Camera1>
               </Modal>
             </div>
 
@@ -750,8 +779,8 @@ function Evaluador() {
                 setCurrent(0);
   
                 setprocesar(false);
-                setFO({ mensaje: false, cercano: false });
-                setWLess({ mensaje: false, cercano: false });
+                setFO({ mensaje: false, sinFO: false });
+                setWLess({ mensaje: false, sinFO: false });
                 setcliente({ rut: "", deuda: null });
                 setcercanoFO({ distancia: "", dispositivo: "" });
                 setcercanoWL({ distancia: "", dispositivo: "" });
