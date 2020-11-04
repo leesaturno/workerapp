@@ -60,10 +60,12 @@ function Evaluador() {
   }
 
   const captadatos = (e) => {
+       
     setClientes({
       ...Clientes,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value.toLocaleUpperCase()
     })
+    return e.target.value.toLocaleUpperCase()
   }
 
   const usr = useSelector(store => store.session);
@@ -73,7 +75,7 @@ function Evaluador() {
       setDatos({ ...datos, rutvalido: true, rutinvalido: false })
       setClientes({
         ...Clientes,
-        rut: datos.rut + '-' + datos.digito
+        rut: datos.rut + '-' + datos.digito.toLocaleUpperCase()
       });
       usr.user.forEach(user => {
         setClientes({
@@ -129,7 +131,7 @@ function Evaluador() {
       const lttd = addressObject.geometry.location.lat();
       const lngtd = addressObject.geometry.location.lng();
       
-      setQuery(query3);
+      setQuery(query3.toLocaleUpperCase());
       setlat(lttd);
       setlng(lngtd);
       axios.get(`https://api.workerapp.cl/api/v2/pointservice`)
@@ -239,7 +241,7 @@ function Evaluador() {
 
       const query2 = addressObject2.formatted_address;
 
-      setcReferencia(query2);
+      setcReferencia(query2.toLocaleUpperCase());
 
 
 
@@ -335,7 +337,7 @@ const doc = (ocr)=>{
   const { Step } = Steps;
 
   const steps = [
-  /*   {
+    {
       content: <CardStep title="Evaluador"
         content={
           <form className="ml-8">
@@ -381,14 +383,14 @@ const doc = (ocr)=>{
                   </ButtonGroup>
                 </div>
 
-                <span className="lg-cols-3 cobertura" id="cobertura"> {loading()} {WLess.mensaje === true ? <span>Tu cobertura más cercana es: WIRELESS Nodo: {cercanoWL.dispositivo}</span> : "" || FO.mensaje === true ? <span>Tu cobertura más cercana es: FIBRA OPTICA Nodo: {cercanoFO.dispositivo}</span> : "" || (FO.sinFO === true && WLess.sinWL === true) ? "!No hay Cobertura¡" : ""}</span>
+                <span className="lg-cols-3 cobertura" id="cobertura"> {loading()} {WLess.mensaje === true ? <span>Tu cobertura más cercana es: WIRELESS Nodo: {cercanoWL.dispositivo}</span> : "" || FO.mensaje === true ? <span>Tu cobertura más cercana es: FIBRA OPTICA Nodo: {cercanoFO.dispositivo}  </span> : "" || (FO.sinFO === true && WLess.sinWL === true) ? "!No hay Cobertura¡" : ""}</span>
 
               </div>
             </div>
           </form>
         }
       ></CardStep>,
-    }, */
+    }, 
 
     {
       content: <CardStep title="Registro de cliente"
@@ -422,30 +424,30 @@ const doc = (ocr)=>{
               <div className="ed-grid lg-grid-3">
                 <div className="form-group">
                   <label className="text-ups">Run</label>
-                  <input type="text" name="rut"  className="form-control" placeholder="" value={datos.rut+'-'+ datos.digito} readOnly />
+                  <input type="text" name="rut"  className="form-control" placeholder="" value={datos.rut+'-'+ datos.digito.toLocaleUpperCase()} readOnly />
                 </div>
                 <div className="form-group">
                   <label className="text-ups">Serie run</label>
-                  <input type="text" name="run" className="form-control" value={Clientes.run} onChange={captadatos} required />
+                  <input type="text" name="run" className="form-control"  onChange={captadatos} required />
                 </div>
                 <div className="form-group">
                   <label className="text-ups">Fecha de nacimiento</label>
-                  <input type="date" name="fNacimiento" className="form-control" value={Clientes.fNacimiento} onChange={captadatos} placeholder={1} required />
+                  <input type="date" name="fNacimiento" className="form-control"  onChange={captadatos} placeholder={1} required />
                 </div>
               </div>
 
               <div className="ed-grid lg-grid-3">
                 <div className="form-group">
                   <label className="text-ups">Nombres</label>
-                  <input type="text" name="nombres" className="form-control" value={Clientes.nombres} onChange={captadatos} required />
+                  <input type="text" name="nombres" className="form-control"  onChange={captadatos} required />
                 </div>
                 <div className="form-group">
                   <label className="text-ups">Apellido paterno</label>
-                  <input type="text" name="apPaterno" className="form-control" value={Clientes.apPaterno} onChange={captadatos} required />
+                  <input type="text" name="apPaterno" className="form-control"  onChange={captadatos} required />
                 </div>
                 <div className="form-group">
                   <label className="text-ups">Apellido materno</label>
-                  <input type="text" name="apMaterno" className="form-control" value={Clientes.apMaterno} onChange={captadatos} required />
+                  <input type="text" name="apMaterno" className="form-control"  onChange={captadatos} required />
                 </div>
               </div>
 
@@ -458,7 +460,7 @@ const doc = (ocr)=>{
                     </div>
 
                     <div className="lg-cols-4">
-                      <input type="number" onInput={LengthCheck} name="phone"  className="form-control" value={Clientes.phone} onChange={captadatos} minLength="8" maxLength="8" required />
+                      <input type="number" onInput={LengthCheck} name="phone"  className="form-control"  onChange={captadatos} minLength="8" maxLength="8" required />
                     </div>
                   </div>
                 </div>
@@ -495,19 +497,19 @@ const doc = (ocr)=>{
               <div className="ed-grid lg-grid-2">
                 <div className="form-group">
                   <label className="text-ups">Block / Manzana</label>
-                  <input type="text" name="blocManzana" className="form-control" value={Clientes.blocManzana} onChange={captadatos} />
+                  <input type="text" name="blocManzana" className="form-control"  onChange={captadatos} />
                 </div>
 
                 <div className="form-group">
                   <label className="text-ups">Departamento / Sitio</label>
-                  <input type="text" name="dptoSitio" className="form-control" value={Clientes.dptoSitio} onChange={captadatos} />
+                  <input type="text" name="dptoSitio" className="form-control"  onChange={captadatos} />
                 </div>
               </div>
 
               <div className="ed-grid">
                 <div className="form-group">
                   <label className="text-ups">Calle referencia</label>
-                  <input name="cReferencia" className="form-control" value={Clientes.cReferencia} onChange={captadatos} type="text" id='cReferencia' onFocus={handleScriptLoad2} required />
+                  <input name="cReferencia" className="form-control" onChange={captadatos} type="text" id='cReferencia' onFocus={handleScriptLoad2} required />
                 </div>
               </div>
             </div>
@@ -727,7 +729,7 @@ const doc = (ocr)=>{
   }
 
   const final = () => {
-    axios.get('https://api.workerapp.cl/api/subscripcion/' + Clientes.nombres + '/' + Clientes.apPaterno + '/' + Clientes.apMaterno + '/' + datos.rut + '-' + datos.digito + '/' + Clientes.run + '/' + '+569' + Clientes.phone + '/' + Clientes.email + '/' + Clientes.fNacimiento + '/' + query + ', ' + Clientes.blocManzana + ', ' + Clientes.dptoSitio + '/' + cReferencia + '/' + Clientes.plan + '/' + Clientes.user)
+    axios.get('https://api.workerapp.cl/api/subscripcion/' + Clientes.nombres + '/' + Clientes.apPaterno + '/' + Clientes.apMaterno + '/' + Clientes.rut + '/' + Clientes.run + '/+569' + Clientes.phone + '/' + Clientes.email + '/' + Clientes.fNacimiento + '/' + query + ', ' + Clientes.blocManzana + ', ' + Clientes.dptoSitio + '/' + cReferencia + '/' + Clientes.plan + '/' + Clientes.user)
 
       .then(res => {
 
@@ -739,7 +741,7 @@ const doc = (ocr)=>{
           }
         });
         setTimeout(() => {
-          axios.get('https://api.workerapp.cl/api/sms/' + '+569' + Clientes.phone + '/' + datos.rut + '-' + datos.digito)
+          axios.get('https://api.workerapp.cl/api/sms/+569' + Clientes.phone + '/' + Clientes.rut)
 
             .then(res => {
 
