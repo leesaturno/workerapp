@@ -32,7 +32,7 @@ function Evaluador() {
   const [lng, setlng] = useState(0);
   const [FO, setFO] = useState({ mensaje: false, sinFO: false });
   const [WLess, setWLess] = useState({ mensaje: false, sinWL: false });
-  const [cliente, setcliente] = useState({ rut: "", deuda: null }); //estado para el cliente que se trae si hay coincidencia para verficar deuda
+  const [cliente, setcliente] = useState({ rut: "", deuda: null, existe:false }); //estado para el cliente que se trae si hay coincidencia para verficar deuda
   const [cercanoFO, setcercanoFO] = useState({ distancia: "", dispositivo: "" });
   const [cercanoWL, setcercanoWL] = useState({ distancia: "", dispositivo: "" });
   const [Clientes, setClientes] = useState({
@@ -96,7 +96,7 @@ function Evaluador() {
           if (cliente.deuda > 0) {
             setcliente({ rut: cliente.rut, deuda: cliente.deuda })
 
-          } else { setcliente({ rut: cliente.rut, deuda: 0 }) }
+          } else { setcliente({ rut: cliente.rut, deuda: 0, existe:true }) }
 
         }, timeout);
       });
@@ -141,8 +141,8 @@ function Evaluador() {
           var R =6378;
           var rad = function (x) { return x * Math.PI / 180; }
 
-             setFO({...FO, mensaje:false});
-             
+          setFO({ mensaje: false, sinFO: false });
+          setWLess({ mensaje: false, sinFO: false });
           pointservice.forEach(point => {
 //verifica cobertura Fibra optica
             if (point.INDEX_tecnologia === "1") {
@@ -566,6 +566,7 @@ const doc = (ocr)=>{
   const next = () => {
     if (datos.rutvalido === true) {
       if (cliente.deuda === 0) {
+        if (cliente.existe === false) {
         if (query !== "") {
           if (WLess.mensaje === true || FO.mensaje === true) {
             setprocesar(true);
@@ -702,8 +703,19 @@ const doc = (ocr)=>{
             }
           }
         )
+      } else {
+        message.error({
+          content: ' ¡Este cliente ya existe!',
+          duration: 5,
+          style:
+          {
+            marginTop:
+              '13vh',
+            float: 'right',
+          }
+        })
       }
-
+    }
       else {
         message.error({
           content: ' ¡Deudor no puedes avanzar!',
@@ -774,8 +786,7 @@ const doc = (ocr)=>{
                 setCurrent(0);
   
                 setprocesar(false);
-                setFO({ mensaje: false, sinFO: false });
-                setWLess({ mensaje: false, sinFO: false });
+                
                 setcliente({ rut: "", deuda: null });
                 setcercanoFO({ distancia: "", dispositivo: "" });
                 setcercanoWL({ distancia: "", dispositivo: "" });
