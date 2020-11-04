@@ -60,6 +60,18 @@ function Verificador() {
     }
   }
 
+  function selfie() {
+    if(cliente.role1=="ocultar1"){
+      
+      return (<>Informacion enviada con exito</>);
+      
+    }else{
+      return (<> <Button type="primary" onClick={()=>{setCam("user"); showModal()}} className="btn-CB">
+      Tomar selfie
+    </Button></>);
+    }
+  }
+
   return (
     <>
       <div className="main mt-5">
@@ -101,9 +113,7 @@ function Verificador() {
                   <br/>
                   <div className="ed-grid lg-grid-2">
                     <div>
-                      <Button type="primary" onClick={()=>{setCam("user"); showModal()}} className="btn-CB">
-                        Tomar selfie
-                      </Button>
+                      {selfie()}
                     </div>
                     <div>
                       <span>Necesitamos una selfie para verificar su identidad</span>

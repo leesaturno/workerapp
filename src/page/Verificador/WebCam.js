@@ -121,7 +121,7 @@ function Camera(props) {
             videoConstraints={videoConstraints}
           />
             <div className="controls">
-                <button onClick={()=>{capture1();}} className="btnCapture snap"></button>
+                <button onClick={()=>{capture1(); disparador(cam2("ocultar1"));}} className="btnCapture snap"></button>
             </div>
         </>
       );
