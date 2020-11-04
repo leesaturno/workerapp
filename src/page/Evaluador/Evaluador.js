@@ -72,11 +72,11 @@ function Evaluador() {
 
   const verificadorrut = async () => {
     if (verificador(datos.rut + '-' + datos.digito)) {
-      setDatos({ ...datos, rutvalido: true, rutinvalido: false })
       setClientes({
         ...Clientes,
         rut: datos.rut + '-' + datos.digito.toLocaleUpperCase()
       });
+      setDatos({ ...datos, rutvalido: true, rutinvalido: false })
       usr.user.forEach(user => {
         setClientes({
           ...Clientes,
