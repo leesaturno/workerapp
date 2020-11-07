@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Evaluador.scss';
 
 import { Steps, Button as BTN, message, Select, Spin, Modal } from 'antd';
@@ -20,7 +20,6 @@ import Segurity from '../../component/Segurity/Segurity';
 import {useSelector } from 'react-redux'; 
 
 function Evaluador() {
-
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
   const [query, setQuery] = useState('');
   const [cReferencia, setcReferencia] = useState('');
@@ -28,13 +27,14 @@ function Evaluador() {
     rut: '',
     digito: '', rutvalido: false, rutivalido: false
   });
-/*   const [lat, setlat] = useState(0);
+  /*   const [lat, setlat] = useState(0);
   const [lng, setlng] = useState(0); */
   const [FO, setFO] = useState({ mensaje: false, sinFO: false });
   const [WLess, setWLess] = useState({ mensaje: false, sinWL: false });
   const [cliente, setcliente] = useState({ rut: "", deuda: null, existe:false }); //estado para el cliente que se trae si hay coincidencia para verficar deuda
   const [cercanoFO, setcercanoFO] = useState({ distancia: "", dispositivo: "" });
   const [cercanoWL, setcercanoWL] = useState({ distancia: "", dispositivo: "" });
+  const [services, setservices] = useState([]);
   const [Clientes, setClientes] = useState({
     rut: "",
     email: "",
@@ -51,7 +51,11 @@ function Evaluador() {
     blocManzana: "",
     dptoSitio: ""
   });
-
+  useEffect(  ()=>{
+    axios.get("https://api.workerapp.cl/apiv2/service")
+    .then(res => {setservices(res.data)})
+   
+ },[])
   const captarrut = (e) => {
     setDatos({
       ...datos,
@@ -326,7 +330,6 @@ console.log(res);
          }
     }
   const { Option } = Select;
-
   const onSearch = (val) => {
     console.log('search:', val);
   }
@@ -534,9 +537,10 @@ console.log(res);
                       option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                     }
                   >
-                    <Option value="1">{WLess.mensaje === true ? "6 BM" : "" || FO.mensaje === true ? "50 MB" : ""}</Option>
-                    <Option value="2">{WLess.mensaje === true ? "8 BM" : "" || FO.mensaje === true ? "200 MB" : ""}</Option>
-                    <Option value="3">{WLess.mensaje === true ? "10 BM" : "" || FO.mensaje === true ? "300 MB" : ""}</Option>
+           {services.map((service) => (
+                                     (WLess.mensaje === true && service.INDEX_tecnologia==="2") ? <><Option key={service.id_service}> {service.velocidades}</Option></>:"" || (FO.mensaje === true && service.INDEX_tecnologia==="1") ? <> <Option key={service.id_service}> {service.velocidades}</Option></>:""
+    ))}
+                 
                   </Select>
                 </div>
               </div>
@@ -895,7 +899,7 @@ console.log(res);
 
         </div>
       </div>
-       <Segurity/>
+    <Segurity/> 
       <Footer></Footer>
     </div>
   );

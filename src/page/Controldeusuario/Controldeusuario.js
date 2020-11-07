@@ -29,17 +29,20 @@ const [localusers,setlocalusers]=useState([]);
     return () =>  { if (Users.users !== localusers) {
       disparador(getusuarios())
     }};
-}, [disparador])
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [disparador]);
  
 
 
   
 
   
- const  cancel=(e) => (
-    
-    message.error('Cancelado')
-   )
+ function cancel(e) {
+    return (
+
+      message.error('Cancelado')
+    );
+  }
 
   const rediredionar = ()=>{
     if (redirect) {

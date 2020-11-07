@@ -15,6 +15,7 @@ function Verificador() {
   const [cam,setCam]=useState("environment");
   const disparador=useDispatch();
   const cliente=useSelector(store=>store.rutespecifico);
+  // eslint-disable-next-line no-unused-vars
   const [clienterut,setClienterut]=useState();
 
 

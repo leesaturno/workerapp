@@ -97,7 +97,7 @@ function Camera(props) {
     }else{
       return (
         <>
-          <img src={imageSrc} ></img>
+          <img src={imageSrc} alt={""} ></img>
               <br/>
               {
                 verif()
@@ -128,7 +128,7 @@ function Camera(props) {
     }else{
       return(
       <>
-        <img src={imageSrc1} ></img>
+        <img src={imageSrc1} alt={""} ></img>
             <br/>
         <div> Selfie realizada con exito </div>
       </>);
