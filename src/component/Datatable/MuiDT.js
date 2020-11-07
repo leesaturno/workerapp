@@ -1,10 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import MUIDataTable from "mui-datatables";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
 import './MuiDT.scss';
 
@@ -12,50 +8,43 @@ import './MuiDT.scss';
 // const [tableBodyHeight, setTableBodyHeight] = useState("400px");
 // const [tableBodyMaxHeight, setTableBodyMaxHeight] = useState("");
 
-const MuiDT = ({ data, columns, options }) => (
+const MuiDT = ({ data, columns, options,getMuiTheme = () => createMuiTheme({
+    overrides: {
+      MUIDataTableFilter: {
+        root:{
+          
+            background: "#242224 !important"
+        
+          
+        },
+        title:{
+          color: "#8F8F8F !important"
+        },
+        resetLink:{
+          color: "#8F8F8F !important"
+        }
+      },
+      MuiFormLabel: {
+        root:{
+          
+          color: "#8F8F8F !important"
+        
+          
+        },
+      }
+    }
+  }) }) => (
+  
     <React.Fragment>
 
-      {/* <FormControl>
-      <InputLabel id="demo-simple-select-label">Responsive Option</InputLabel>
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={responsive}
-        style={{ width: "200px", marginBottom: "10px", marginRight: 10 }}
-        onChange={(e) => setResponsive(e.target.value)}
-      >
-        <MenuItem value={"vertical"}>vertical</MenuItem>
-        <MenuItem value={"standard"}>standard</MenuItem>
-        <MenuItem value={"simple"}>simple</MenuItem>
-
-        <MenuItem value={"scroll"}>scroll (deprecated)</MenuItem>
-        <MenuItem value={"scrollMaxHeight"}>
-          scrollMaxHeight (deprecated)
-        </MenuItem>
-        <MenuItem value={"stacked"}>stacked (deprecated)</MenuItem>
-      </Select>
-    </FormControl>
-    <FormControl>
-      <InputLabel id="demo-simple-select-label">Table Body Height</InputLabel>
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={tableBodyHeight}
-        style={{ width: "200px", marginBottom: "10px", marginRight: 10 }}
-        onChange={(e) => setTableBodyHeight(e.target.value)}
-      >
-        <MenuItem value={""}>[blank]</MenuItem>
-        <MenuItem value={"400px"}>400px</MenuItem>
-        <MenuItem value={"800px"}>800px</MenuItem>
-        <MenuItem value={"100%"}>100%</MenuItem>
-      </Select>
-    </FormControl> */}
-
+     
+    <MuiThemeProvider theme={getMuiTheme()}>
       <MUIDataTable
         data={data}
         columns={columns}
         options={options}
       />
+      </MuiThemeProvider>
     </React.Fragment>
     
 );

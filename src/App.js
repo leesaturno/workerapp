@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.scss';
-import { BrowserRouter as Router, Switch, Route,Fade } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { AnimatedSwitch } from 'react-router-transition';
 
 import Nav from './component/Nav/Nav'
@@ -45,9 +45,10 @@ function App() {
           <Route exact path='/Evaluador' component={Evaluador} /> 
           <Route exact path='/Controldeusuario' component={Controldeusuario} /> 
           <Route exact path='/NewUser' component={NewUser} />
-          <Route exact path='/EditUser' component={EditUser} />
+          <Route exact path='/EditUser/:id' component={EditUser} />
           <Route exact path='/Perfil' component={Perfil} />
           <Route exact path='/Verificador/:id' component={Verificador} />
+          <Route exact path='/Agendamiento' render={() => "error"} />
           <Route render={() => <Error/>} />
           {/*ruta*/}
         </AnimatedSwitch>

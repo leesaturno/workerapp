@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import './Controldeusuario.scss';
 import {
  
@@ -12,9 +12,11 @@ import {useDispatch} from 'react-redux';
 import {usuarioinsertaction} from '../../Redux/Dusk/usuarioreducer';
 import { ToastContainer, toast } from 'react-toastify';
 import Segurity from '../../component/Segurity/Segurity';
+import axios from 'axios';
 function NewUser() {
     const disparador=useDispatch();
     let history = useHistory();
+    const [privilegios, setprivilegios]=useState([]);
     const [Users,setUsers]=useState({
         user:"",
         email:"",
@@ -28,7 +30,11 @@ function NewUser() {
         privilegios:"",
         direccion:""
       })
-      
+      useEffect(  ()=>{
+         axios.get("https://api.workerapp.cl/apiv2/privilegios")
+         .then(res => {setprivilegios(res.data)})
+        
+      },[])
       const cargadedatos = (e)=>{
             setUsers({
               ...Users,
@@ -38,7 +44,7 @@ function NewUser() {
     
       const enviarDatos = (e) => {
          e.preventDefault();
-         if(Users.password==Users.password2){
+         if(Users.password===Users.password2){
             toast.success('Usuario registrado con exito', {
                 position: "top-right",
                 autoClose: 2000,
@@ -65,7 +71,7 @@ function NewUser() {
                 });
          }
       }
-    const { Option } = Select;
+
       
     const onSearch=(val) => {
         console.log('search:', val);
@@ -143,14 +149,15 @@ function NewUser() {
                                 onChange={(value)=>{setUsers({...Users,
                                     privilegios : value})}}
                                 onSearch={onSearch}
-                                defaultValue='1'
+                                
                                 filterOption={(input, option) =>
                                     option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                   }
                                  
                             >
-                                <Option value="1">Admin</Option>
-                                <Option value="2">Usuario</Option>
+                          {privilegios.map((privilegio) => (
+      <Select.Option key={privilegio.id_privilegio}>{privilegio.privilegio}</Select.Option>
+    ))}
                             </Select>
                         </div>
                     </div>
@@ -172,7 +179,7 @@ function NewUser() {
         </div>
         <ToastContainer/>
         <Footer></Footer>
-        <Segurity/>
+     <Segurity/> 
       </div>
   );
 }

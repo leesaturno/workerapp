@@ -6,7 +6,7 @@ import {Redirect} from 'react-router-dom';
 function Segurity() {
   const user=useSelector(store=>store.session);  
   const door=()=>{
-    if(user.atividad==false){
+    if(user.atividad===false){
      return <Redirect to="/"/>
     }
   }

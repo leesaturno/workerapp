@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
+
 import {NavLink} from 'react-router-dom';
-import { Menu, Button } from 'antd';
+import { Menu } from 'antd';
 import Icon from '../Icons/Icons';
 import {
   HomeOutlined,
@@ -11,7 +11,7 @@ import {
 
 import './Menulateral.scss';
 
-const { SubMenu } = Menu;
+
 
 class Menua extends React.Component {
   state = {

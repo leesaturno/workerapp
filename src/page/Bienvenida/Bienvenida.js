@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './Bienvenida.scss';
 
 import Footer from '../../component/Footer/Footer'

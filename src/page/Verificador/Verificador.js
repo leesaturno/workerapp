@@ -1,4 +1,4 @@
-import React,{useRef,useCallback,useState,useEffect} from 'react';
+import React,{useState,useEffect} from 'react';
 import './Verificador.scss';
 import CardStep from '../../component/Card/CardStep';
 import Camera from './WebCam'
@@ -20,6 +20,7 @@ function Verificador() {
 
   useEffect(()=>{
     disparador(rutsaction(id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     or=2
   },[or]);
 
@@ -49,7 +50,7 @@ function Verificador() {
   };
   
   function botonandverso() {
-    if(cliente.role=="ocultar1"){
+    if(cliente.role==="ocultar1"){
       
       return (<>Informacion enviada con exito</>);
       
@@ -61,7 +62,7 @@ function Verificador() {
   }
 
   function selfie() {
-    if(cliente.role1=="ocultar1"){
+    if(cliente.role1==="ocultar1"){
       
       return (<>Informacion enviada con exito</>);
       

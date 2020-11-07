@@ -19,7 +19,7 @@ var fixarray=[];
 export default function pointreducer(state=pointState,action){
     switch (action.type) {
         case OPTENER_PUNTOS_DE_SERVICIO:
-            if(action.payload!=""){
+            if(action.payload!==""){
                 fix=true;
                 fixarray=action.payload;
             }

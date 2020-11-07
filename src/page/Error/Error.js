@@ -2,7 +2,7 @@ import React from 'react'
 import { useTrail, animated } from 'react-spring'
 import './Error.scss'
 import { Button } from 'antd';
-import {Redirect} from "react-router-dom";
+
 
 const fast = { tension: 1200, friction: 40 }
 const slow = { mass: 10, tension: 200, friction: 50 }

@@ -3,8 +3,8 @@ import './Verificador.scss';
 import { createWorker } from 'tesseract.js';
 import Webcam from "react-webcam";
 import {useDispatch} from 'react-redux';
-import { Button } from 'antd';
-import {cam2} from '../../Redux/Dusk/verificadorreducer';
+
+import {camevaluador} from '../../Redux/Dusk/verificadorreducer';
 
 
 function Camera1(props) {
@@ -30,8 +30,8 @@ function Camera1(props) {
   const [ocr, setOcr] = useState('Reconociendo...');
   const doOCR = async () => {
     await worker.load();
-    await worker.loadLanguage('eng');
-    await worker.initialize('eng');
+    await worker.loadLanguage('spa');
+    await worker.initialize('spa');
     const { data: { text } } = await worker.recognize(imageSrc);
     var nombres = "LEE MARK CLAUDE";
     var apellidos = "SATURNO YNOJOSA";
@@ -42,13 +42,17 @@ function Camera1(props) {
     var textnombres = text.substr(indexnombres,nombres.length);
     var textapellidos = text.substr(indexapellidos,nombres.length);
     var textdni = text.substr(indexdni,dni.length);
+    
     setOcr("nombres: "+textnombres+" Apellidos: "+textapellidos+" DNI: "+textdni);
     await worker.terminate();
   
   }
   useEffect(()=>{
     doOCR()
-   
+    if (ocr!=='Reconociendo...') {
+      
+      disparador(camevaluador(ocr))
+    }
   });
  
 
@@ -63,9 +67,7 @@ function Camera1(props) {
             videoConstraints={videoConstraints}
           />
             <div className="controls">
-                <button onClick={()=>{capture(); setTimeout(()=>{  var myVar =setInterval(() => {
-      ;props.doc(ocr)
-    }, 1000);setTimeout(()=>{ clearInterval(myVar)},300000)},10000) }}  className="btnCapture snap"></button>
+                <button onClick={()=>{capture();  }}  className="btnCapture snap"></button>
             </div>
         </>
       );

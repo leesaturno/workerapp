@@ -14,10 +14,10 @@ import verificador from 'verificador-rut';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 import Camera1 from '../Verificador/WebCam1'
-import Segurity from '../../component/Segurity/Segurity';
+/* import Segurity from '../../component/Segurity/Segurity'; */
 //redux
-/* import {pointAction,ruttAction} from '../../Redux/Dusk/pointreducer'; */
-import { useDispatch, useSelector } from 'react-redux';
+/*  import {camevaluador} from '../../Redux/Dusk/verificadorreducer'; */
+import {useSelector } from 'react-redux'; 
 
 function Evaluador() {
 
@@ -28,8 +28,8 @@ function Evaluador() {
     rut: '',
     digito: '', rutvalido: false, rutivalido: false
   });
-  const [lat, setlat] = useState(0);
-  const [lng, setlng] = useState(0);
+/*   const [lat, setlat] = useState(0);
+  const [lng, setlng] = useState(0); */
   const [FO, setFO] = useState({ mensaje: false, sinFO: false });
   const [WLess, setWLess] = useState({ mensaje: false, sinWL: false });
   const [cliente, setcliente] = useState({ rut: "", deuda: null, existe:false }); //estado para el cliente que se trae si hay coincidencia para verficar deuda
@@ -69,7 +69,7 @@ function Evaluador() {
   }
 
   const usr = useSelector(store => store.session);
-
+  const ocr = useSelector(store => store.rutespecifico);
   const verificadorrut = async () => {
     if (verificador(datos.rut + '-' + datos.digito)) {
       
@@ -87,7 +87,7 @@ function Evaluador() {
 
       const res = await axios.get("https://api.workerapp.cl/api/factibilidadrut/" + datos.rut + '-' + datos.digito);
       const timeout = 1000;
-
+console.log(res);
       if (res.data.length === 0) {
         setcliente({ ...cliente, deuda: 0 })
       } else res.data.forEach(cliente => {
@@ -133,16 +133,15 @@ function Evaluador() {
       const lngtd = addressObject.geometry.location.lng();
       
       setQuery(query3.toLocaleUpperCase());
-      setlat(lttd);
-      setlng(lngtd);
+   /*    setlat(lttd);
+      setlng(lngtd); */
       axios.get(`https://api.workerapp.cl/api/v2/pointservice`)
         .then(res => {
           const pointservice = res.data;
           var R =6378;
           var rad = function (x) { return x * Math.PI / 180; }
 
-          setFO({ mensaje: false, sinFO: false });
-          setWLess({ mensaje: false, sinFO: false });
+         
           pointservice.forEach(point => {
 //verifica cobertura Fibra optica
             if (point.INDEX_tecnologia === "1") {
@@ -287,12 +286,7 @@ function Evaluador() {
   }
 
   // modal
-const doc = (ocr)=>{
 
-
-  console.log(Object.values(ocr));
-  console.log("evaluador:"+ocr);
-}
   const [ViewModal, setViewModal] = useState(
     {
       loading: false,
@@ -313,8 +307,10 @@ const doc = (ocr)=>{
       loading: true,
     });
     setTimeout(() => {
+      console.log(Object.values(ocr));
+     
       setViewModal({ ...ViewModal, loading: false, visible: false });
-    }, 3000);
+    }, 300000);
   };
 
   const handleCancel = () => {
@@ -391,7 +387,7 @@ const doc = (ocr)=>{
           </form>
         }
       ></CardStep>,
-    }, 
+    },  
 
     {
       content: <CardStep title="Registro de cliente"
@@ -416,7 +412,7 @@ const doc = (ocr)=>{
                                     </BTN>,
                 ]}
               >
-                <Camera1 doc={doc}></Camera1>
+                <Camera1></Camera1>
               </Modal>
             </div>
 
@@ -457,7 +453,7 @@ const doc = (ocr)=>{
                   <label className="text-ups">Tel&#233;fono</label>
                   <div className="ed-grid lg-grid-6">
                     <div className="lg-cols-2">
-                      <input type="tel" className="form-control" value="+569" readOnly />
+                      <input type="tel" className="form-control" value="+569" readOnly disabled />
                     </div>
 
                     <div className="lg-cols-4">
@@ -519,7 +515,7 @@ const doc = (ocr)=>{
               <span className="text-ups spanSeparador">Plan a contratar</span>
               <div className="ed-grid">
                 <div className="form-group">
-                  {/* <br /> */}
+                  
                   <Select
                     name="plan"
                     showSearch
@@ -548,7 +544,7 @@ const doc = (ocr)=>{
           </form>
         }
       ></CardStep>,
-    },
+    }, 
     {
       content: <CardStep title="Estas a un paso"
         content={
@@ -742,6 +738,7 @@ const doc = (ocr)=>{
   }
 
   const final = () => {
+    if(cliente.existe===false){
     axios.get('https://api.workerapp.cl/api/subscripcion/' + Clientes.nombres + '/' + Clientes.apPaterno + '/' + Clientes.apMaterno + '/' + datos.rut + '-' + datos.digito.toUpperCase() + '/' + Clientes.run + '/+569' + Clientes.phone + '/' + Clientes.email + '/' + Clientes.fNacimiento + '/' + query + ', ' + Clientes.blocManzana + ', ' + Clientes.dptoSitio + '/' + cReferencia + '/' + Clientes.plan + '/' + Clientes.user)
 
       .then(res => {
@@ -783,18 +780,72 @@ const doc = (ocr)=>{
                   blocManzana: "",
                   dptoSitio: ""
                 });
+                setFO({ mensaje: false, sinFO: false });
+                setWLess({ mensaje: false, sinFO: false });
                 setCurrent(0);
   
                 setprocesar(false);
-                
+                setQuery("");
+                setcReferencia("");
                 setcliente({ rut: "", deuda: null });
                 setcercanoFO({ distancia: "", dispositivo: "" });
                 setcercanoWL({ distancia: "", dispositivo: "" });
               }, 2000);
-            })
+            }).catch(err => {
+              message.error({
+                content: ' ¡Mensaje no enviado! Verifique sus datos',
+                duration: 5,
+                style:
+                {
+                  marginTop:
+                    '13vh',
+                  float: 'right',
+                }
+              })
+          })
         }, 3000);
 
       })
+    }else {
+      message.error({
+        content: ' ¡Este cliente ya existe!',
+        duration: 5,
+        style:
+        {
+          marginTop:
+            '13vh',
+          float: 'right',
+        }
+      })
+      setTimeout(() => {
+                
+        setClientes({
+          rut: "",
+          email: "",
+          run:"",
+          fNacimiento: null,
+          user: "",
+          nombres: "",
+          apPaterno: "",
+          apMaterno: "",
+          phone: "",
+          plan: "",
+          cReferencia: '',
+          direccion:"",
+          blocManzana: "",
+          dptoSitio: ""
+        });
+        setCurrent(0);
+        setcReferencia("");
+        setQuery("");
+        setprocesar(false);
+        setFO({ mensaje: false, sinFO: false });
+        setWLess({ mensaje: false, sinFO: false });
+        setcliente({ rut: "", deuda: null });
+        setcercanoFO({ distancia: "", dispositivo: "" });
+        setcercanoWL({ distancia: "", dispositivo: "" });
+      }, 2000);
+    }
   }
 
   const prev = () => {
@@ -833,12 +884,12 @@ const doc = (ocr)=>{
           )}
           {current === steps.length - 1 && (
             <BTN type="primary" onClick={() => { final() }}>
-              Finalizar
+              FINALIZAR
             </BTN>
           )}
           {current > 0 && (
             <BTN style={{ margin: '10px 25px' }} onClick={() => prev()}>
-              Anterior
+              ANTERIOR
             </BTN>
           )}
 

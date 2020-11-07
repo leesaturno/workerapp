@@ -62,9 +62,9 @@ function Camera(props) {
     let col4=ocr.indexOf(props.apellidosP);
     let col5=ocr.indexOf(props.apellidosM);
 
-    if(ocr!='Reconociendo...'){
+    if(ocr!=='Reconociendo...'){
       if(col1>0 && col2>0 && col3>0 && col4>0 && col5>0){
-        if(quees==true){
+        if(quees===true){
           return (<>Exito <br/><br/> <Button onClick={()=>{ disparador(cam1("ocultar1")); setquees(false); }}> Enviar </Button> <br/></>);  
         }else{
           return (<>Enviado</>);  
@@ -80,7 +80,7 @@ function Camera(props) {
   
 
   function ord() {
-    if(imageSrc==null){
+    if(imageSrc===null){
       return (
         <>
           <Webcam
@@ -111,7 +111,7 @@ function Camera(props) {
   }
 
   function selfie(){
-    if(imageSrc1==null){
+    if(imageSrc1===null){
     return (
         <>
           <Webcam
@@ -136,7 +136,7 @@ function Camera(props) {
   }
 
   function ordverif(){
-    if(props.modecam=="user"){
+    if(props.modecam==="user"){
       return(<>
         {selfie()}
       </>);

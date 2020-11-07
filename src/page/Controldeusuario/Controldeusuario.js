@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, {useEffect, useState} from 'react';
 import './Controldeusuario.scss';
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+
 import Card from '../../component/Card/Card'
 import MuiDT from "../../component/Datatable/MuiDT"
 import Footer from '../../component/Footer/Footer'
@@ -12,103 +12,49 @@ import Global from '../../Global'
 import axios from 'axios';
 import {
   
-  Link,
+  
   Redirect
   
 } from "react-router-dom";
+import {getusuarios} from '../../Redux/Dusk/usuarioreducer';
+import {useDispatch,useSelector} from 'react-redux';
+export default function Controldeusuario()  {
+  const Users = useSelector(store => store.Clientes);
+const [localusers,setlocalusers]=useState([]);
+ const [redirect, setredirect]=useState('')
+ const disparador=useDispatch();
+  useEffect(() =>{
+    disparador(getusuarios())
+    setlocalusers(Users.users)
+    return () =>  { if (Users.users !== localusers) {
+      disparador(getusuarios())
+    }};
+}, [disparador])
+ 
 
-export default class Controldeusuario extends Component {
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-        Users: [],
-        redirect:''
-    };
-
-      this.url = Global.url;
-      this.confirm = this.confirm.bind(this);
-      this.cancel = this.cancel.bind(this);
-  }
-componentDidMount(){
-  axios.get(this.url + "users")
-    .then(res => {
-      const users = res.data;
-      this.setState({ users:users });
-    })
-}
-  componentWillMount(){
-    axios.get(this.url + "users")
-    .then(res => {
-      const users1 = res.data;
-      this.setState({ users:users1 });
-    })
-   }
-
-   shouldComponentUpdate( nextState) {    
-    
-    // Si retornamos true, se volverá a renderizar el componente
-
-    // Si retornamos true, se volverá a renderizar el componente
-    if (this.state.users !== nextState.users) {
-      return true;
-    }    else return false;
-
-    // Si retornamos false, evitaremos el método render
-    
-  }
-  getMuiTheme = () => createMuiTheme({
-    overrides: {
-      MUIDataTableFilter: {
-        root:{
-          
-            background: "#242224 !important"
-        
-          
-        },
-        title:{
-          color: "#8F8F8F !important"
-        },
-        resetLink:{
-          color: "#8F8F8F !important"
-        }
-      },
-      MuiFormLabel: {
-        root:{
-          
-          color: "#8F8F8F !important"
-        
-          
-        },
-      }
-    }
-  })
- confirm(e) {
-    console.log(e);
-    
-
-    
-  }
   
-   cancel(e) {
-    console.log(e);
-    message.error('Cancelado');
-  }
 
-  render(){
-    if (this.state.redirect) {
-      return <Redirect to={this.state.redirect} />
-    }
+  
+ const  cancel=(e) => (
+    
+    message.error('Cancelado')
+   )
+
+  const rediredionar = ()=>{
+    if (redirect) {
+      return <Redirect to={redirect} />
+    }}
     return (
         <div>
           <div class="main mt-5 ml-10">
+          {rediredionar()}
               <Card 
                 title="Control de usuarios" 
                 btn="Nuevo usuario " 
                 href="/NewUser" 
                 content={
-                  <MuiThemeProvider theme={this.getMuiTheme()}>
+                 
                   <MuiDT
                   
                       columns= {[
@@ -169,29 +115,24 @@ componentDidMount(){
                                 return (
                                   <>
                                     <Button type="warning" className="btn-DT" onClick={()=> { 
-                                    this.setState({ redirect: "/EditUser?id="+value});}}>Editar</Button>
+                                  setredirect( "/EditUser/"+value);}}>Editar</Button>
 
                                     <Popconfirm
                                       title="¿Seguro que desea eliminar este usuario?"
                                       icon={<UserDeleteOutlined style={{ color: 'red' }} />}
-                                      onConfirm={()=>{axios.get(this.url +'deleteusers/'+value)
+                                      onConfirm={()=>{axios.get(Global.url +'deleteusers/'+value)
                                       .then(res => {
                                         message.success({ content:'Usuario eliminado exitosamente', 
  
- style: {
-   marginTop: '13vh', float: 'right',
- }
-});
-                                          console.log(res);
-                                          
-                                          axios.get(this.url + "users")
-                                            .then(res => {
-                                              const users2 = res.data;
-                                              this.setState({ users:users2 });
-                                            })
+                                          style: {
+                                            marginTop: '13vh', float: 'right',
+                                          }
+                                        });
+                                                disparador(getusuarios())   
+                                        
                                           })
                                         }}
-                                      onCancel={this.cancel}
+                                      onCancel={cancel}
                                       okText="Si"
                                       cancelText="No"
                                       >
@@ -205,7 +146,7 @@ componentDidMount(){
                       ]}
 
                       data = {
-                        this.state.users
+                        Users.users
                       }
 
                       options = {{
@@ -243,14 +184,13 @@ componentDidMount(){
     },
                         // tableBodyMaxHeight: ''
                       }}}
-                  /> </MuiThemeProvider>
+                  /> 
                 }
               />
           </div>
 
           <Footer></Footer>
-          <Segurity/>
+          {/* <Segurity/> */}
         </div>
     );
   }
-}

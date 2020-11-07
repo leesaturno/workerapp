@@ -14,7 +14,7 @@ var fixarray=[];
 export default function Loginreducer(state=LoginState,action){
     switch (action.type) {
         case OPTENER_Y_VALIDAR_USUARIOS:
-            if(action.payload!=""){
+            if(action.payload!==""){
                 fix=true;
                 fixarray=action.payload;
             }
@@ -28,7 +28,7 @@ export default function Loginreducer(state=LoginState,action){
 export const LoginAction = (user,pass) => async (dispatch,getState) =>{
     try {
         const res= await axios.get("https://api.workerapp.cl/apiv2/auth/"+user+"/"+pass);
-        if(res.data!=""){
+        if(res.data!==""){
             toast.success('¡Usuario verificado con exito!', {
                 position: "top-right",
                 autoClose: 2000,

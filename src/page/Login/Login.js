@@ -6,7 +6,7 @@ import Logo from '../../images/logo.png';
 import {useDispatch,useSelector} from 'react-redux';
 import {LoginAction} from '../../Redux/Dusk/loginreducer';
 //toast
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 function Login(props){
   const disparador=useDispatch();
@@ -20,7 +20,7 @@ function Login(props){
   const [bandera,setbandera]= useState(true);
 
   useEffect(() => {
-      if(user.atividad==true){
+      if(user.atividad===true){
             setTimeout(() => {
               setbandera(true);
               props.history.push("/Bienvenida");

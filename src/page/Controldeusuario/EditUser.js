@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import './Controldeusuario.scss';
 import {
     useHistory,
-    useLocation
+    useParams
   } from "react-router-dom";
   import axios from 'axios';
 import CardStep from '../../component/Card/CardStep'
@@ -16,9 +16,8 @@ import Segurity from '../../component/Segurity/Segurity';
 function EditUser() {
     const disparador=useDispatch();
     let history = useHistory();
-    const useQuery =()=> {
-        return new URLSearchParams(useLocation().search);
-      }
+    let { id } = useParams();
+    const [privilegios, setprivilegios]=useState([]);
     const [Clientes,setClientes]=useState({
         user:"",
         email:"",
@@ -33,11 +32,11 @@ function EditUser() {
         direccion:""
       })
      const [stop, setStop] = useState(false);
-      const query = useQuery();
+    
 
       useEffect(() => {
         if(stop=== false){
-          axios.get(`https://api.workerapp.cl/api/users/`+query.get("id"))
+          axios.get(`https://api.workerapp.cl/api/users/`+id)
           .then(res => {
               const user = res.data;
               user.forEach(element => {
@@ -79,10 +78,11 @@ function EditUser() {
    
      
    })
-  
+   axios.get("https://api.workerapp.cl/apiv2/privilegios")
+   .then(res => {setprivilegios(res.data)})
         }
           return () =>   setStop(true);
-      }, [setStop, stop, setClientes, Clientes, query]);
+      }, [setStop, stop, setClientes, Clientes,id]);
   
   
         const cargadedatos = (e)=>{
@@ -95,7 +95,7 @@ function EditUser() {
       const enviarDatos = (e) => {
           
          e.preventDefault();
-         if(Clientes.password==Clientes.password2){
+         if(Clientes.password===Clientes.password2){
             toast.success('Usuario actualizado con exito', {
                 position: "top-right",
                 autoClose: 2000,
@@ -105,7 +105,7 @@ function EditUser() {
                 draggable: true,
                 progress: undefined,
                 });
-            disparador(usuarioUpdateaction(query.get("id"),Clientes.user,Clientes.password,Clientes.privilegios,Clientes.name,Clientes.email,Clientes.fNacimiento,Clientes.direccion,Clientes.cargo,Clientes.phone,Clientes.cel,"43"));
+            disparador(usuarioUpdateaction(id,Clientes.user,Clientes.password,Clientes.privilegios,Clientes.name,Clientes.email,Clientes.fNacimiento,Clientes.direccion,Clientes.cargo,Clientes.phone,Clientes.cel,"43"));
             let timeout=2000;
             setTimeout(() => {
              history.push("/Controldeusuario")
@@ -122,7 +122,7 @@ function EditUser() {
                 });
          }
       }
-    const { Option } = Select;
+ 
       
     const onSearch=(val) => {
         console.log('search:', val);
@@ -206,8 +206,9 @@ function EditUser() {
                                     option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                   }
                             >
-                                <Option value="1">Admin</Option>
-                                <Option value="2">Usuario</Option>
+                                                 {privilegios.map((privilegio) => (
+      <Select.Option key={privilegio.id_privilegio}>{privilegio.privilegio}</Select.Option>
+    ))}
                             </Select>
                         </div>
                     </div>
@@ -229,7 +230,7 @@ function EditUser() {
         </div>
         <ToastContainer/>
         <Footer></Footer>
-        <Segurity/>
+    {/*     <Segurity/> */}
       </div>
   );
 }
