@@ -190,7 +190,7 @@ const [localusers,setlocalusers]=useState([]);
           </div>
 
           <Footer></Footer>
-          {/* <Segurity/> */}
+          <Segurity/> 
         </div>
     );
   }

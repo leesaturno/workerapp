@@ -14,7 +14,7 @@ import verificador from 'verificador-rut';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 import Camera1 from '../Verificador/WebCam1'
-/* import Segurity from '../../component/Segurity/Segurity'; */
+import Segurity from '../../component/Segurity/Segurity'; 
 //redux
 /*  import {camevaluador} from '../../Redux/Dusk/verificadorreducer'; */
 import {useSelector } from 'react-redux'; 
@@ -895,7 +895,7 @@ console.log(res);
 
         </div>
       </div>
-      {/* <Segurity/> */}
+       <Segurity/>
       <Footer></Footer>
     </div>
   );
