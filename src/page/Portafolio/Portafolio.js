@@ -1,65 +1,77 @@
 import React, { useEffect, useState } from "react";
-import "./Controldeusuario.scss";
-
-import Card from "../../component/Card/Card";
+import "./Portafolio.scss";
+import CardAmplio from "../../component/Card/CardAmplio";
 import MuiDT from "../../component/Datatable/MuiDT";
 import Footer from "../../component/Footer/Footer";
 import Segurity from "../../component/Segurity/Segurity";
-import { UserDeleteOutlined } from "@ant-design/icons";
+import { InfoCircleOutlined, CheckSquareOutlined } from "@ant-design/icons";
 
-import { Button, Popconfirm, message } from "antd";
+import { Button, Popover, message } from "antd";
 import Global from "../../Global";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
-import { getusuarios } from "../../Redux/Dusk/usuarioreducer";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function Controldeusuario() {
+export default function Portafolio() {
   const Users = useSelector((store) => store.Clientes);
-  const [localusers, setlocalusers] = useState([]);
-  const [redirect, setredirect] = useState("");
-  const disparador = useDispatch();
-  useEffect(() => {
-    disparador(getusuarios());
-    setlocalusers(Users.users);
-    return () => {
-      if (Users.users !== localusers) {
-        disparador(getusuarios());
-      }
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [disparador]);
 
-  function cancel(e) {
-    return message.error({
-      content: "Cancelado",
+  const [Pov, setPov] = useState({
+    visible: false,
+  });
 
-      style: {
-        marginTop: "13vh",
-        float: "right",
-      },
-    });
-  }
-
-  const rediredionar = () => {
-    if (redirect) {
-      return <Redirect to={redirect} />;
-    }
+  const hide = () => {
+    setPov({ ...Pov, visible: false });
   };
+
+  const handleVisibleChange = (visible) => {
+    setPov({ ...Pov, visible });
+  };
+
+  const text = (
+    <span className="center">
+      <InfoCircleOutlined style={{ color: "#1890ff" }} /> Información del
+      cliente
+    </span>
+  );
+
+  const content = (
+    <div>
+      <p>
+        Fecha: 22/10/2020
+        <br />
+        OI: 25500
+        <br />
+        RUN: 17967154-5
+        <br />
+        Nombres: Juan Perez Molina Rosales
+        <br />
+        Dirección: Los Silos 1260
+        <br />
+        Elemento: H1P3N9
+        <br />
+        Plan: 200 MB
+        <br />
+        Mensualidad: $14.990
+        <br />
+        Verificado: <CheckSquareOutlined /> 23/10/2020
+        <br />
+        Estado: Agendado 24/10/2020 PM
+        <br />
+        Costo de instalación: $10.000
+      </p>
+    </div>
+  );
+
   return (
     <div>
       <div class="main mt-5 ml-10">
-        {rediredionar()}
-        <Card
-          title="Control de usuarios"
-          btn="Nuevo usuario "
-          href="/NewUser"
+        <CardAmplio
+          title="Portafolio"
           content={
             <MuiDT
               columns={[
                 {
-                  name: "nombre",
-                  label: "Nombre",
+                  name: "fecha",
+                  label: "Fecha",
                   options: {
                     filter: true,
                     sort: true,
@@ -69,8 +81,8 @@ export default function Controldeusuario() {
                   },
                 },
                 {
-                  name: "email",
-                  label: "Email",
+                  name: "oi",
+                  label: "OI (Orden de ingreso)",
                   options: {
                     filter: true,
                     sort: false,
@@ -80,8 +92,8 @@ export default function Controldeusuario() {
                   },
                 },
                 {
-                  name: "telefono",
-                  label: "Teléfono",
+                  name: "run",
+                  label: "Run",
                   options: {
                     filter: true,
                     sort: false,
@@ -91,8 +103,8 @@ export default function Controldeusuario() {
                   },
                 },
                 {
-                  name: "username",
-                  label: "Username",
+                  name: "nombres",
+                  label: "Nombres",
                   options: {
                     filter: true,
                     sort: false,
@@ -102,8 +114,8 @@ export default function Controldeusuario() {
                   },
                 },
                 {
-                  name: "username",
-                  label: "Acciones",
+                  name: "verificado",
+                  label: "verificado",
                   options: {
                     filter: true,
                     sort: false,
@@ -114,51 +126,78 @@ export default function Controldeusuario() {
                     customBodyRender: (value, row) => {
                       return (
                         <>
-                          <Button
-                            type="warning"
-                            className="btn-DT"
-                            onClick={() => {
-                              setredirect("/EditUser/" + value);
-                            }}
-                          >
-                            Editar
+                          <Button type="primary" className="btn-daT">
+                            Verificar
                           </Button>
-
-                          <Popconfirm
-                            title="¿Seguro que desea eliminar este usuario?"
-                            icon={
-                              <UserDeleteOutlined style={{ color: "red" }} />
-                            }
-                            onConfirm={() => {
-                              axios
-                                .get(Global.url + "deleteusers/" + value)
-                                .then((res) => {
-                                  message.success({
-                                    content: "Usuario eliminado exitosamente",
-
-                                    style: {
-                                      marginTop: "13vh",
-                                      float: "right",
-                                    },
-                                  });
-                                  disparador(getusuarios());
-                                });
-                            }}
-                            onCancel={cancel}
-                            okText="Si"
-                            cancelText="No"
+                          {/* <span className="center centered"><CheckSquareOutlined/></span> */}
+                        </>
+                      );
+                    },
+                  },
+                },
+                {
+                  name: "estado",
+                  label: "Estado",
+                  options: {
+                    filter: true,
+                    sort: false,
+                    empty: true,
+                    onDownload: (buildHead, buildBody, columns, data) => {
+                      return "\uFEFF" + buildHead(columns) + buildBody(data);
+                    },
+                    customBodyRender: (value, row) => {
+                      return (
+                        <>
+                          <Button type="primary" className="btn-daT">
+                            Agendar
+                          </Button>
+                          {/* <span className="center centered">Agendado <br/> 24/10/2020 PM</span> */}
+                        </>
+                      );
+                    },
+                  },
+                },
+                {
+                  name: "nombres",
+                  label: "Info",
+                  options: {
+                    filter: true,
+                    sort: false,
+                    empty: true,
+                    onDownload: (buildHead, buildBody, columns, data) => {
+                      return "\uFEFF" + buildHead(columns) + buildBody(data);
+                    },
+                    customBodyRender: (value, row) => {
+                      return (
+                        <>
+                          <Popover
+                            placement="bottomRight"
+                            title={text}
+                            content={content}
+                            trigger="click"
+                            visible={Pov.visible}
+                            onVisibleChange={handleVisibleChange}
                           >
-                            <Button type="danger" className="btn-DT">
-                              Eliminar
+                            <Button type="info" className="btn-info-DT">
+                              <InfoCircleOutlined />
                             </Button>
-                          </Popconfirm>
+                          </Popover>
                         </>
                       );
                     },
                   },
                 },
               ]}
-              data={Users.users}
+              data={
+                // Users.users
+                [
+                  {
+                    fecha: 12 / 11 / 2020,
+                    oi: 25500,
+                    run: 17967154 - 5,
+                  },
+                ]
+              }
               options={{
                 filter: true,
                 filterType: "dropdown",
@@ -207,7 +246,7 @@ export default function Controldeusuario() {
       </div>
 
       <Footer></Footer>
-      <Segurity />
+      {/* <Segurity /> */}
     </div>
   );
 }
