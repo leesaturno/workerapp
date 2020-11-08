@@ -192,9 +192,9 @@ export default function Portafolio() {
                 // Users.users
                 [
                   {
-                    fecha: 12 / 11 / 2020,
+                    fecha: "12 / 11 / 2020",
                     oi: 25500,
-                    run: 17967154 - 5,
+                    run: "17967154 - 5",
                   },
                 ]
               }

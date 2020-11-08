@@ -54,6 +54,7 @@ export default function Controldeusuario() {
           title="Control de usuarios"
           btn="Nuevo usuario "
           href="/NewUser"
+          icon="newUser"
           content={
             <MuiDT
               columns={[
@@ -143,6 +144,9 @@ export default function Controldeusuario() {
                                   });
                                   disparador(getusuarios());
                                 });
+                            }}
+                            cancelButtonProps={{
+                              style: { backgroundColor: "#313131" },
                             }}
                             onCancel={cancel}
                             okText="Si"
