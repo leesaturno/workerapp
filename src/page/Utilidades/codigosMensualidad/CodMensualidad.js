@@ -115,7 +115,9 @@ export default function CodInstalacion() {
 
               <br />
 
-              <button className="bttn btn-CB text-ups">Crear códigos</button>
+              <div className="center">
+                <button className="bttn btn-Card text-ups">Crear códigos</button>
+              </div>
             </form>
           }
         />
