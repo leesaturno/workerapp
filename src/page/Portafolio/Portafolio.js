@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./Portafolio.scss";
+import Info from "./Info";
+import Agendado from "./agendado";
+import Fullname from "./fullname";
 import CardAmplio from "../../component/Card/CardAmplio";
 import MuiDT from "../../component/Datatable/MuiDT";
 import Footer from "../../component/Footer/Footer";
 import Segurity from "../../component/Segurity/Segurity";
 import { InfoCircleOutlined, CheckSquareOutlined } from "@ant-design/icons";
 import { getCLIENTES } from "../../Redux/Dusk/Clientesreducer";
-import { Button, Popover, message } from "antd";
+import { Button, Popover } from "antd";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -23,9 +26,7 @@ export default function Portafolio() {
     visible: false,
   });
 
-  const hide = () => {
-    setPov({ ...Pov, visible: false });
-  };
+
 
   const handleVisibleChange = (visible) => {
     setPov({ ...Pov, visible });
@@ -38,33 +39,7 @@ export default function Portafolio() {
     </span>
   );
   const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
-  const content = (
-    <div>
-      <p>
-        Fecha: 22/10/2020
-        <br />
-        OI: 25500
-        <br />
-        RUN: 17967154-5
-        <br />
-        Nombres: Juan Perez Molina Rosales
-        <br />
-        Dirección: Los Silos 1260
-        <br />
-        Elemento: H1P3N9
-        <br />
-        Plan: 200 MB
-        <br />
-        Mensualidad: $14.990
-        <br />
-        Verificado: <CheckSquareOutlined /> 23/10/2020
-        <br />
-        Estado: Agendado 24/10/2020 PM
-        <br />
-        Costo de instalación: $10.000
-      </p>
-    </div>
-  );
+
 
   return (
     <div>
@@ -116,13 +91,18 @@ export default function Portafolio() {
                   },
                 },
                 {
-                  name: "nombres",
-                  label: "Nombres",
+                  name: "rut",
+                  label: "Nombre",
                   options: {
                     filter: true,
                     sort: false,
                     onDownload: (buildHead, buildBody, columns, data) => {
                       return "\uFEFF" + buildHead(columns) + buildBody(data);
+                    },
+                    customBodyRender: (value, row) => {
+                      return (
+                        <Fullname rut={value} />
+                      );
                     },
                   },
                 },
@@ -151,7 +131,7 @@ export default function Portafolio() {
                   },
                 },
                 {
-                  name: "fecha",
+                  name: "rut",
                   label: "Estado",
                   options: {
                     filter: true,
@@ -162,13 +142,11 @@ export default function Portafolio() {
                     },
                     customBodyRender: (value, row) => {
                       return (
-                        <>
 
-                          {value === null ? <><Button type="primary" className="btn-daT">
-                            Agendar
-                          </Button></> : <><span className="center centered">Agendado <br /> {value} </span></>}
 
-                        </>
+
+
+                        <Agendado rut={value} />
                       )
                     },
                   },
@@ -189,7 +167,7 @@ export default function Portafolio() {
                           <Popover
                             placement="bottomRight"
                             title={text}
-                            content={content}
+                            content={<Info value={value} />}
                             trigger="click"
                             visible={Pov.visible}
                             onVisibleChange={handleVisibleChange}

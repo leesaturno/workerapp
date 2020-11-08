@@ -22,7 +22,7 @@ export default function Clientesreducer(state = StateCLIENTE, action) {
         case OBTENER_DATOS_DE_CLIENTES_EN_API:
             return { ...state, clientes: action.payload }
             case OBTENER_DATOS_DE_CLIENTE_EN_API:
-            return { ...state, cliente: action.payload }
+            return { ...state, cliente:StateCLIENTE.cliente.concat([action.payload]) }
         default:
             return state
     }
