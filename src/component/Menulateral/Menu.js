@@ -6,13 +6,15 @@ import Icon from '../Icons/Icons';
 import {
   HomeOutlined,
   UserSwitchOutlined,
-  SafetyOutlined
+  SafetyOutlined,
+  CloudOutlined
 } from '@ant-design/icons';
 
 import './Menulateral.scss';
 
 
 
+const { SubMenu } = Menu;
 class Menua extends React.Component {
   state = {
     collapsed: true,
@@ -24,9 +26,10 @@ class Menua extends React.Component {
     });
   };
 
+
   render() {
     return (
-      <div>
+      <div style={{ width: 256 }}>
         <Menu
           defaultSelectedKeys={['1']}
           defaultOpenKeys={['sub1']}
@@ -49,6 +52,18 @@ class Menua extends React.Component {
                  Evaluador
             </NavLink>
           </Menu.Item>
+          <Menu.Item key="4" icon={<CloudOutlined />}>
+            <NavLink to="/Portafolio">
+                 Portafolio
+            </NavLink>
+          </Menu.Item>
+
+          {/* <SubMenu key="sub1" icon={<CloudOutlined />} title="Utilidades">
+            <Menu.Item key="5">Option 5</Menu.Item>
+            <Menu.Item key="6">Option 6</Menu.Item>
+            <Menu.Item key="7">Option 7</Menu.Item>
+            <Menu.Item key="8">Option 8</Menu.Item>
+          </SubMenu> */}
 
           <div className="footer" onClick={this.toggleCollapsed} style={{ marginBottom: 16 }}>
           <Icon name="toggle"/>
