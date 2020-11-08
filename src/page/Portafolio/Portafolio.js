@@ -183,19 +183,8 @@ export default function Portafolio() {
                 },
               ]}
               data={
-<<<<<<< HEAD
                 Clientes.clientes
 
-=======
-                // Users.users
-                [
-                  {
-                    fecha: "12 / 11 / 2020",
-                    oi: 25500,
-                    run: "17967154 - 5",
-                  },
-                ]
->>>>>>> 61d73fc27d083ab0552420100b44584e9b5836d9
               }
               options={{
                 filter: true,
