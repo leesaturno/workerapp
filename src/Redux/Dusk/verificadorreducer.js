@@ -12,7 +12,7 @@ const StateUsuariospecifi={
 const DATOS_USUARIOS_ESPECIFICO="DATOS_USUARIOS_ESPECIFICO";
 const DATOS_VARIABLES_DEL_VERIFICADOR_ENTRE_WEB_CAM_Y_VERIFICADOR="DATOS_VARIABLES_DEL_VERIFICADOR_ENTRE_WEB_CAM_Y_VERIFICADOR";
 const DATOS_VARIABLES_DEL_VERIFICADOR_ENTRE_WEB_CAM_Y_VERIFICADOR1="DATOS_VARIABLES_DEL_VERIFICADOR_ENTRE_WEB_CAM_Y_VERIFICADOR1";
-const DATOS_DE_TESSERACT="DATOS_DE_TESSERACT"
+const DATOS_DE_TESSERACT_ENTRE_WEB_CAM_Y_EVALUADOR="DATOS_DE_TESSERACT_ENTRE_WEB_CAM_Y_EVALUADOR"
 
 //reducer
 export default function verificadoreducer(state=StateUsuariospecifi,action){
@@ -23,7 +23,7 @@ export default function verificadoreducer(state=StateUsuariospecifi,action){
             return {...state,role:action.payload}
         case DATOS_VARIABLES_DEL_VERIFICADOR_ENTRE_WEB_CAM_Y_VERIFICADOR1:
             return {...state,role1:action.payload}
-              case DATOS_DE_TESSERACT:
+              case DATOS_DE_TESSERACT_ENTRE_WEB_CAM_Y_EVALUADOR:
             return {...state,tessract:action.payload}
         default:
             return state
@@ -69,7 +69,7 @@ export const camevaluador = (ocr) => (dispatch,getState) =>{
     try {
         console.log(ocr)
         dispatch({
-            type:DATOS_DE_TESSERACT,
+            type:DATOS_DE_TESSERACT_ENTRE_WEB_CAM_Y_EVALUADOR,
             payload: ocr
         })
     } catch (error) {

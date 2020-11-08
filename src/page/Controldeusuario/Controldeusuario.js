@@ -19,7 +19,7 @@ import {
 import {getusuarios} from '../../Redux/Dusk/usuarioreducer';
 import {useDispatch,useSelector} from 'react-redux';
 export default function Controldeusuario()  {
-  const Users = useSelector(store => store.Clientes);
+  const Users = useSelector(store => store.Usuarios);
 const [localusers,setlocalusers]=useState([]);
  const [redirect, setredirect]=useState('')
  const disparador=useDispatch();
