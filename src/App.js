@@ -16,6 +16,9 @@ import Perfil from "./page/Perfil/Perfil";
 import Verificador from "./page/Verificador/Verificador";
 import Error from "./page/Error/Error";
 import Portafolio from "./page/Portafolio/Portafolio";
+import CodInstalacion from "./page/Utilidades/codigosInstalacion/CodInstalacion";
+import CodMensualidad from "./page/Utilidades/codigosMensualidad/CodMensualidad";
+import Agendamiento from "./page/Agendamiento/Agendamiento";
 
 //import
 //Redux
@@ -37,6 +40,9 @@ function App() {
             "/EditUser",
             "/Perfil",
             "/Portafolio",
+            "/CodInstalacion",
+            "/CodMensualidad",
+            "/Agendamiento",
           ]}
         >
           <Nav />
@@ -59,6 +65,9 @@ function App() {
           <Route exact path="/Perfil" component={Perfil} />
           <Route exact path="/Verificador/:id" component={Verificador} />
           <Route exact path="/Portafolio" component={Portafolio} />
+          <Route exact path="/CodInstalacion" component={CodInstalacion} />
+          <Route exact path="/CodMensualidad" component={CodMensualidad} />
+          <Route exact path="/Agendamiento" component={Agendamiento} />
           <Route render={() => <Error />} />
           {/*ruta*/}
         </AnimatedSwitch>

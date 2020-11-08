@@ -190,7 +190,28 @@ form {
     background-color: rgba(122, 138, 101, 0.75) !important;
 }
   
+.ant-popover-inner {
+    background-color: $card-dark !important;
+    color: $text-D !important;
+    box-shadow: 0 1px 15px rgba(0,0,0,.1),0 1px 8px rgba(0,0,0,.1) !important;
+}
 
+.ant-popover-message-title, .ant-popover-title, .ant-popover-inner-content {
+    color: $text-D !important;
+}
+
+.ant-popover-placement-top > .ant-popover-content > .ant-popover-arrow,
+.ant-popover-placement-topLeft > .ant-popover-content > .ant-popover-arrow,
+.ant-popover-placement-topRight > .ant-popover-content > .ant-popover-arrow {
+  border-right-color:$card-dark !important;
+  border-bottom-color:$card-dark !important;
+}
+
+.ant-popover-placement-bottom > .ant-popover-content > .ant-popover-arrow, .ant-popover-placement-bottomLeft > .ant-popover-content > .ant-popover-arrow, .ant-popover-placement-bottomRight > .ant-popover-content > .ant-popover-arrow {
+    border-top-color: $card-dark !important;
+    border-left-color: $card-dark !important;
+}
+  
 
 //MEDIA QUERY MANAGER
 // 0 - 600: Phone 

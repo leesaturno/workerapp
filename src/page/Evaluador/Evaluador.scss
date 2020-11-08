@@ -96,9 +96,11 @@ background-color: $primary !important; }
         background-color: $error !important;
         border-color: $error !important;
     }
-    button {
+    .ant-btn-sm{
+        border: none !important;
+        color: #fff !important;
         &:hover{
-            border-color: $primary !important; 
+            border: none !important; 
         } 
         
     }
