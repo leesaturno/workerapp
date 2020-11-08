@@ -213,10 +213,10 @@ function Evaluador() {
 
             if (cercanoFO.distancia < cercanoWL.distancia) {
               setFO({ ...FO, mensaje: false });
-
+              setcercanoFO({ ...cercanoFO, distancia: "", dispositivo: "" });
             } else if (cercanoWL.distancia < cercanoFO.distancia) {
               setWLess({ ...WLess, mensaje: false });
-
+              setcercanoWL({ ...cercanoWL, distancia: "", dispositivo: "" });
 
             }
           }
@@ -744,7 +744,7 @@ function Evaluador() {
 
   const final = () => {
     if (cliente.existe === false) {
-      axios.get('https://api.workerapp.cl/api/subscripcion/' + Clientes.nombres + '/' + Clientes.apPaterno + '/' + Clientes.apMaterno + '/' + datos.rut + '-' + datos.digito.toUpperCase() + '/' + Clientes.run + '/+569' + Clientes.phone + '/' + Clientes.email + '/' + Clientes.fNacimiento + '/' + query + ', ' + Clientes.blocManzana + ', ' + Clientes.dptoSitio + '/' + cReferencia + '/' + Clientes.plan + '/' + Clientes.user)
+      axios.get('https://api.workerapp.cl/api/subscripcion/' + Clientes.nombres + '/' + Clientes.apPaterno + '/' + Clientes.apMaterno + '/' + datos.rut + '-' + datos.digito.toUpperCase() + '/' + Clientes.run + '/+569' + Clientes.phone + '/' + Clientes.email + '/' + Clientes.fNacimiento + '/' + query + ', ' + Clientes.blocManzana + ', ' + Clientes.dptoSitio + '/' + cReferencia + '/' + Clientes.plan + '/' +cercanoWL.dispositivo+cercanoWL.dispositivo +"/"+ Clientes.user)
 
         .then(res => {
 
