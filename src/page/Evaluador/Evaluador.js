@@ -14,10 +14,10 @@ import verificador from 'verificador-rut';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 import Camera1 from '../Verificador/WebCam1'
-import Segurity from '../../component/Segurity/Segurity'; 
+import Segurity from '../../component/Segurity/Segurity';
 //redux
 /*  import {camevaluador} from '../../Redux/Dusk/verificadorreducer'; */
-import {useSelector } from 'react-redux'; 
+import { useSelector } from 'react-redux';
 
 function Evaluador() {
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
@@ -31,14 +31,14 @@ function Evaluador() {
   const [lng, setlng] = useState(0); */
   const [FO, setFO] = useState({ mensaje: false, sinFO: false });
   const [WLess, setWLess] = useState({ mensaje: false, sinWL: false });
-  const [cliente, setcliente] = useState({ rut: "", deuda: null, existe:false }); //estado para el cliente que se trae si hay coincidencia para verficar deuda
+  const [cliente, setcliente] = useState({ rut: "", deuda: null, existe: false }); //estado para el cliente que se trae si hay coincidencia para verficar deuda
   const [cercanoFO, setcercanoFO] = useState({ distancia: "", dispositivo: "" });
   const [cercanoWL, setcercanoWL] = useState({ distancia: "", dispositivo: "" });
   const [services, setservices] = useState([]);
   const [Clientes, setClientes] = useState({
     rut: "",
     email: "",
-    run:"",
+    run: "",
     fNacimiento: null,
     user: "",
     nombres: "",
@@ -51,11 +51,11 @@ function Evaluador() {
     blocManzana: "",
     dptoSitio: ""
   });
-  useEffect(  ()=>{
+  useEffect(() => {
     axios.get("https://api.workerapp.cl/apiv2/service")
-    .then(res => {setservices(res.data)})
-   
- },[])
+      .then(res => { setservices(res.data) })
+
+  }, [])
   const captarrut = (e) => {
     setDatos({
       ...datos,
@@ -64,19 +64,19 @@ function Evaluador() {
   }
 
   const captadatos = (e) => {
-       
+
     setClientes({
       ...Clientes,
       [e.target.name]: e.target.value.toLocaleUpperCase()
     })
-   
+
   }
 
   const usr = useSelector(store => store.session);
   const ocr = useSelector(store => store.rutespecifico);
   const verificadorrut = async () => {
     if (verificador(datos.rut + '-' + datos.digito)) {
-      
+
       setClientes({
         ...Clientes,
         rut: datos.rut + '-' + datos.digito.toUpperCase()
@@ -91,7 +91,7 @@ function Evaluador() {
 
       const res = await axios.get("https://api.workerapp.cl/api/factibilidadrut/" + datos.rut + '-' + datos.digito);
       const timeout = 1000;
-console.log(res);
+      console.log(res);
       if (res.data.length === 0) {
         setcliente({ ...cliente, deuda: 0 })
       } else res.data.forEach(cliente => {
@@ -100,7 +100,7 @@ console.log(res);
           if (cliente.deuda > 0) {
             setcliente({ rut: cliente.rut, deuda: cliente.deuda })
 
-          } else { setcliente({ rut: cliente.rut, deuda: 0, existe:true }) }
+          } else { setcliente({ rut: cliente.rut, deuda: 0, existe: true }) }
 
         }, timeout);
       });
@@ -111,7 +111,7 @@ console.log(res);
       setcliente({ rut: cliente.rut, deuda: null })
     }
   }
-//autocompletado de la direccion de cobertura y verificador de cobertura
+  //autocompletado de la direccion de cobertura y verificador de cobertura
   const handleScriptLoad = () => {
 
     // Declare Options For Autocomplete
@@ -128,26 +128,26 @@ console.log(res);
       const addressObject = autocomplete.getPlace();
 
 
-      
+
       let distancesWL = [];
       let distancesFO = [];
 
       const query3 = addressObject.formatted_address;
       const lttd = addressObject.geometry.location.lat();
       const lngtd = addressObject.geometry.location.lng();
-      
+
       setQuery(query3.toLocaleUpperCase());
-   /*    setlat(lttd);
-      setlng(lngtd); */
+      /*    setlat(lttd);
+         setlng(lngtd); */
       axios.get(`https://api.workerapp.cl/api/v2/pointservice`)
         .then(res => {
           const pointservice = res.data;
-          var R =6378;
+          var R = 6378;
           var rad = function (x) { return x * Math.PI / 180; }
 
-         
+
           pointservice.forEach(point => {
-//verifica cobertura Fibra optica
+            //verifica cobertura Fibra optica
             if (point.INDEX_tecnologia === "1") {
 
 
@@ -158,29 +158,30 @@ console.log(res);
               var circunferencia = 2 * Math.atan2(Math.sqrt(a1), Math.sqrt(1 - a1));
               var d1 = R * circunferencia;
               var dist = d1.toFixed(3);
-            
+
 
               distancesFO.sort(ordenar);
-              if (dist <= point.distancia) {  ;
-                distancesFO.push({ id: dist, nombre: point.dispositivo});
-              
+              if (dist <= point.distancia) {
+                ;
+                distancesFO.push({ id: dist, nombre: point.dispositivo });
+
                 distancesFO.sort(ordenar);
-               
+
 
                 setFO({ ...FO, mensaje: true });
-                console.log(dist + "soy fibra "+lttd+","+lngtd+" Base de datos: "+point.latitud+", "+point.longitud);
-                
-                
-                 setTimeout(() => {
-                   
-                   setcercanoFO({ ...cercanoFO, distancia: distancesFO[0].id, dispositivo: distancesFO[0].nombre });
-                 }, 1000);
-                
-               
-               
-              } else  console.log(dist + "soy fibra "+lttd+","+lngtd);
+                console.log(dist + "soy fibra " + lttd + "," + lngtd + " Base de datos: " + point.latitud + ", " + point.longitud);
+
+
+                setTimeout(() => {
+
+                  setcercanoFO({ ...cercanoFO, distancia: distancesFO[0].id, dispositivo: distancesFO[0].nombre });
+                }, 1000);
+
+
+
+              } else console.log(dist + "soy fibra " + lttd + "," + lngtd);
             } else { setFO({ ...FO, sinFO: true }); }
-//verifica cobertura wifi
+            //verifica cobertura wifi
             if (point.INDEX_tecnologia === "2") {
 
 
@@ -193,30 +194,30 @@ console.log(res);
               var distWL = d.toFixed(3);
               if (distWL <= point.distancia) {
 
-                distancesWL.push({ id: distWL, nombre: point.dispositivo});
+                distancesWL.push({ id: distWL, nombre: point.dispositivo });
                 distancesWL.sort(ordenar);
-                console.log(distWL + "soy WL "+lttd+","+lngtd);
+                console.log(distWL + "soy WL " + lttd + "," + lngtd);
                 setWLess({ ...WLess, mensaje: true });
                 setTimeout(() => {
                   setcercanoWL({ ...cercanoWL, distancia: distancesWL[0].id, dispositivo: distancesWL[0].nombre });
                 }, 1000);
-               
-               
 
-              
+
+
+
               }
 
             } else { setWLess({ ...WLess, sinWL: true }); }
           });
           if (FO.mensaje === true && WLess.mensaje === true) {
-            
-            if  (cercanoFO.distancia<cercanoWL.distancia)  {
+
+            if (cercanoFO.distancia < cercanoWL.distancia) {
               setFO({ ...FO, mensaje: false });
-              
-            }else if (cercanoWL.distancia<cercanoFO.distancia) {
+
+            } else if (cercanoWL.distancia < cercanoFO.distancia) {
               setWLess({ ...WLess, mensaje: false });
-              
-              
+
+
             }
           }
 
@@ -225,11 +226,11 @@ console.log(res);
 
     })
   }
-//ordenador de las distancias para cobertura 
+  //ordenador de las distancias para cobertura 
   const ordenar = (valor1, valor2) => {
     return valor1.id - valor2.id
   }
-//autocompletado de la calle de referencia 
+  //autocompletado de la calle de referencia 
   const handleScriptLoad2 = () => {
     const options = {
       componentRestrictions: { country: "cl" }
@@ -259,7 +260,7 @@ console.log(res);
   /* const evaluador=useSelector(store=>store.evaluador); */
 
 
-//loading de la deuda en el rut step 1
+  //loading de la deuda en el rut step 1
   const loading2 = () => {
     if (datos.rutvalido === true) {
       do {
@@ -271,7 +272,7 @@ console.log(res);
 
 
   }
-//loading de la cobertura step 1
+  //loading de la cobertura step 1
   const loading = () => {
 
 
@@ -312,7 +313,7 @@ console.log(res);
     });
     setTimeout(() => {
       console.log(Object.values(ocr));
-     
+
       setViewModal({ ...ViewModal, loading: false, visible: false });
     }, 300000);
   };
@@ -321,14 +322,14 @@ console.log(res);
     setViewModal({ ...ViewModal, visible: false });
   };
   // fin modal
- const LengthCheck = (object) => {
+  const LengthCheck = (object) => {
     if (object.target.value.length > object.target.maxLength) {
-     object.target.value = object.target.value.slice(0, object.target.maxLength)
-      }
-      if (object.target.value.length > object.target.minLength) {
-        object.target.value = object.target.value.slice(0, object.target.maxLength)
-         }
+      object.target.value = object.target.value.slice(0, object.target.maxLength)
     }
+    if (object.target.value.length > object.target.minLength) {
+      object.target.value = object.target.value.slice(0, object.target.maxLength)
+    }
+  }
   const { Option } = Select;
   const onSearch = (val) => {
     console.log('search:', val);
@@ -390,7 +391,7 @@ console.log(res);
           </form>
         }
       ></CardStep>,
-    },  
+    },
 
     {
       content: <CardStep title="Registro de cliente"
@@ -424,30 +425,30 @@ console.log(res);
               <div className="ed-grid lg-grid-3">
                 <div className="form-group">
                   <label className="text-ups">Run</label>
-                  <input type="text" name="rut"  className="form-control" placeholder="" value={datos.rut+'-'+ datos.digito.toLocaleUpperCase()} readOnly />
+                  <input type="text" name="rut" className="form-control" placeholder="" value={datos.rut + '-' + datos.digito.toLocaleUpperCase()} readOnly />
                 </div>
                 <div className="form-group">
                   <label className="text-ups">Serie run</label>
-                  <input type="text" name="run" className="form-control"  onChange={captadatos} required />
+                  <input type="text" name="run" className="form-control" onChange={captadatos} required />
                 </div>
                 <div className="form-group">
                   <label className="text-ups">Fecha de nacimiento</label>
-                  <input type="date" name="fNacimiento" className="form-control"  onChange={captadatos} placeholder={1} required />
+                  <input type="date" name="fNacimiento" className="form-control" onChange={captadatos} placeholder={1} required />
                 </div>
               </div>
 
               <div className="ed-grid lg-grid-3">
                 <div className="form-group">
                   <label className="text-ups">Nombres</label>
-                  <input type="text" name="nombres" className="form-control"  onChange={captadatos} required />
+                  <input type="text" name="nombres" className="form-control" onChange={captadatos} required />
                 </div>
                 <div className="form-group">
                   <label className="text-ups">Apellido paterno</label>
-                  <input type="text" name="apPaterno" className="form-control"  onChange={captadatos} required />
+                  <input type="text" name="apPaterno" className="form-control" onChange={captadatos} required />
                 </div>
                 <div className="form-group">
                   <label className="text-ups">Apellido materno</label>
-                  <input type="text" name="apMaterno" className="form-control"  onChange={captadatos} required />
+                  <input type="text" name="apMaterno" className="form-control" onChange={captadatos} required />
                 </div>
               </div>
 
@@ -460,7 +461,7 @@ console.log(res);
                     </div>
 
                     <div className="lg-cols-4">
-                      <input type="number" onInput={LengthCheck} name="phone"  className="form-control"  onChange={captadatos} minLength="8" maxLength="8" required />
+                      <input type="number" onInput={LengthCheck} name="phone" className="form-control" onChange={captadatos} minLength="8" maxLength="8" required />
                     </div>
                   </div>
                 </div>
@@ -497,12 +498,12 @@ console.log(res);
               <div className="ed-grid lg-grid-2">
                 <div className="form-group">
                   <label className="text-ups">Block / Manzana</label>
-                  <input type="text" name="blocManzana" className="form-control"  onChange={captadatos} />
+                  <input type="text" name="blocManzana" className="form-control" onChange={captadatos} />
                 </div>
 
                 <div className="form-group">
                   <label className="text-ups">Departamento / Sitio</label>
-                  <input type="text" name="dptoSitio" className="form-control"  onChange={captadatos} />
+                  <input type="text" name="dptoSitio" className="form-control" onChange={captadatos} />
                 </div>
               </div>
 
@@ -518,7 +519,7 @@ console.log(res);
               <span className="text-ups spanSeparador">Plan a contratar</span>
               <div className="ed-grid">
                 <div className="form-group">
-                  
+
                   <Select
                     name="plan"
                     showSearch
@@ -537,10 +538,10 @@ console.log(res);
                       option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                     }
                   >
-           {services.map((service) => (
-                                     (WLess.mensaje === true && service.INDEX_tecnologia==="2") ? <><Option key={service.id_service}> {service.velocidades}</Option></>:"" || (FO.mensaje === true && service.INDEX_tecnologia==="1") ? <> <Option key={service.id_service}> {service.velocidades}</Option></>:""
-    ))}
-                 
+                    {services.map((service) => (
+                      (WLess.mensaje === true && service.INDEX_tecnologia === "2") ? <><Option key={service.id_service}> {service.velocidades}</Option></> : "" || (FO.mensaje === true && service.INDEX_tecnologia === "1") ? <> <Option key={service.id_service}> {service.velocidades}</Option></> : ""
+                    ))}
+
                   </Select>
                 </div>
               </div>
@@ -548,7 +549,7 @@ console.log(res);
           </form>
         }
       ></CardStep>,
-    }, 
+    },
     {
       content: <CardStep title="Estas a un paso"
         content={
@@ -567,24 +568,35 @@ console.log(res);
     if (datos.rutvalido === true) {
       if (cliente.deuda === 0) {
         if (cliente.existe === false) {
-        if (query !== "") {
-          if (WLess.mensaje === true || FO.mensaje === true) {
-            setprocesar(true);
-            if (current === 1) {
-              if (Clientes.run !== "") {
-                if (Clientes.fNacimiento !== null) {
-                  if (Clientes.nombres !== "") {
-                    if (Clientes.apPaterno !== "") {
-                      if (Clientes.apMaterno !== "") {
-                        if (Clientes.phone !== "") {
-                          if (Clientes.email !== "") {
-                            if (cReferencia !== "") {
-                              if (Clientes.plan !== "") {
-                                setCurrent(current + 1);
+          if (query !== "") {
+            if (WLess.mensaje === true || FO.mensaje === true) {
+              setprocesar(true);
+              if (current === 1) {
+                if (Clientes.run !== "") {
+                  if (Clientes.fNacimiento !== null) {
+                    if (Clientes.nombres !== "") {
+                      if (Clientes.apPaterno !== "") {
+                        if (Clientes.apMaterno !== "") {
+                          if (Clientes.phone !== "") {
+                            if (Clientes.email !== "") {
+                              if (cReferencia !== "") {
+                                if (Clientes.plan !== "") {
+                                  setCurrent(current + 1);
+                                } else {
+                                  message.error(
+                                    {
+                                      content: ' ¡Debe seleccionar un plan!',
+                                      duration: 5,
+                                      style: {
+                                        marginTop: '13vh', float: 'right',
+                                      }
+                                    }
+                                  )
+                                }
                               } else {
                                 message.error(
                                   {
-                                    content: ' ¡Debe seleccionar un plan!',
+                                    content: ' ¡Debe proporcionar una calle de referencia!',
                                     duration: 5,
                                     style: {
                                       marginTop: '13vh', float: 'right',
@@ -595,7 +607,7 @@ console.log(res);
                             } else {
                               message.error(
                                 {
-                                  content: ' ¡Debe proporcionar una calle de referencia!',
+                                  content: ' ¡Debe proporcionar un email!',
                                   duration: 5,
                                   style: {
                                     marginTop: '13vh', float: 'right',
@@ -606,7 +618,7 @@ console.log(res);
                           } else {
                             message.error(
                               {
-                                content: ' ¡Debe proporcionar un email!',
+                                content: ' ¡Debe proporcionar un numero de telefono!',
                                 duration: 5,
                                 style: {
                                   marginTop: '13vh', float: 'right',
@@ -617,7 +629,7 @@ console.log(res);
                         } else {
                           message.error(
                             {
-                              content: ' ¡Debe proporcionar un numero de telefono!',
+                              content: ' ¡Debe proporcionar un Apellido materno!',
                               duration: 5,
                               style: {
                                 marginTop: '13vh', float: 'right',
@@ -628,7 +640,7 @@ console.log(res);
                       } else {
                         message.error(
                           {
-                            content: ' ¡Debe proporcionar un Apellido materno!',
+                            content: ' ¡Debe proporcionar un Apellido paterno!',
                             duration: 5,
                             style: {
                               marginTop: '13vh', float: 'right',
@@ -639,7 +651,7 @@ console.log(res);
                     } else {
                       message.error(
                         {
-                          content: ' ¡Debe proporcionar un Apellido paterno!',
+                          content: ' ¡ Debe proporcionar un nombre o nombres!',
                           duration: 5,
                           style: {
                             marginTop: '13vh', float: 'right',
@@ -650,7 +662,7 @@ console.log(res);
                   } else {
                     message.error(
                       {
-                        content: ' ¡ Debe proporcionar un nombre o nombres!',
+                        content: ' ¡Debe proporcionar una fecha de nacimiento!',
                         duration: 5,
                         style: {
                           marginTop: '13vh', float: 'right',
@@ -658,10 +670,10 @@ console.log(res);
                       }
                     )
                   }
-                }else {
+                } else {
                   message.error(
                     {
-                      content: ' ¡Debe proporcionar una fecha de nacimiento!',
+                      content: ' ¡Debe proporcionar una Serie run!',
                       duration: 5,
                       style: {
                         marginTop: '13vh', float: 'right',
@@ -669,53 +681,42 @@ console.log(res);
                     }
                   )
                 }
-              } else {
-                message.error(
-                  {
-                    content: ' ¡Debe proporcionar una Serie run!',
-                    duration: 5,
-                    style: {
-                      marginTop: '13vh', float: 'right',
-                    }
-                  }
-                )
-              }
-            } else { setCurrent(current + 1); }
-          }
-          else
-            message.error(
-              {
-                content: ' ¡Sin cobertura! ¡imposible avanzar!',
-                duration: 5,
-                style:
-                {
-                  marginTop: '13vh', float: 'right',
-                }
-              }
-            )
-        }
-        else message.error(
-          {
-            content: ' ¡Tiene que escribir una dirección!',
-            duration: 5, style:
-            {
-              marginTop: '13vh', float: 'right',
+              } else { setCurrent(current + 1); }
             }
+            else
+              message.error(
+                {
+                  content: ' ¡Sin cobertura! ¡imposible avanzar!',
+                  duration: 5,
+                  style:
+                  {
+                    marginTop: '13vh', float: 'right',
+                  }
+                }
+              )
           }
-        )
-      } else {
-        message.error({
-          content: ' ¡Este cliente ya existe!',
-          duration: 5,
-          style:
-          {
-            marginTop:
-              '13vh',
-            float: 'right',
-          }
-        })
+          else message.error(
+            {
+              content: ' ¡Tiene que escribir una dirección!',
+              duration: 5, style:
+              {
+                marginTop: '13vh', float: 'right',
+              }
+            }
+          )
+        } else {
+          message.error({
+            content: ' ¡Este cliente ya existe!',
+            duration: 5,
+            style:
+            {
+              marginTop:
+                '13vh',
+              float: 'right',
+            }
+          })
+        }
       }
-    }
       else {
         message.error({
           content: ' ¡Deudor no puedes avanzar!',
@@ -742,75 +743,75 @@ console.log(res);
   }
 
   const final = () => {
-    if(cliente.existe===false){
-    axios.get('https://api.workerapp.cl/api/subscripcion/' + Clientes.nombres + '/' + Clientes.apPaterno + '/' + Clientes.apMaterno + '/' + datos.rut + '-' + datos.digito.toUpperCase() + '/' + Clientes.run + '/+569' + Clientes.phone + '/' + Clientes.email + '/' + Clientes.fNacimiento + '/' + query + ', ' + Clientes.blocManzana + ', ' + Clientes.dptoSitio + '/' + cReferencia + '/' + Clientes.plan + '/' + Clientes.user)
+    if (cliente.existe === false) {
+      axios.get('https://api.workerapp.cl/api/subscripcion/' + Clientes.nombres + '/' + Clientes.apPaterno + '/' + Clientes.apMaterno + '/' + datos.rut + '-' + datos.digito.toUpperCase() + '/' + Clientes.run + '/+569' + Clientes.phone + '/' + Clientes.email + '/' + Clientes.fNacimiento + '/' + query + ', ' + Clientes.blocManzana + ', ' + Clientes.dptoSitio + '/' + cReferencia + '/' + Clientes.plan + '/' + Clientes.user)
 
-      .then(res => {
+        .then(res => {
 
-        message.success({
-          content: '¡Cliente creado exitosamente!', duration: 5,
+          message.success({
+            content: '¡Cliente creado exitosamente!', duration: 5,
 
-          style: {
-            marginTop: '13vh', float: 'right',
-          }
-        });
-        setTimeout(() => {
-          axios.get('https://api.workerapp.cl/api/sms/+569' + Clientes.phone + '/' + datos.rut + '-' + datos.digito.toUpperCase())
+            style: {
+              marginTop: '13vh', float: 'right',
+            }
+          });
+          setTimeout(() => {
+            axios.get('https://api.workerapp.cl/api/sms/+569' + Clientes.phone + '/' + datos.rut + '-' + datos.digito.toUpperCase())
 
-            .then(res => {
+              .then(res => {
 
-              message.success({
-                content: '¡mensaje de verificacion enviado exitosamente!', duration: 5,
+                message.success({
+                  content: '¡mensaje de verificacion enviado exitosamente!', duration: 5,
 
-                style: {
-                  marginTop: '13vh', float: 'right',
-                }
-              });
-              setTimeout(() => {
-                
-                setClientes({
-                  rut: "",
-                  email: "",
-                  run:"",
-                  fNacimiento: null,
-                  user: "",
-                  nombres: "",
-                  apPaterno: "",
-                  apMaterno: "",
-                  phone: "",
-                  plan: "",
-                  cReferencia: '',
-                  direccion:"",
-                  blocManzana: "",
-                  dptoSitio: ""
+                  style: {
+                    marginTop: '13vh', float: 'right',
+                  }
                 });
-                setFO({ mensaje: false, sinFO: false });
-                setWLess({ mensaje: false, sinFO: false });
-                setCurrent(0);
-  
-                setprocesar(false);
-                setQuery("");
-                setcReferencia("");
-                setcliente({ rut: "", deuda: null });
-                setcercanoFO({ distancia: "", dispositivo: "" });
-                setcercanoWL({ distancia: "", dispositivo: "" });
-              }, 2000);
-            }).catch(err => {
-              message.error({
-                content: ' ¡Mensaje no enviado! Verifique sus datos',
-                duration: 5,
-                style:
-                {
-                  marginTop:
-                    '13vh',
-                  float: 'right',
-                }
-              })
-          })
-        }, 3000);
+                setTimeout(() => {
 
-      })
-    }else {
+                  setClientes({
+                    rut: "",
+                    email: "",
+                    run: "",
+                    fNacimiento: null,
+                    user: "",
+                    nombres: "",
+                    apPaterno: "",
+                    apMaterno: "",
+                    phone: "",
+                    plan: "",
+                    cReferencia: '',
+                    direccion: "",
+                    blocManzana: "",
+                    dptoSitio: ""
+                  });
+                  setFO({ mensaje: false, sinFO: false });
+                  setWLess({ mensaje: false, sinFO: false });
+                  setCurrent(0);
+
+                  setprocesar(false);
+                  setQuery("");
+                  setcReferencia("");
+                  setcliente({ rut: "", deuda: null });
+                  setcercanoFO({ distancia: "", dispositivo: "" });
+                  setcercanoWL({ distancia: "", dispositivo: "" });
+                }, 2000);
+              }).catch(err => {
+                message.error({
+                  content: ' ¡Mensaje no enviado! Verifique sus datos',
+                  duration: 5,
+                  style:
+                  {
+                    marginTop:
+                      '13vh',
+                    float: 'right',
+                  }
+                })
+              })
+          }, 3000);
+
+        })
+    } else {
       message.error({
         content: ' ¡Este cliente ya existe!',
         duration: 5,
@@ -822,11 +823,11 @@ console.log(res);
         }
       })
       setTimeout(() => {
-                
+
         setClientes({
           rut: "",
           email: "",
-          run:"",
+          run: "",
           fNacimiento: null,
           user: "",
           nombres: "",
@@ -835,7 +836,7 @@ console.log(res);
           phone: "",
           plan: "",
           cReferencia: '',
-          direccion:"",
+          direccion: "",
           blocManzana: "",
           dptoSitio: ""
         });
@@ -899,7 +900,7 @@ console.log(res);
 
         </div>
       </div>
-    <Segurity/> 
+      <Segurity />
       <Footer></Footer>
     </div>
   );
