@@ -5,14 +5,19 @@ import MuiDT from "../../component/Datatable/MuiDT";
 import Footer from "../../component/Footer/Footer";
 import Segurity from "../../component/Segurity/Segurity";
 import { InfoCircleOutlined, CheckSquareOutlined } from "@ant-design/icons";
-
+import { getCLIENTES } from "../../Redux/Dusk/Clientesreducer";
 import { Button, Popover, message } from "antd";
-import Global from "../../Global";
-import axios from "axios";
+
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Portafolio() {
-  const Users = useSelector((store) => store.Clientes);
+  const disparador = useDispatch();
+  useEffect(() => {
+    disparador(getCLIENTES());
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [disparador]);
+  const Clientes = useSelector((store) => store.Clientes);
 
   const [Pov, setPov] = useState({
     visible: false,
@@ -32,7 +37,7 @@ export default function Portafolio() {
       cliente
     </span>
   );
-
+  const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
   const content = (
     <div>
       <p>
@@ -70,13 +75,21 @@ export default function Portafolio() {
             <MuiDT
               columns={[
                 {
-                  name: "fecha",
+                  name: "stamp",
                   label: "Fecha",
                   options: {
                     filter: true,
                     sort: true,
                     onDownload: (buildHead, buildBody, columns, data) => {
                       return "\uFEFF" + buildHead(columns) + buildBody(data);
+                    }, customBodyRender: (value, row) => {
+                      var fecha = new Date(value)
+                      var stamp = fecha.toLocaleString('en-GB', options)
+                      return (
+                        <>
+                          {stamp}
+                        </>
+                      );
                     },
                   },
                 },
@@ -92,7 +105,7 @@ export default function Portafolio() {
                   },
                 },
                 {
-                  name: "run",
+                  name: "rut",
                   label: "Run",
                   options: {
                     filter: true,
@@ -126,17 +139,19 @@ export default function Portafolio() {
                     customBodyRender: (value, row) => {
                       return (
                         <>
-                          <Button type="primary" className="btn-daT">
+
+                          {value !== "1" ? <><Button type="primary" className="btn-daT">
                             Verificar
-                          </Button>
-                          {/* <span className="center centered"><CheckSquareOutlined/></span> */}
+                         </Button></> : <><span className="center centered"><CheckSquareOutlined /></span></>}
+
                         </>
+
                       );
                     },
                   },
                 },
                 {
-                  name: "estado",
+                  name: "fecha",
                   label: "Estado",
                   options: {
                     filter: true,
@@ -148,17 +163,18 @@ export default function Portafolio() {
                     customBodyRender: (value, row) => {
                       return (
                         <>
-                          <Button type="primary" className="btn-daT">
+
+                          {value === null ? <><Button type="primary" className="btn-daT">
                             Agendar
-                          </Button>
-                          {/* <span className="center centered">Agendado <br/> 24/10/2020 PM</span> */}
+                          </Button></> : <><span className="center centered">Agendado <br /> {value} </span></>}
+
                         </>
-                      );
+                      )
                     },
                   },
                 },
                 {
-                  name: "nombres",
+                  name: "rut",
                   label: "Info",
                   options: {
                     filter: true,
@@ -189,14 +205,8 @@ export default function Portafolio() {
                 },
               ]}
               data={
-                // Users.users
-                [
-                  {
-                    fecha: 12 / 11 / 2020,
-                    oi: 25500,
-                    run: 17967154 - 5,
-                  },
-                ]
+                Clientes.clientes
+
               }
               options={{
                 filter: true,

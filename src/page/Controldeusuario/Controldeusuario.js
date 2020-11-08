@@ -1,51 +1,63 @@
-import React, { useEffect, useState } from "react";
-import "./Controldeusuario.scss";
+import React, { useEffect, useState } from 'react';
+import './Controldeusuario.scss';
 
-import Card from "../../component/Card/Card";
-import MuiDT from "../../component/Datatable/MuiDT";
-import Footer from "../../component/Footer/Footer";
-import Segurity from "../../component/Segurity/Segurity";
-import { UserDeleteOutlined } from "@ant-design/icons";
+import Card from '../../component/Card/Card'
+import MuiDT from "../../component/Datatable/MuiDT"
+import Footer from '../../component/Footer/Footer'
+import Segurity from '../../component/Segurity/Segurity';
+import { UserDeleteOutlined } from '@ant-design/icons';
 
-import { Button, Popconfirm, message } from "antd";
-import Global from "../../Global";
-import axios from "axios";
-import { Redirect } from "react-router-dom";
-import { getusuarios } from "../../Redux/Dusk/usuarioreducer";
-import { useDispatch, useSelector } from "react-redux";
+import { Button, Popconfirm, message } from 'antd';
+import Global from '../../Global'
+import axios from 'axios';
+import {
 
+
+  Redirect
+
+} from "react-router-dom";
+import { getusuarios } from '../../Redux/Dusk/usuarioreducer';
+import { useDispatch, useSelector } from 'react-redux';
 export default function Controldeusuario() {
-  const Users = useSelector((store) => store.Clientes);
+  const Users = useSelector(store => store.Usuarios);
   const [localusers, setlocalusers] = useState([]);
-  const [redirect, setredirect] = useState("");
+  const [redirect, setredirect] = useState('')
   const disparador = useDispatch();
   useEffect(() => {
-    disparador(getusuarios());
-    setlocalusers(Users.users);
+    disparador(getusuarios())
+    setlocalusers(Users.users)
     return () => {
       if (Users.users !== localusers) {
-        disparador(getusuarios());
+        disparador(getusuarios())
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [disparador]);
 
-  function cancel(e) {
-    return message.error({
-      content: "Cancelado",
 
-      style: {
-        marginTop: "13vh",
-        float: "right",
-      },
-    });
+
+
+
+
+  function cancel(e) {
+    return (
+
+      message.error({
+        content: "Cancelado",
+
+        style: {
+          marginTop: "13vh",
+          float: "right",
+        },
+      })
+    );
   }
 
   const rediredionar = () => {
     if (redirect) {
-      return <Redirect to={redirect} />;
+      return <Redirect to={redirect} />
     }
-  };
+  }
   return (
     <div>
       <div class="main mt-5 ml-10">
@@ -55,7 +67,9 @@ export default function Controldeusuario() {
           btn="Nuevo usuario "
           href="/NewUser"
           content={
+
             <MuiDT
+
               columns={[
                 {
                   name: "nombre",
@@ -65,30 +79,29 @@ export default function Controldeusuario() {
                     sort: true,
                     onDownload: (buildHead, buildBody, columns, data) => {
                       return "\uFEFF" + buildHead(columns) + buildBody(data);
-                    },
-                  },
+                    }
+                  }
                 },
                 {
                   name: "email",
                   label: "Email",
                   options: {
                     filter: true,
-                    sort: false,
-                    onDownload: (buildHead, buildBody, columns, data) => {
+                    sort: false, onDownload: (buildHead, buildBody, columns, data) => {
                       return "\uFEFF" + buildHead(columns) + buildBody(data);
-                    },
-                  },
+                    }
+                  }
                 },
                 {
                   name: "telefono",
-                  label: "Teléfono",
+                  label: "Telefono",
                   options: {
                     filter: true,
                     sort: false,
                     onDownload: (buildHead, buildBody, columns, data) => {
                       return "\uFEFF" + buildHead(columns) + buildBody(data);
-                    },
-                  },
+                    }
+                  }
                 },
                 {
                   name: "username",
@@ -98,8 +111,8 @@ export default function Controldeusuario() {
                     sort: false,
                     onDownload: (buildHead, buildBody, columns, data) => {
                       return "\uFEFF" + buildHead(columns) + buildBody(data);
-                    },
-                  },
+                    }
+                  }
                 },
                 {
                   name: "username",
@@ -114,82 +127,69 @@ export default function Controldeusuario() {
                     customBodyRender: (value, row) => {
                       return (
                         <>
-                          <Button
-                            type="warning"
-                            className="btn-DT"
-                            onClick={() => {
-                              setredirect("/EditUser/" + value);
-                            }}
-                          >
-                            Editar
-                          </Button>
+                          <Button type="warning" className="btn-DT" onClick={() => {
+                            setredirect("/EditUser/" + value);
+                          }}>Editar</Button>
 
                           <Popconfirm
                             title="¿Seguro que desea eliminar este usuario?"
-                            icon={
-                              <UserDeleteOutlined style={{ color: "red" }} />
-                            }
+                            icon={<UserDeleteOutlined style={{ color: 'red' }} />}
                             onConfirm={() => {
-                              axios
-                                .get(Global.url + "deleteusers/" + value)
-                                .then((res) => {
+                              axios.get(Global.url + 'deleteusers/' + value)
+                                .then(res => {
                                   message.success({
-                                    content: "Usuario eliminado exitosamente",
+                                    content: 'Usuario eliminado exitosamente',
 
                                     style: {
-                                      marginTop: "13vh",
-                                      float: "right",
-                                    },
+                                      marginTop: '13vh', float: 'right',
+                                    }
                                   });
-                                  disparador(getusuarios());
-                                });
+                                  disparador(getusuarios())
+
+                                })
                             }}
                             onCancel={cancel}
                             okText="Si"
                             cancelText="No"
                           >
-                            <Button type="danger" className="btn-DT">
-                              Eliminar
-                            </Button>
+                            <Button type="danger" className="btn-DT">Eliminar</Button>
                           </Popconfirm>
                         </>
                       );
-                    },
-                  },
+                    }
+                  }
                 },
               ]}
-              data={Users.users}
+
+              data={
+                Users.users
+              }
+
               options={{
                 filter: true,
-                filterType: "dropdown",
-                responsive: "vertical",
-                tableBodyHeight: "400px",
-                textLabels: {
+                filterType: 'dropdown',
+                responsive: 'vertical',
+                tableBodyHeight: '400px', textLabels: {
                   pagination: {
                     next: "Siguiente",
                     previous: "Anterior",
                     rowsPerPage: "Filas por pagina:",
                     displayRows: "de",
-                  },
-                  filter: {
+                  }, filter: {
                     all: "TODOS",
                     title: "FILTROS",
                     reset: "REINICIAR",
-                  },
-                  body: {
+                  }, body: {
                     noMatch: "Lo sentimos, sin registros encontrados",
                     toolTip: "Filtrar",
-                    columnHeaderTooltip: (column) =>
-                      `Filtrar por ${column.label}`,
-                  },
-                  toolbar: {
+                    columnHeaderTooltip: column => `Filtrar por ${column.label}`
+                  }, toolbar: {
                     search: "Buscar",
                     downloadCsv: "Descargar CSV",
                     print: "Imprimir",
                     viewColumns: "Ver columnas",
                     filterTable: "Filtrar Tablas",
-                  },
-                  viewColumns: {
+                  }, viewColumns: {
                     title: "Mostrar Columnas",
                     titleAria: "Mostrar/Ocultar Columnas",
                   },
@@ -199,7 +199,7 @@ export default function Controldeusuario() {
                     deleteAria: "Eliminar Filas Seleccionadas",
                   },
                   // tableBodyMaxHeight: ''
-                },
+                }
               }}
             />
           }

@@ -1,15 +1,17 @@
 import axios from 'axios';
 
+
 //Constanes
 const StateCLIENTE = {
-    registro: [],
+    cliente: [],
     update: [],
-    clientes: []
+    clientes: [],
+    
 
 };
 
 //types
-
+const OBTENER_DATOS_DE_CLIENTE_EN_API="OBTENER_DATOS_DE_CLIENTE_EN_API";
 const ACTUALIZAR_DATOS_DE_CLIENTE_EN_API = "ACTUALIZAR_DATOS_DE_CLIENTE_EN_API";
 const OBTENER_DATOS_DE_CLIENTES_EN_API = "OBTENER_DATOS_DE_CLIENTES_EN_API";
 //reducer
@@ -19,6 +21,8 @@ export default function Clientesreducer(state = StateCLIENTE, action) {
             return { ...state, update: action.payload }
         case OBTENER_DATOS_DE_CLIENTES_EN_API:
             return { ...state, clientes: action.payload }
+            case OBTENER_DATOS_DE_CLIENTE_EN_API:
+            return { ...state, cliente: action.payload }
         default:
             return state
     }
@@ -37,11 +41,24 @@ export const CLIENTEUpdateaction = (username2, username, password, index_privile
         console.log(error)
     }
 }
-export const getCLIENTEs = () => async (dispatch, getState) => {
+export const getCLIENTES = () => async (dispatch, getState) => {
     try {
-        const res = await axios.get("https://api.workerapp.cl/apiv2/users");
+        const res = await axios.get("https://api.workerapp.cl/apiv2/clientes");
+  
         dispatch({
             type: OBTENER_DATOS_DE_CLIENTES_EN_API,
+            payload: res.data
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+export const getCLIENTE = (val) => async (dispatch, getState) => {
+    try {
+        const res = await axios.get("https://api.workerapp.cl/apiv2/cliente/"+val);
+  
+        dispatch({
+            type: OBTENER_DATOS_DE_CLIENTE_EN_API,
             payload: res.data
         })
     } catch (error) {
