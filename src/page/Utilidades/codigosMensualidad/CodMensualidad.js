@@ -208,6 +208,9 @@ export default function CodInstalacion() {
                             //       disparador(getusuarios());
                             //     });
                             // }}
+                            cancelButtonProps={{
+                              style: { backgroundColor: "#313131" },
+                            }}
                             onCancel={cancel}
                             okText="Si"
                             cancelText="No"

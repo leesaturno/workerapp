@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Portafolio.scss";
 import Info from "./Info";
 import Agendado from "./agendado";
+import Verificado from "./verificado";
 import Fullname from "./fullname";
 import CardAmplio from "../../component/Card/CardAmplio";
 import MuiDT from "../../component/Datatable/MuiDT";
@@ -107,7 +108,7 @@ export default function Portafolio() {
                   },
                 },
                 {
-                  name: "verificado",
+                  name: "rut",
                   label: "verificado",
                   options: {
                     filter: true,
@@ -119,11 +120,8 @@ export default function Portafolio() {
                     customBodyRender: (value, row) => {
                       return (
                         <>
-
-                          {value !== "1" ? <><Button type="primary" className="btn-daT">
-                            Verificar
-                         </Button></> : <><span className="center centered"><CheckSquareOutlined /></span></>}
-
+                        <Verificado rut={value} redire={"/Verificador/"}  />
+                         
                         </>
 
                       );
@@ -144,9 +142,11 @@ export default function Portafolio() {
                       return (
 
 
+<>
 
-
-                        <Agendado rut={value} />
+                        <Agendado rut={value} redire={"/Agendamiento/"}/>
+                        
+                        </>
                       )
                     },
                   },

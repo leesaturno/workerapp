@@ -16,7 +16,7 @@ import Segurity from '../../component/Segurity/Segurity';
 function EditUser() {
     const disparador=useDispatch();
     let history = useHistory();
-    let { id } = useParams();
+    const { id } = useParams();
     const [privilegios, setprivilegios]=useState([]);
     const [Clientes,setClientes]=useState({
         user:"",

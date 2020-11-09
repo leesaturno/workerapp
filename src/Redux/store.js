@@ -5,14 +5,15 @@ import pointreducer from './Dusk/pointreducer';
 import Usuarioreducer from './Dusk/usuarioreducer';
 import verificadoreducer from './Dusk/verificadorreducer';
 import Clientesreducer from './Dusk/Clientesreducer';
-
+import Cuponesreducer from './Dusk/Cuponesreducer';
 
 const rootReducer = combineReducers({
     session: Loginreducer,
     evaluador: pointreducer,
     Usuarios: Usuarioreducer,
     rutespecifico:verificadoreducer,
-    Clientes:Clientesreducer
+    Clientes:Clientesreducer,
+    Cupones:Cuponesreducer
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

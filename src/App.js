@@ -67,7 +67,7 @@ function App() {
           <Route exact path="/Portafolio" component={Portafolio} />
           <Route exact path="/CodInstalacion" component={CodInstalacion} />
           <Route exact path="/CodMensualidad" component={CodMensualidad} />
-          <Route exact path="/Agendamiento" component={Agendamiento} />
+          <Route exact path="/Agendamiento/:id" component={Agendamiento} />
           <Route render={() => <Error />} />
           {/*ruta*/}
         </AnimatedSwitch>

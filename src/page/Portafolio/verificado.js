@@ -8,8 +8,8 @@ import {
 
 } from "react-router-dom";
 import { useSelector } from "react-redux";
-
-export default function Agendado(props) {
+import { CheckSquareOutlined } from "@ant-design/icons";
+export default function Verificado(props) {
 
   const Clientes = useSelector((store) => store.Clientes);
 
@@ -31,11 +31,11 @@ export default function Agendado(props) {
       <>
       {rediredionar()}
         {client.rut === props.rut ?
-          client.id_agendamiento === null ? <><Button type="primary" className="btn-daT" onClick={() => {
+          client.verificado !== "1" ? <><Button type="primary" className="btn-daT" onLoad onClick={() => {
                             setredirect(props.redire + client.rut);
                           }}>
-            Agendar
-      </Button></> : <><span className="center centered">Agendado <br /> {new Date(client.fecha).toLocaleString('en-EN', options)} {client.tramohorario}</span></> : ""}
+            Verificar
+      </Button></> : <><span className="center centered"><CheckSquareOutlined /></span></>: ""}
 
       </>
     ))

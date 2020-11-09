@@ -6,7 +6,10 @@ import { LoadingOutlined } from '@ant-design/icons';
 
 import axios from 'axios';
 import CardStep from '../../component/Card/CardStep';
+import {
 
+  useHistory
+} from "react-router-dom";
 import Icon from '../../component/Icons/Icons';
 import Footer from '../../component/Footer/Footer';
 import Script from 'react-load-script';
@@ -27,6 +30,7 @@ function Evaluador() {
     rut: '',
     digito: '', rutvalido: false, rutivalido: false
   });
+  let history = useHistory();
   /*   const [lat, setlat] = useState(0);
   const [lng, setlng] = useState(0); */
   const [FO, setFO] = useState({ mensaje: false, sinFO: false });
@@ -795,6 +799,7 @@ function Evaluador() {
                   setcliente({ rut: "", deuda: null });
                   setcercanoFO({ distancia: "", dispositivo: "" });
                   setcercanoWL({ distancia: "", dispositivo: "" });
+                  history.push("/Agendamiento?id=" +datos.rut + '-' + datos.digito.toUpperCase())
                 }, 2000);
               }).catch(err => {
                 message.error({

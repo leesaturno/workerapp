@@ -4,10 +4,38 @@ import MuiDT from "../../../component/Datatable/MuiDT";
 import Footer from "../../../component/Footer/Footer";
 import Segurity from "../../../component/Segurity/Segurity";
 import { DeleteOutlined } from "@ant-design/icons";
-import { Button, Popconfirm, message } from "antd";
+import { Button, Popconfirm, message, Select } from "antd";
+import { useDispatch, useSelector } from 'react-redux';
+import { getusuarios } from '../../../Redux/Dusk/usuarioreducer';
+import { setCUPONES, getCUPONES } from '../../../Redux/Dusk/Cuponesreducer';
+import axios from 'axios';
 
 export default function CodInstalacion() {
+  const Users = useSelector(store => store.Usuarios);
+  const SCupones = useSelector(store => store.Cupones);
+  const disparador = useDispatch();
+  const [recupones, setrecupones] = useState([]);
+  useEffect(() => {
+    disparador(getusuarios())
+    disparador(getCUPONES())
+    setrecupones(SCupones.CUPONES)
 
+  }, [disparador]);
+
+  useEffect(() => {
+    if (SCupones.CUPONES !== recupones) {
+      disparador(getCUPONES())
+    }
+  }, [])
+  const [cupones, setcupones] = useState({
+    user: "",
+    valor: "",
+    cantidad: "",
+    vigencia: "",
+    valides: null,
+    codigo: ""
+  });
+  const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
   function cancel(e) {
     return message.error({
       content: "Cancelado",
@@ -18,59 +46,107 @@ export default function CodInstalacion() {
       },
     });
   }
+  const onSearch = (val) => {
+    console.log('search:', val);
+  }
+  const submit = (e) => {
+    e.preventDefault();
+    if (cupones.user) {
+      if (cupones.codigo) {
+        if (cupones.valor) {
+          if (cupones.cantidad) {
+            if (cupones.valides) {
+              disparador(setCUPONES(cupones.user, cupones.codigo, cupones.valor, cupones.cantidad, cupones.valides))
+              disparador(getCUPONES())
+              setTimeout(() => {
+                setcupones({
+                  user: "",
+                  valor: "",
+                  cantidad: "",
+                  vigencia: "",
+                  valides: null,
+                  codigo: ""
+                })
+              }, 1000);
+            }
+          }
+        }
+      }
+    }
+  }
+  const changevalor = (value) => {
+    setcupones({ ...cupones, valor: value });
+    if (value === "1") { setcupones({ ...cupones, codigo: "5A" + Math.floor(Math.random() * 1000), valor: "5000" }) } else if (value === "2") { setcupones({ ...cupones, codigo: "10B" + Math.floor(Math.random() * 999), valor: "10000" }) } else if (value === "3") { setcupones({ ...cupones, codigo: "30C" + Math.floor(Math.random() * 99), valor: "30000" }) };
+  }
+  const changevalides = (value) => {
+    setcupones({ ...cupones, vigencia: value });
+    var fecha = new Date();
 
+
+    var vigencia = new Date(fecha.setDate(fecha.getDate() + parseInt(value)));
+    setcupones({ ...cupones, valides: vigencia.toISOString().split("T")[0] })
+  }
   return (
     <>
       <div class="main mt-5 ml-10">
-      <CardAmplio
+        <CardAmplio
           title="Nuevo código de descuento"
           content={
             <form >
               <div className="ed-grid lg-grid-4">
                 <div className="form-group">
-                  <label className="text-ups">Código descuento</label>
+                  <label className="text-ups">Cantidad</label>
                   <input
-                    type="text"
-                    name="user"
+                    type="number"
+                    name="cantidad"
                     required
                     className="form-control"
+                    onChange={(e) => {
+                      setcupones({ ...cupones, cantidad: e.target.value });
+                    }}
                   />
                 </div>
 
                 <div className="form-group">
                   <label className="text-ups">Valor</label>
-                  {/* <Select
-                    name="privilegios"
+                  <Select
+                    name="Valor"
                     showSearch
-                    placeholder="Selecciona un privilegio"
-                    title="privilegios"
+                    placeholder="Selecciona un Valor"
+                    title="Valor"
                     onChange={(value) => {
-                      setUsers({ ...Users, privilegios: value });
+                      changevalor(value)
                     }}
-                    onSearch={onSearch}
+
                     filterOption={(input, option) =>
                       option.children
                         .toLowerCase()
                         .indexOf(input.toLowerCase()) >= 0
                     }
                   >
-                    {privilegios.map((privilegio) => (
-                      <Select.Option key={privilegio.id_privilegio}>
-                        {privilegio.privilegio}
+
+                    <Select.Option value="1">
+                      $ 5000
                       </Select.Option>
-                    ))}
-                  </Select> */}
+                    <Select.Option value="2">
+                      $ 10000
+                      </Select.Option>
+                    <Select.Option value="3">
+                      $ 30000
+                      </Select.Option>
+
+                  </Select>
                 </div>
-             
+
                 <div className="form-group">
                   <label className="text-ups">Usuario</label>
-                  {/* <Select
-                    name="privilegios"
+                  <Select
+                    name="Usuario"
                     showSearch
-                    placeholder="Selecciona un privilegio"
-                    title="privilegios"
+                    placeholder="Selecciona un Usuario"
+                    title="Usuario"
                     onChange={(value) => {
-                      setUsers({ ...Users, privilegios: value });
+                      setcupones({ ...cupones, user: value });
                     }}
                     onSearch={onSearch}
                     filterOption={(input, option) =>
@@ -79,57 +155,62 @@ export default function CodInstalacion() {
                         .indexOf(input.toLowerCase()) >= 0
                     }
                   >
-                    {privilegios.map((privilegio) => (
-                      <Select.Option key={privilegio.id_privilegio}>
-                        {privilegio.privilegio}
+                    {Users.users.map((User) => (
+                      <Select.Option key={User.id_user}>
+                        {User.nombre}
                       </Select.Option>
                     ))}
-                  </Select> */}
+                  </Select>
                 </div>
 
                 <div className="form-group">
                   <label className="text-ups">Vigencia</label>
-                  {/* <Select
-                    name="privilegios"
+                  <Select
+                    name="Vigencia"
                     showSearch
-                    placeholder="Selecciona un privilegio"
-                    title="privilegios"
+                    placeholder="Selecciona la Vigencia"
+                    title="Vigencia"
                     onChange={(value) => {
-                      setUsers({ ...Users, privilegios: value });
+                      changevalides(value)
+
                     }}
-                    onSearch={onSearch}
+
                     filterOption={(input, option) =>
                       option.children
                         .toLowerCase()
                         .indexOf(input.toLowerCase()) >= 0
                     }
                   >
-                    {privilegios.map((privilegio) => (
-                      <Select.Option key={privilegio.id_privilegio}>
-                        {privilegio.privilegio}
+                    <Select.Option value="3">
+                      3 Dias
                       </Select.Option>
-                    ))}
-                  </Select> */}
+                    <Select.Option value="5">
+                      5 Dias
+                      </Select.Option>
+                    <Select.Option value="7">
+                      7 Dias
+                      </Select.Option>
+                  </Select>
                 </div>
               </div>
 
               <br />
-              
+
               <div className="center">
-                <button className="bttn btn-Card text-ups">Crear códigos</button>
+                <button className="bttn btn-Card text-ups" onClick={submit}>Crear códigos</button>
               </div>
             </form>
           }
         />
 
-        <br/><br/>
+        <br /><br />
         <CardAmplio
           title="Códigos de descuento de instalación"
           content={
             <MuiDT
               columns={[
                 {
-                  name: "codD",
+                  name: "codigo",
                   label: "Código descuento",
                   options: {
                     filter: true,
@@ -151,7 +232,7 @@ export default function CodInstalacion() {
                   },
                 },
                 {
-                  name: "usuario",
+                  name: "INDEX_user",
                   label: "Usuario",
                   options: {
                     filter: true,
@@ -162,7 +243,7 @@ export default function CodInstalacion() {
                   },
                 },
                 {
-                  name: "vigencia",
+                  name: "tiempo_valido",
                   label: "Vigencia",
                   options: {
                     filter: true,
@@ -172,9 +253,19 @@ export default function CodInstalacion() {
                     },
                   },
                 },
-
                 {
-                  name: "accion",
+                  name: "cantidad",
+                  label: "Cantidad",
+                  options: {
+                    filter: true,
+                    sort: false,
+                    onDownload: (buildHead, buildBody, columns, data) => {
+                      return "\uFEFF" + buildHead(columns) + buildBody(data);
+                    },
+                  },
+                },
+                {
+                  name: "codigo",
                   label: "Acciones",
                   options: {
                     filter: true,
@@ -193,21 +284,23 @@ export default function CodInstalacion() {
                           <Popconfirm
                             title="¿Seguro que desea eliminar este código?"
                             icon={<DeleteOutlined style={{ color: "red" }} />}
-                            // onConfirm={() => {
-                            //   axios
-                            //     .get(Global.url + "deleteusers/" + value)
-                            //     .then((res) => {
-                            //       message.success({
-                            //         content: "Usuario eliminado exitosamente",
+                            onConfirm={() => {
+                              axios.get("https://api.workerapp.cl/api/deletecupones/" + value)
+                                .then((res) => {
+                                  message.success({
+                                    content: "Cupon eliminado exitosamente",
 
-                            //         style: {
-                            //           marginTop: "13vh",
-                            //           float: "right",
-                            //         },
-                            //       });
-                            //       disparador(getusuarios());
-                            //     });
-                            // }}
+                                    style: {
+                                      marginTop: "13vh",
+                                      float: "right",
+                                    },
+                                  });
+                                  disparador(getCUPONES());
+                                });
+                            }}
+                            cancelButtonProps={{
+                              style: { backgroundColor: "#313131" },
+                            }}
                             onCancel={cancel}
                             okText="Si"
                             cancelText="No"
@@ -224,13 +317,7 @@ export default function CodInstalacion() {
               ]}
               data={
                 // Users.users
-                [
-                  {
-                    codD: "12 / 11 / 2020",
-                    valor: 25500,
-                    vigencia: "17967154 - 5",
-                  },
-                ]
+                SCupones.CUPONES
               }
               options={{
                 filter: true,
