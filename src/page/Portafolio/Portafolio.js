@@ -234,7 +234,7 @@ export default function Portafolio() {
       </div>
 
       <Footer></Footer>
-      {/* <Segurity /> */}
+       <Segurity /> 
     </div>
   );
 }
