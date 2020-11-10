@@ -388,7 +388,7 @@ function Evaluador() {
                   </ButtonGroup>
                 </div>
 
-                <span className="lg-cols-3 cobertura" id="cobertura"> {loading()} {WLess.mensaje === true ? <span>Tu cobertura más cercana es: WIRELESS Nodo: {cercanoWL.dispositivo}</span> : "" || FO.mensaje === true ? <span>Tu cobertura más cercana es: FIBRA OPTICA Nodo: {cercanoFO.dispositivo}  </span> : "" || (FO.sinFO === true && WLess.sinWL === true) ? "!No hay Cobertura¡" : ""}</span>
+                <span className="lg-cols-3 cobertura" id="cobertura"> {loading()} {WLess.mensaje === true ? <span>Tu cobertura más cercana es: WIRELESS CTO: {cercanoWL.dispositivo}</span> : "" || FO.mensaje === true ? <span>Tu cobertura más cercana es: FIBRA OPTICA CTO: {cercanoFO.dispositivo}  </span> : "" || (FO.sinFO === true && WLess.sinWL === true) ? "!No hay Cobertura¡" : ""}</span>
 
               </div>
             </div>
