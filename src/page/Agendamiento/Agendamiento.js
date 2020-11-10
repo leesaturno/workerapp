@@ -66,7 +66,6 @@ function Agendamiento() {
           let rut = element.rut;
           setagendar({
             ...agendar,
-            user: "59",
             cliente: cli_id,
             apPaterno: apPaterno,
             apMaterno: apMaterno,
@@ -74,7 +73,16 @@ function Agendamiento() {
             rut: rut
           })
         })
-        axios.get("https://api.workerapp.cl/apiv2/cupones/59")
+        Usuar.user.forEach(element => {
+          let usr_id = element.id_user;
+       
+          setagendar({
+            ...agendar,
+            user: usr_id
+          
+          })
+        })
+        axios.get("https://api.workerapp.cl/apiv2/cupones/"+agendar.user)
           .then(res => {
             res.data.forEach(cupon => {
               if (cupon.codigo === agendar.codigodescuento) {
