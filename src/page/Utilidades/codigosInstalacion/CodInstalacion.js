@@ -7,7 +7,7 @@ import { DeleteOutlined } from "@ant-design/icons";
 import { Button, Popconfirm, message, Select } from "antd";
 import { useDispatch, useSelector } from 'react-redux';
 import { getusuarios } from '../../../Redux/Dusk/usuarioreducer';
-import { setCUPONES, getCUPONES } from '../../../Redux/Dusk/Cuponesreducer';
+import { setCUPONES, getCUPONES, getCUPON,CUPONEUpdateaction} from '../../../Redux/Dusk/Cuponesreducer';
 import axios from 'axios';
 
 export default function CodInstalacion() {
@@ -27,6 +27,7 @@ export default function CodInstalacion() {
       disparador(getCUPONES())
     }
   }, [])
+  const [editing, setediting]=useState(false);
   const [cupones, setcupones] = useState({
     user: "",
     valor: "",
@@ -35,7 +36,20 @@ export default function CodInstalacion() {
     valides: null,
     codigo: ""
   });
-  const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+  const [editcupon, seteditcupon] = useState({
+    user: "",
+  
+    cantidad: "",
+   
+ 
+    newuser: "",
+  
+    newcantidad: 0,
+    newvalides: null,
+    valides:null,
+    codigo:""
+  });
+  
   function cancel(e) {
     return message.error({
       content: "Cancelado",
@@ -46,9 +60,78 @@ export default function CodInstalacion() {
       },
     });
   }
+ 
   const onSearch = (val) => {
     console.log('search:', val);
   }
+  const submitedit = (e) => {
+    e.preventDefault();
+    //insertar edicion todos nuevos
+    if (editcupon.newuser !== "" && editcupon.newcantidad !== 0 && editcupon.newvalides !== null) {
+      disparador(CUPONEUpdateaction(editcupon.newuser, editcupon.newcantidad, editcupon.newvalides, editcupon.codigo))
+//insertar edicion mismo user pero cantidad y valides nuevos
+    } else if (editcupon.newuser === "" && editcupon.newcantidad !== 0 && editcupon.newvalides !== null) {
+      disparador(CUPONEUpdateaction(editcupon.user, editcupon.newcantidad, editcupon.newvalides, editcupon.codigo))
+      //insertar edicion mismo user y valides pero cantidad nueva
+    } else if (editcupon.newuser === "" && editcupon.newcantidad !== 0 && editcupon.newvalides === null) {
+      disparador(CUPONEUpdateaction(editcupon.user, editcupon.newcantidad, editcupon.valides))
+      //insertar edicion misma valides y cantidad pero user nuevo
+    } else if (editcupon.newuser !== "" && editcupon.newcantidad === 0 && editcupon.newvalides === null) {
+      disparador(CUPONEUpdateaction(editcupon.newuser, editcupon.cantidad, editcupon.valides))
+       //insertar edicion misma valides pero cantidad y user nuevos
+    }else if (editcupon.newuser !== "" && editcupon.newcantidad !== 0 && editcupon.newvalides === null) {
+      disparador(CUPONEUpdateaction(editcupon.newuser, editcupon.newcantidad, editcupon.valides))
+      //insertar edicion misma cantidad pero valides y user nuevos
+    }else if (editcupon.newuser !== "" && editcupon.newcantidad === 0 && editcupon.newvalides !== null) {
+      disparador(CUPONEUpdateaction(editcupon.newuser, editcupon.cantidad, editcupon.newvalides, editcupon.codigo))
+      //insertar edicion misma cantidad y user pero valides nueva
+    }else if (editcupon.newuser === "" && editcupon.newcantidad !== 0 && editcupon.newvalides !== null) {
+      disparador(CUPONEUpdateaction(editcupon.user, editcupon.cantidad, editcupon.newvalides, editcupon.codigo))
+    }else  message.error({
+      content: "Error al actualizar verifique los datos",
+
+      style: {
+        marginTop: "13vh",
+        float: "right",
+      },
+    });
+  }
+
+
+  React.useEffect(()=>{
+    if(editing===false){
+    SCupones.CUPON.map(element => (
+      seteditcupon({...editcupon,
+        user: element.INDEX_user,
+  
+        cantidad: element.cantidad,
+        valides:element.tiempo_valido,
+        codigo:element.codigo
+        
+        
+      })
+    ));
+  }  
+  },[editing, SCupones.CUPON]) 
+  const editar =  React.useCallback((value) => {
+    
+    setediting(false)
+    disparador(getCUPON(value));
+     message.loading({
+      content: "Cargando datos para editar",
+duration:2,
+      style: {
+        marginTop: "13vh",
+        float: "right",
+      },
+    });
+    setTimeout(() => {
+      
+      setediting(true)
+      window.scrollTo(0, 0)
+    }, 2000);
+  
+  }, [disparador ])
   const submit = (e) => {
     e.preventDefault();
     if (cupones.user) {
@@ -79,16 +162,18 @@ export default function CodInstalacion() {
     if (value === "1") { setcupones({ ...cupones, codigo: "5A" + Math.floor(Math.random() * 1000), valor: "5000" }) } else if (value === "2") { setcupones({ ...cupones, codigo: "10B" + Math.floor(Math.random() * 999), valor: "10000" }) } else if (value === "3") { setcupones({ ...cupones, codigo: "30C" + Math.floor(Math.random() * 99), valor: "30000" }) };
   }
   const changevalides = (value) => {
-    setcupones({ ...cupones, vigencia: value });
+ 
     var fecha = new Date();
 
 
     var vigencia = new Date(fecha.setDate(fecha.getDate() + parseInt(value)));
     setcupones({ ...cupones, valides: vigencia.toISOString().split("T")[0] })
+    seteditcupon({ ...editcupon, newvalides: vigencia.toISOString().split("T")[0] })
   }
   return (
     <>
       <div class="main mt-5 ml-10">
+    { editing===false?
         <CardAmplio
           title="Nuevo código de descuento"
           content={
@@ -201,7 +286,94 @@ export default function CodInstalacion() {
               </div>
             </form>
           }
+        />:  <CardAmplio
+          title="Editar código de descuento"
+          content={
+            <form >
+              <div className="ed-grid lg-grid-4">
+                <div className="form-group">
+                  <label className="text-ups">Cantidad</label>
+                  <input
+                    type="number"
+                    name="cantidad"
+                    required
+                    className="form-control"
+                    value={editcupon.newcantidad===0? editcupon.cantidad:editcupon.newcantidad }
+                    onChange={(e) => {
+                      seteditcupon({ ...editcupon, newcantidad: e.target.value });
+                    }}
+                  />
+                </div>
+
+         
+
+                <div className="form-group">
+                  <label className="text-ups">Usuario</label>
+                  <Select
+                    name="Usuario"
+                    showSearch
+                    placeholder="Selecciona un Usuario"
+                    title="Usuario"
+                    value={editcupon.newuser===""? editcupon.user:editcupon.newuser }
+                    onChange={(value) => {
+                      seteditcupon({ ...editcupon, newuser: value });
+                    }}
+                    onSearch={onSearch}
+                    filterOption={(input, option) =>
+                      option.children
+                        .toLowerCase()
+                        .indexOf(input.toLowerCase()) >= 0
+                    }
+                  >
+                    {Users.users.map((User) => (
+                      <Select.Option key={User.id_user}>
+                        {User.nombre}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </div>
+
+                <div className="form-group">
+                  <label className="text-ups">Vigencia</label>
+                  <Select
+                    name="Vigencia"
+                    showSearch
+                    placeholder="Selecciona la Vigencia"
+                    title="Vigencia"
+                   
+                    onChange={(value) => {
+                      changevalides(value)
+
+                    }}
+
+                    filterOption={(input, option) =>
+                      option.children
+                        .toLowerCase()
+                        .indexOf(input.toLowerCase()) >= 0
+                    }
+                  >
+                    <Select.Option value="3">
+                      3 Dias
+                      </Select.Option>
+                    <Select.Option value="5">
+                      5 Dias
+                      </Select.Option>
+                    <Select.Option value="7">
+                      7 Dias
+                      </Select.Option>
+                  </Select>
+                </div>
+              </div>
+
+              <br />
+
+              <div className="center">
+                <button className="bttn btn-Card text-ups" onClick={submitedit}>Editar código</button>
+              </div>
+            </form>
+          }
         />
+}
 
         <br /><br />
         <CardAmplio
@@ -277,7 +449,7 @@ export default function CodInstalacion() {
                     customBodyRender: (value, row) => {
                       return (
                         <>
-                          <Button type="warning" className="btn-DT">
+                          <Button type="warning" className="btn-DT" onClick={()=>{editar(value)}}>
                             Editar
                           </Button>
 

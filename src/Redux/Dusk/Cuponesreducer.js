@@ -6,7 +6,7 @@ const StateCUPONE = {
     CUPONE: [],
     update: [],
     CUPONES: [],
-    
+    CUPON: [],
 
 };
 
@@ -25,7 +25,7 @@ export default function Cuponesreducer(state = StateCUPONE, action) {
             case GUARDAR_DATOS_DE_CUPONE_EN_API:
             return { ...state, CUPONE:action.payload }
             case OBTENER_DATOS_DE_CUPON_EN_API:
-            return { ...state, CUPONE:action.payload }
+            return { ...state, CUPON:action.payload }
         default:
             return state
     }
@@ -33,9 +33,17 @@ export default function Cuponesreducer(state = StateCUPONE, action) {
 
 //Acciones
 
-export const CUPONEUpdateaction = (username2, username, password, index_privilegios, nombre, email, cumpleanos, direccion, cargo, telefono, telefono2, estado) => async (dispatch, getState) => {
+export const CUPONEUpdateaction = (user,cantidad,vigencia,codigo) => async (dispatch, getState) => {
     try {
-        const res = await axios.get("https://api.workerapp.cl/api/editeuser/" + username2 + "/" + username + "/" + password + "/" + index_privilegios + "/" + nombre + "/" + email + "/" + cumpleanos + "/" + direccion + "/" + cargo + "/" + telefono + "/" + telefono2 + "/" + estado);
+        const res = await axios.get("https://api.workerapp.cl/apiv2/upcupones/" + user + "/" + cantidad + "/" + vigencia+ "/" + codigo);
+        message.success({
+            content: "¡Cupon editado con exito!",
+      
+            style: {
+              marginTop: "13vh",
+              float: "right",
+            },
+          })
         dispatch({
             type: ACTUALIZAR_DATOS_DE_CUPONE_EN_API,
             payload: res.data
@@ -58,7 +66,7 @@ export const getCUPONES = () => async (dispatch, getState) => {
 } 
 export const setCUPONES = (user,codigo,valor,cantidad,vigencia) => async (dispatch, getState) => {
     try {
-        const res = await axios.get("https://api.workerapp.cl/apiv2/cupones/"+user+"/"+codigo+"/"+valor+"/"+cantidad+"/"+vigencia);
+        const res = await axios.get("https://api.workerapp.cl/apiv2/crearcupones/"+user+"/"+codigo+"/"+valor+"/"+cantidad+"/"+vigencia);
         message.success({
             content: "Cupones creados",
       
@@ -84,8 +92,15 @@ export const setCUPONES = (user,codigo,valor,cantidad,vigencia) => async (dispat
 }
 export const getCUPON = (val) => async (dispatch, getState) => {
     try {
-        const res = await axios.get("https://api.workerapp.cl/apiv2/CUPON/"+val);
-  
+        const res = await axios.get("https://api.workerapp.cl/apiv2/cupon/"+val);
+        message.success({
+            content: "¡Datos traidos con exito!",
+      
+            style: {
+              marginTop: "13vh",
+              float: "right",
+            },
+          })
         dispatch({
             type: OBTENER_DATOS_DE_CUPON_EN_API,
             payload: res.data
