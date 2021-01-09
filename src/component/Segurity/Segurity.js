@@ -13,4 +13,4 @@ function Segurity() {
   return(<>{door()}</>);
 }
 
-export default Segurity;
+export default Segurity; 

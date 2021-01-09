@@ -15,7 +15,7 @@ function Bienvenida() {
         </div>
 
         <Footer></Footer>
-        <Segurity/>
+        <Segurity/> 
       </div>
   );
 }

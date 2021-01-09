@@ -23,7 +23,7 @@ function Verificador() {
     disparador(rutsaction(id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
     or=2
-  },[or]);
+  },[or]); 
 
   const [ViewModal, setViewModal]= useState(
     {

@@ -15,7 +15,7 @@
     width: 100%;
     @include respond('phone-land') {
         padding: 1.5rem 0;
-    }
+    } 
     .navbar-left {
         display: none;
         flex-basis: 40%;

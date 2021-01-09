@@ -29,7 +29,7 @@ function Camera(props) {
     const imageSrc = webcamRef.current.getScreenshot();
     setImgSrc(imageSrc);
   }, [webcamRef, setImgSrc]);
- 
+  
   const capture1 = useCallback(() => {
     const imageSrc1 = webcamRef.current.getScreenshot();
     setImgSrc1(imageSrc1);

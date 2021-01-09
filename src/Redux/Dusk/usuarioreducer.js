@@ -28,8 +28,8 @@ export default function Usuarioreducer(state=StateUsuario,action){
 
 //Acciones
 export const usuarioinsertaction = (username,password,index_privilegios,nombre,email,cumpleanos,direccion,cargo,telefono,telefono2,estado) => async (dispatch,getState) =>{
-    try {
-        const res= await axios.get("https://api.workerapp.cl/apiv2/saveuser/"+username+"/"+password+"/"+index_privilegios+"/"+nombre+"/"+email+"/"+cumpleanos+"/"+direccion+"/"+cargo+"/"+telefono+"/"+telefono2+"/"+estado);
+    try { 
+        const res = await axios.get("https://apitwork.000webhostapp.com/apiv2/saveuser/" + username + "/" + password + "/" + index_privilegios + "/" + nombre + "/" + email + "/" + cumpleanos + "/" + direccion + "/" + cargo + "/" + telefono + "/" + telefono2 + "/" + estado);
         dispatch({
             type:GUARDAR_DATOS_DE_USUARIO_EN_API,
             payload: res.data
@@ -40,7 +40,7 @@ export const usuarioinsertaction = (username,password,index_privilegios,nombre,e
 }
 export const usuarioUpdateaction = (username2,username,password,index_privilegios,nombre,email,cumpleanos,direccion,cargo,telefono,telefono2,estado) => async (dispatch,getState) =>{
     try {
-        const res= await axios.get("https://api.workerapp.cl/api/editeuser/"+username2+"/"+username+"/"+password+"/"+index_privilegios+"/"+nombre+"/"+email+"/"+cumpleanos+"/"+direccion+"/"+cargo+"/"+telefono+"/"+telefono2+"/"+estado);
+        const res = await axios.get("https://apitwork.000webhostapp.com/api/editeuser/" + username2 + "/" + username + "/" + password + "/" + index_privilegios + "/" + nombre + "/" + email + "/" + cumpleanos + "/" + direccion + "/" + cargo + "/" + telefono + "/" + telefono2 + "/" + estado);
         dispatch({
             type:ACTUALIZAR_DATOS_DE_USUARIO_EN_API,
             payload: res.data
@@ -51,7 +51,7 @@ export const usuarioUpdateaction = (username2,username,password,index_privilegio
 }
 export const getusuarios = () => async (dispatch,getState) =>{
     try {
-        const res= await axios.get("https://api.workerapp.cl/api/users");
+        const res = await axios.get("https://apitwork.000webhostapp.com/api/users");
         dispatch({
             type:OBTENER_DATOS_DE_USUARIOS_EN_API,
             payload: res.data

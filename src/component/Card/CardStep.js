@@ -16,5 +16,5 @@ const CardStep = ({ title, content }) => (
         </div>
     </div>
 );
-
+ 
 export default CardStep;

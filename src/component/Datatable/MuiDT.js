@@ -15,7 +15,7 @@ const MuiDT = ({
           root: {
             background: "#242224 !important",
           },
-          title: {
+          title: { 
             color: "#8F8F8F !important",
           },
           resetLink: {

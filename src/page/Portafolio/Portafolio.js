@@ -26,7 +26,7 @@ export default function Portafolio() {
   const [Pov, setPov] = useState({
     visible: false,
   });
-
+ 
 
 
   const handleVisibleChange = (visible) => {

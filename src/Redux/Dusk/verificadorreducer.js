@@ -28,12 +28,12 @@ export default function verificadoreducer(state=StateUsuariospecifi,action){
         default:
             return state
     }
-}
+} 
 
 //Acciones
 export const rutsaction = (ruts) => async (dispatch,getState) =>{
     try {
-        const res= await axios.get('https://api.workerapp.cl/apiv2/verificador/'+ruts);
+        const res = await axios.get('https://apitwork.000webhostapp.com/apiv2/verificador/' + ruts);
         dispatch({
             type:DATOS_USUARIOS_ESPECIFICO,
             payload: res.data

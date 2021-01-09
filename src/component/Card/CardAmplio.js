@@ -17,5 +17,5 @@ const CardAmplio = ({ title, content }) => (
     </div>
   </div>
 );
-
+ 
 export default CardAmplio;

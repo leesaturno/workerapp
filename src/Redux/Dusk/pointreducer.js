@@ -29,12 +29,12 @@ export default function pointreducer(state=pointState,action){
         default:
             return state
     }
-}
+} 
 
 //Acciones
 export const pointAction = () => async (dispatch,getState) =>{
     try {
-        const res= await axios.get("https://api.workerapp.cl/api/v2/pointservice");
+        const res = await axios.get("https://apitwork.000webhostapp.com/api/v2/pointservice");
         dispatch({
             type:OPTENER_PUNTOS_DE_SERVICIO,
             payload: res.data
@@ -46,7 +46,7 @@ export const pointAction = () => async (dispatch,getState) =>{
 
 export const ruttAction = (rutentrada) => async (dispatch,getState) =>{
     try {
-        const res= await axios.get("https://api.workerapp.cl/api/factibilidadrut/"+rutentrada);
+        const res = await axios.get("https://apitwork.000webhostapp.com/api/factibilidadrut/" + rutentrada);
         dispatch({
             type:VALIDAR_RUTS,
             payload: res.data

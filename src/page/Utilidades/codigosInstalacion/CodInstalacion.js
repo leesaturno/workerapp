@@ -19,7 +19,7 @@ export default function CodInstalacion() {
     disparador(getusuarios())
     disparador(getCUPONES())
     setrecupones(SCupones.CUPONES)
-
+ 
   }, [disparador]);
 
   useEffect(() => {
@@ -475,7 +475,7 @@ export default function CodInstalacion() {
                             title="¿Seguro que desea eliminar este código?"
                             icon={<DeleteOutlined style={{ color: "red" }} />}
                             onConfirm={() => {
-                              axios.get("https://api.workerapp.cl/api/deletecupones/" + value)
+                              axios.get("https://apitwork.000webhostapp.com/api/deletecupones/" + value)
                                 .then((res) => {
                                   message.success({
                                     content: "Cupon eliminado exitosamente",

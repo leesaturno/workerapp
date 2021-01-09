@@ -21,7 +21,7 @@ function EditUser() {
     const [Clientes,setClientes]=useState({
         user:"",
         email:"",
-        password:"",
+        password:"", 
         password2:"",
         fNacimiento:"",
         cargo:"",
@@ -36,7 +36,7 @@ function EditUser() {
 
       useEffect(() => {
         if(stop=== false){
-          axios.get(`https://api.workerapp.cl/api/users/`+id)
+            axios.get(`https://apitwork.000webhostapp.com/api/users/` + id)
           .then(res => {
               const user = res.data;
               user.forEach(element => {
@@ -78,7 +78,7 @@ function EditUser() {
    
      
    })
-   axios.get("https://api.workerapp.cl/apiv2/privilegios")
+            axios.get("https://apitwork.000webhostapp.com/apiv2/privilegios")
    .then(res => {setprivilegios(res.data)})
         }
           return () =>   setStop(true);

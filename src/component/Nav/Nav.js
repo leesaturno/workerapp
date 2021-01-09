@@ -19,7 +19,7 @@ const menu = (
       </NavLink>
     </Menu.Item>
   </Menu>
-)
+) 
 
 function Nav(props) {
   const verif=()=>{

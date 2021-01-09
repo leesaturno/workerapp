@@ -23,7 +23,7 @@ function getBase64(img, callback) {
     }
     return isJpgOrPng && isLt2M;
   }
-
+ 
 
 export default class Perfil extends Component {
 

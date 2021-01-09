@@ -28,14 +28,14 @@ export default function Cuponesreducer(state = StateCUPONE, action) {
             return { ...state, CUPON:action.payload }
         default:
             return state
-    }
+    } 
 }
 
 //Acciones
 
 export const CUPONEUpdateaction = (user,cantidad,vigencia,codigo) => async (dispatch, getState) => {
     try {
-        const res = await axios.get("https://api.workerapp.cl/apiv2/upcupones/" + user + "/" + cantidad + "/" + vigencia+ "/" + codigo);
+        const res = await axios.get("https://apitwork.000webhostapp.com/apiv2/upcupones/" + user + "/" + cantidad + "/" + vigencia + "/" + codigo);
         message.success({
             content: "¡Cupon editado con exito!",
       
@@ -54,7 +54,7 @@ export const CUPONEUpdateaction = (user,cantidad,vigencia,codigo) => async (disp
 }
 export const getCUPONES = () => async (dispatch, getState) => {
     try {
-        const res = await axios.get("https://api.workerapp.cl/apiv2/cupones");
+        const res = await axios.get("https://apitwork.000webhostapp.com/apiv2/cupones");
   
         dispatch({
             type:OBTENER_DATOS_DE_CUPONES_EN_API,
@@ -66,7 +66,7 @@ export const getCUPONES = () => async (dispatch, getState) => {
 } 
 export const setCUPONES = (user,codigo,valor,cantidad,vigencia) => async (dispatch, getState) => {
     try {
-        const res = await axios.get("https://api.workerapp.cl/apiv2/crearcupones/"+user+"/"+codigo+"/"+valor+"/"+cantidad+"/"+vigencia);
+        const res = await axios.get("https://apitwork.000webhostapp.com/apiv2/crearcupones/" + user + "/" + codigo + "/" + valor + "/" + cantidad + "/" + vigencia);
         message.success({
             content: "Cupones creados",
       
@@ -92,7 +92,7 @@ export const setCUPONES = (user,codigo,valor,cantidad,vigencia) => async (dispat
 }
 export const getCUPON = (val) => async (dispatch, getState) => {
     try {
-        const res = await axios.get("https://api.workerapp.cl/apiv2/cupon/"+val);
+        const res = await axios.get("https://apitwork.000webhostapp.com/apiv2/cupon/" + val);
         message.success({
             content: "¡Datos traidos con exito!",
       

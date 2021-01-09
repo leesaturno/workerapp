@@ -7,4 +7,4 @@ const Icon = ({ name }) => (
     </svg>
   );
   
-  export default Icon;
+  export default Icon; 

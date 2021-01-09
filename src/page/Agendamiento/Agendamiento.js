@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import { message, Select } from "antd";
 
 function Agendamiento() {
-
+ 
 
   let history = useHistory();
   const { id } = useParams();
@@ -48,7 +48,7 @@ function Agendamiento() {
   const [cupn, setcupn] = useState();
   useEffect(() => {
 
-    axios.get("https://api.workerapp.cl/apiv2/cliente/" + id)
+    axios.get("https://apitwork.000webhostapp.com/apiv2/cliente/" + id)
       .then(res => {
 
 
@@ -82,7 +82,7 @@ function Agendamiento() {
           
           })
         })
-        axios.get("https://api.workerapp.cl/apiv2/cupones/"+agendar.user)
+        axios.get("https://apitwork.000webhostapp.com/apiv2/cupones/" + agendar.user)
           .then(res => {
             res.data.forEach(cupon => {
               if (cupon.codigo === agendar.codigodescuento) {
@@ -103,7 +103,7 @@ function Agendamiento() {
     if(agendar.codigodescuento!==""){
       
       setTimeout(() => {
-    axios.get("https://api.workerapp.cl/apiv2/agendar/" + agendar.user + "/" + agendar.cliente + "/" + agendar.fecha + "/" + (agendar.costoinstalacion - cupn)+ "/" + agendar.tramohorario + "/" + agendar.codigodescuento)
+        axios.get("https://apitwork.000webhostapp.com/apiv2/agendar/" + agendar.user + "/" + agendar.cliente + "/" + agendar.fecha + "/" + (agendar.costoinstalacion - cupn) + "/" + agendar.tramohorario + "/" + agendar.codigodescuento)
       .then(res => {
         message.success({
           content: "Instalacion agendada",
@@ -120,7 +120,8 @@ function Agendamiento() {
       history.push("/Portafolio")
     }, timeout);
   }, 4000);
-  }else {axios.get("https://api.workerapp.cl/apiv2/agendar/" + agendar.user + "/" + agendar.cliente + "/" + agendar.fecha + "/" + agendar.costoinstalacion + "/" + agendar.tramohorario)
+    } else {
+      axios.get("https://apitwork.000webhostapp.com/apiv2/agendar/" + agendar.user + "/" + agendar.cliente + "/" + agendar.fecha + "/" + agendar.costoinstalacion + "/" + agendar.tramohorario)
   .then(res => {
     message.success({
       content: "Instalacion agendada",
@@ -219,7 +220,7 @@ setTimeout(() => {
                       title="Cupones"
                       onChange={(value) => {
                         setagendar({ ...agendar, codigodescuento: value });
-                        axios.get("https://api.workerapp.cl/apiv2/cupones/59")
+                        axios.get("https://apitwork.000webhostapp.com/apiv2/cupones/59")
                           .then(res => {
                             res.data.forEach(cupon => {
                               if (cupon.codigo === value) {

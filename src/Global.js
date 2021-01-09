@@ -1,5 +1,5 @@
 var Global = {
-    url: 'https://api.workerapp.cl/api/'
+    url: 'https://apitwork.000webhostapp.com/api/'
 };
 
 export default Global;

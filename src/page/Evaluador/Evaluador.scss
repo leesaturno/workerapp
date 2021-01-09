@@ -4,17 +4,20 @@
     width: 30% !important;
     margin: 0 auto !important;
     align-items: center;
+
     @include respond('phone') {
         width: 50% !important;
     }
+
     @media only screen and (max-width: 367px) {
         width: 60% !important;
     }
-  }
+}
 
 .ant-steps-item-finish .ant-steps-item-icon {
     border-color: $primary !important;
-    & > .ant-steps-icon {
+
+    &>.ant-steps-icon {
         color: $primary !important;
     }
 }
@@ -24,12 +27,14 @@
     border-color: $primary !important;
 }
 
-.ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title::after {
-background-color: $primary !important; }
+.ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title::after {
+    background-color: $primary !important;
+}
 
-.ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-tail::after {
-background-color: $primary !important; }
-  
+.ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-tail::after {
+    background-color: $primary !important;
+}
+
 .ant-steps:not(.ant-steps-dot):not(.ant-steps-navigation):not(.ant-steps-vertical) .ant-steps-item {
     padding-bottom: 10%;
 }
@@ -48,7 +53,7 @@ background-color: $primary !important; }
     outline: none;
 }
 
-.ant-btn-sm{
+.ant-btn-sm {
     width: 3rem !important;
 }
 
@@ -63,6 +68,7 @@ background-color: $primary !important; }
     background: $primary !important;
     border-color: $primary !important;
     outline: none;
+
     &:hover {
         color: $white !important;
 
@@ -74,7 +80,8 @@ background-color: $primary !important; }
     background: rgba(251, 207, 30, .85) !important;
     border-color: $warning !important;
     outline: none;
-    &:hover{
+
+    &:hover {
         color: $white !important;
         background: $warning !important;
     }
@@ -85,9 +92,10 @@ background-color: $primary !important; }
     background: rgba(214, 26, 36, .85) !important;
     border-color: $error !important;
     outline: none;
-    &:hover{
+
+    &:hover {
         color: $white !important;
-        background: $error !important;   
+        background: $error !important;
     }
 }
 
@@ -96,13 +104,15 @@ background-color: $primary !important; }
         background-color: $error !important;
         border-color: $error !important;
     }
-    .ant-btn-sm{
+
+    .ant-btn-sm {
         border: none !important;
         color: #fff !important;
-        &:hover{
-            border: none !important; 
-        } 
-        
+
+        &:hover {
+            border: none !important;
+        }
+
     }
 }
 
@@ -117,17 +127,19 @@ background-color: $primary !important; }
     flex-direction: inherit !important;
 }
 
-.ant-steps-horizontal.ant-steps-label-horizontal > .ant-steps-item > .ant-steps-item-container > .ant-steps-item-tail {
+.ant-steps-horizontal.ant-steps-label-horizontal>.ant-steps-item>.ant-steps-item-container>.ant-steps-item-tail {
     position: absolute;
     top: 0;
     left: 16px;
     width: 10px;
     height: 100%;
     padding: 38px 0 6px;
+
     @include respond('phone') {
         display: none !important;
     }
 }
+
 .steps-action {
     padding: 35px 0 0 0;
 }

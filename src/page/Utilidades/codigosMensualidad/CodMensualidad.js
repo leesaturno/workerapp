@@ -18,7 +18,7 @@ export default function CodInstalacion() {
       },
     });
   }
-
+ 
   return (
     <>
       <div class="main mt-5 ml-10">

@@ -23,7 +23,7 @@ export default function Agendado(props) {
     if (redirect) {
       return <Redirect to={redirect} />
     }
-  }
+  } 
 
   return (
     

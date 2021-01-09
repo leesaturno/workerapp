@@ -27,11 +27,11 @@ export default function Loginreducer(state=LoginState,action){
 //Acciones
 export const LoginAction = (user,pass) => async (dispatch,getState) =>{
     try {
-        const res= await axios.get("https://api.workerapp.cl/apiv2/auth/"+user+"/"+pass);
+        const res = await axios.get("https://apitwork.000webhostapp.com/apiv2/auth/" + user + "/" + pass);
         if(res.data!==""){
             toast.success('¡Usuario verificado con exito!', {
                 position: "top-right",
-                autoClose: 2000,
+                autoClose: 2000, 
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,

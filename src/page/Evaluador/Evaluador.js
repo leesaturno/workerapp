@@ -3,7 +3,7 @@ import './Evaluador.scss';
 
 import { Steps, Button as BTN, message, Select, Spin, Modal } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-
+ 
 import axios from 'axios';
 import CardStep from '../../component/Card/CardStep';
 import {
@@ -56,7 +56,7 @@ function Evaluador() {
     dptoSitio: ""
   });
   useEffect(() => {
-    axios.get("https://api.workerapp.cl/apiv2/service")
+    axios.get("https://apitwork.000webhostapp.com/apiv2/service")
       .then(res => { setservices(res.data) })
 
   }, [])
@@ -93,7 +93,7 @@ function Evaluador() {
         });
       })
 
-      const res = await axios.get("https://api.workerapp.cl/api/factibilidadrut/" + datos.rut + '-' + datos.digito);
+      const res = await axios.get("https://apitwork.000webhostapp.com/api/factibilidadrut/" + datos.rut + '-' + datos.digito);
       const timeout = 1000;
       console.log(res);
       if (res.data.length === 0) {
@@ -143,7 +143,7 @@ function Evaluador() {
       setQuery(query3.toLocaleUpperCase());
       /*    setlat(lttd);
          setlng(lngtd); */
-      axios.get(`https://api.workerapp.cl/api/v2/pointservice`)
+      axios.get(`https://apitwork.000webhostapp.com/api/v2/pointservice`)
         .then(res => {
           const pointservice = res.data;
           var R = 6378;
@@ -748,7 +748,7 @@ function Evaluador() {
 
   const final = () => {
     if (cliente.existe === false) {
-      axios.get('https://api.workerapp.cl/api/subscripcion/' + Clientes.nombres + '/' + Clientes.apPaterno + '/' + Clientes.apMaterno + '/' + datos.rut + '-' + datos.digito.toUpperCase() + '/' + Clientes.run + '/+569' + Clientes.phone + '/' + Clientes.email + '/' + Clientes.fNacimiento + '/' + query + ', ' + Clientes.blocManzana + ', ' + Clientes.dptoSitio + '/' + cReferencia + '/' + Clientes.plan + '/' +cercanoWL.dispositivo+cercanoWL.dispositivo +"/"+ Clientes.user)
+      axios.get('https://apitwork.000webhostapp.com/api/subscripcion/' + Clientes.nombres + '/' + Clientes.apPaterno + '/' + Clientes.apMaterno + '/' + datos.rut + '-' + datos.digito.toUpperCase() + '/' + Clientes.run + '/+569' + Clientes.phone + '/' + Clientes.email + '/' + Clientes.fNacimiento + '/' + query + ', ' + Clientes.blocManzana + ', ' + Clientes.dptoSitio + '/' + cReferencia + '/' + Clientes.plan + '/' + cercanoWL.dispositivo + cercanoWL.dispositivo + "/" + Clientes.user)
 
         .then(res => {
 
@@ -760,7 +760,7 @@ function Evaluador() {
             }
           });
           setTimeout(() => {
-            axios.get('https://api.workerapp.cl/api/sms/+569' + Clientes.phone + '/' + datos.rut + '-' + datos.digito.toUpperCase())
+            axios.get('https://apitwork.000webhostapp.com/api/sms/+569' + Clientes.phone + '/' + datos.rut + '-' + datos.digito.toUpperCase())
 
               .then(res => {
 

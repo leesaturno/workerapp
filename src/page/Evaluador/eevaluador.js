@@ -4,7 +4,7 @@ import Icon from '../../component/Icons/Icons';
 import CardStep from '../../component/Card/CardStep';
 
 const { Step } = Steps;
-
+ 
 const steps = [
   {
     content: <CardStep title="Evaluador"

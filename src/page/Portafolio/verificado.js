@@ -15,7 +15,7 @@ export default function Verificado(props) {
 
   const [redirect, setredirect] = React.useState('');
 
-
+ 
 
   const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
 

@@ -18,7 +18,7 @@ export default function Info(props) {
   const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
 
 
-
+ 
   return (
     Clientes.clientes.map(cliente => (
       <div>

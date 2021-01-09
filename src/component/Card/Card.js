@@ -25,5 +25,5 @@ const Card = ({ title, btn, href, content, icon }) => (
     </div>
   </div>
 );
-
+ 
 export default Card;

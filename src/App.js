@@ -20,7 +20,7 @@ import CodInstalacion from "./page/Utilidades/codigosInstalacion/CodInstalacion"
 import CodMensualidad from "./page/Utilidades/codigosMensualidad/CodMensualidad";
 import Agendamiento from "./page/Agendamiento/Agendamiento";
 
-//import
+//import 
 //Redux
 import { Provider } from "react-redux";
 import GenerateStore from "./Redux/store";

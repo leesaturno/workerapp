@@ -19,7 +19,7 @@ function NewUser() {
     email: "",
     password: "",
     password2: "",
-    fNacimiento: "",
+    fNacimiento: "", 
     cargo: "",
     name: "",
     phone: "",
@@ -28,7 +28,7 @@ function NewUser() {
     direccion: "",
   });
   useEffect(() => {
-    axios.get("https://api.workerapp.cl/apiv2/privilegios").then((res) => {
+    axios.get("https://apitwork.000webhostapp.com/apiv2/privilegios").then((res) => {
       setprivilegios(res.data);
     });
   }, []);

@@ -10,7 +10,7 @@ const trans = (x, y) => `translate3d(${x}px,${y}px,0) translate3d(-50%,-50%,0)`
 
 export default function Error() {
   const [trail, set] = useTrail(3, () => ({ xy: [0, 0], config: i => (i === 0 ? fast : slow) }))
- 
+  
   return (
     <>
       <svg style={{ position: 'absolute', width: 0, height: 0 }}>

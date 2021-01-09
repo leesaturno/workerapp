@@ -22,7 +22,7 @@ export default function Menua() {
   const Usuar = useSelector((store) => store.session);
   const toggleCollapsed = () => {
     setcollapsed(!collapsed);
-  };
+  }; 
 const getrole=()=>{
   Usuar.user.forEach(element => {
     setrole(element.INDEX_privilegio)

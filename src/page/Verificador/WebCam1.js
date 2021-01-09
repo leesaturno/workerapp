@@ -28,7 +28,7 @@ function Camera1(props) {
       
   }, [webcamRef, setImgSrc]);
   const [ocr, setOcr] = useState('Reconociendo...');
-  const doOCR = async () => {
+  const doOCR = async () => { 
     await worker.load();
     await worker.loadLanguage('spa');
     await worker.initialize('spa');
