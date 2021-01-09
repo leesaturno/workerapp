@@ -1,0 +1,236 @@
+@import "../../App.scss";
+
+.ant-menu {
+  position: absolute;
+  top: 4%;
+  bottom: 0;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  z-index: 4;
+  height: 100%;
+  transition: border-radius 0.3s;
+  @include respond("phone-land") {
+    padding-top: 60px;
+    padding-bottom: 0;
+  }
+  &.ant-menu-dark {
+    background: $card-dark !important;
+    max-width: 130px;
+    height: calc(100% - 50px);
+    border-radius: 0.5rem;
+    z-index: 3;
+    transition: transform 0.3s;
+    left: 25px;
+    text-align: center;
+    position: fixed;
+    padding-top: 0;
+    padding-bottom: 30px;
+    box-shadow: 0 3px 30px rgba(0, 0, 0, 0.3), 0 3px 24px rgba(0, 0, 0, 0.3) !important;
+    @include respond("phone-land") {
+      left: 0;
+      border-radius: 0 0.75rem 0.75rem 0;
+    }
+    .anticon {
+      font-size: 25px;
+      margin: 10px 0 10px 0;
+    }
+  }
+
+  .footer {
+    border-top: 1px solid $divider;
+    margin: 0 auto;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    border-bottom: 1px solid $divider;
+    color: $text-D;
+    transition: color 0.3s;
+    transition: background 0.3s;
+    bottom: -1%;
+    position: absolute;
+    width: 100%;
+    svg {
+      width: 28px;
+      cursor: pointer;
+    }
+  }
+}
+
+.ant-menu-item {
+  padding: 0 !important;
+  span {
+    margin-bottom: 10px;
+  }
+}
+
+.ant-menu-dark.ant-menu-inline .ant-menu-item {
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  border-bottom: 1px solid $muted;
+  color: $text-D;
+  transition: color 0.3s;
+  transition: background 0.3s;
+  text-decoration: none;
+  white-space: normal;
+  line-height: 1.5;
+  svg {
+    fill: $text-D;
+    width: 30px;
+    margin-bottom: 2px;
+  }
+  &:hover {
+    color: $primary;
+    svg {
+      fill: $primary;
+    }
+  }
+}
+
+.ant-menu-dark .ant-menu-item-selected {
+  background-color: transparent !important;
+  color: $primary;
+  svg {
+    fill: $primary !important;
+  }
+  &::after {
+    content: " ";
+    background: $primary;
+    border-radius: 10px;
+    position: absolute;
+    width: 6px;
+    height: 70px;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+  }
+}
+
+.ant-menu-dark .ant-menu-item-selected > a,
+.ant-menu-dark .ant-menu-item-selected > span > a,
+.ant-menu-dark .ant-menu-item-selected > a:hover,
+.ant-menu-dark .ant-menu-item-selected > span > a:hover {
+  color: $primary !important;
+}
+
+.ant-menu-dark .ant-menu-item > span > a:hover {
+  color: $primary !important;
+}
+
+.ant-menu-inline-collapsed > .ant-menu-item .anticon,
+.ant-menu-inline-collapsed
+  > .ant-menu-item-group
+  > .ant-menu-item-group-list
+  > .ant-menu-item
+  .anticon,
+.ant-menu-inline-collapsed
+  > .ant-menu-item-group
+  > .ant-menu-item-group-list
+  > .ant-menu-submenu
+  > .ant-menu-submenu-title
+  .anticon,
+.ant-menu-inline-collapsed
+  > .ant-menu-submenu
+  > .ant-menu-submenu-title
+  .anticon {
+  margin: 0;
+  font-size: 20px;
+  line-height: 40px;
+}
+
+.ant-menu-dark.ant-menu-inline-collapsed {
+  width: 60px;
+  .footer {
+    svg {
+      width: 20px;
+    }
+  }
+}
+
+.ant-tooltip-open {
+  color: $primary !important;
+}
+
+.ant-menu-dark.ant-menu-inline-collapsed.ant-menu-item-selected {
+  &::after {
+    content: " ";
+    background: $primary;
+    border-radius: 10px;
+    position: absolute;
+    width: 6px;
+    height: 10px;
+    transform: translateY(-50%);
+    left: 0;
+  }
+}
+.ant-menu-dark .ant-menu-inline.ant-menu-sub {
+  background: #272727 !important;
+  position: relative;
+}
+
+.ant-menu-submenu > .ant-menu-submenu-title {
+    height: 65px !important;
+    line-height: 0 !important;
+    display: grid;
+    a:hover {
+      color: $primary !important;
+    }
+}
+
+.ant-menu-item-group > .ant-menu-item-group-list > .ant-menu-item,
+.ant-menu-inline-collapsed
+  > .ant-menu-item-group
+  > .ant-menu-item-group-list
+  > .ant-menu-submenu
+  > .ant-menu-submenu-title,
+.ant-menu-inline-collapsed > .ant-menu-submenu > .ant-menu-submenu-title {
+  padding: 0 !important;
+}
+
+.ant-menu-item:hover,
+.ant-menu-item-active,
+.ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open,
+.ant-menu-submenu-active,
+.ant-menu-submenu-title:hover {
+  color: $primary !important;
+  a{
+    &:hover {
+        color: $primary !important;
+      }
+}
+}
+
+.ant-menu-item-selected {
+  color: $primary !important;
+}
+
+.ant-menu-item-selected a,
+.ant-menu-item-selected a:hover {
+  color: $primary !important;
+}
+
+.ant-menu-submenu-popup > .ant-menu {
+  background: #272727 !important;
+  height: calc(16vh - 12px);
+  
+  .ant-menu-item-only-child {
+    margin: 15px !important;
+    height: 20px !important;
+    line-height: 20px !important;
+    a{
+        &:hover {
+            color: $primary !important;
+          }
+    }
+  }
+}

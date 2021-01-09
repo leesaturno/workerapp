@@ -1,0 +1,603 @@
+@import "../../App.scss";
+
+.card {
+    border-radius: .75rem;
+    margin: auto;
+    display: block;
+    width: 80%;
+    border: initial;
+    box-shadow: 0 1px 15px rgba(0, 0, 0, .1), 0 1px 8px rgba(0, 0, 0, .1);
+    position: relative;
+    text-align: center;
+    padding: 10px 30px 10px 30px;
+
+    @include respond('phone-land') {
+        width: 80%;
+        padding: 0;
+    }
+
+    .card-header {
+        height: 70px;
+        border-bottom: 1px solid $divider;
+        width: 100%;
+
+        @include respond('phone-land') {
+            height: 60px;
+        }
+
+        @media only screen and (max-width: 367px) {
+            height: 130px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .card-title {
+            margin-left: 30px;
+            line-height: 5em;
+        }
+    }
+
+    .card-body {
+        padding: 0 10px 10px 10px;
+
+        @include respond('phone-land') {
+            padding: 0;
+        }
+    }
+}
+
+
+
+.cardAmplio {
+    border-radius: .75rem;
+    margin: auto;
+    display: block;
+    width: 80%;
+    box-shadow: 0 1px 15px rgba(0, 0, 0, .1), 0 1px 8px rgba(0, 0, 0, .1);
+    position: relative;
+    padding: 10px;
+    vertical-align: middle;
+    text-align: center;
+
+    @include respond('phone-land') {
+        width: 80%;
+        padding: 0;
+        margin-left: 12%;
+    }
+
+    .card-header {
+        height: 60px;
+        width: 100%;
+        border-bottom: 1px solid $divider;
+
+        .card-title {
+            margin-left: 30px;
+            line-height: 5em;
+        }
+    }
+
+    .card-body {
+        padding: 0 10px 0 10px;
+        text-align: left;
+
+        @include respond('phone-land') {
+            padding: 0;
+        }
+    }
+}
+
+
+.card-step {
+    border-radius: .75rem;
+    width: 50%;
+    box-shadow: 0 1px 15px rgba(0, 0, 0, .1), 0 1px 8px rgba(0, 0, 0, .1);
+    margin: auto;
+    text-align: center;
+    padding: 10px;
+
+    @include respond('phone-land') {
+        width: 80%;
+        padding: 0;
+    }
+
+    .card-header {
+        height: 60px;
+        width: 100%;
+
+        .card-title {
+            line-height: 5em;
+        }
+    }
+
+    .card-body {
+        padding: 20px;
+        text-align: left;
+
+        @include respond('phone-land') {
+            margin-right: 0 !important;
+            padding: 10px !important;
+        }
+
+        @include respond('tab-port') {
+            margin-right: 0 !important;
+            padding: 0;
+        }
+
+        @include respond('tab') {
+            margin-right: 0;
+            padding: 0;
+        }
+
+        .ml-8 {
+            margin-right: 8%;
+
+            @include respond('tab-port') {
+                margin-right: 0 !important;
+            }
+
+            @include respond('tab') {
+                margin-right: 22%;
+                margin-left: -10px;
+            }
+        }
+
+        form {
+            @include respond('tab') {
+                padding: 0;
+            }
+
+            label {
+                color: hsla(0, 0%, 56.1%, .7);
+                font-size: 12px;
+            }
+
+            input,
+            select {
+                background-color: transparent;
+                border: 1px solid #424242;
+                border-radius: .3rem;
+                color: $text-D;
+                font-size: 13px;
+                height: 40px;
+                margin-bottom: 20px;
+                padding: 10px;
+                width: 100%;
+
+                &:focus {
+                    border: 1px solid $primary;
+                }
+
+                &:read-only {
+                    border: none !important;
+
+                    &:disabled {
+                        width: max-content;
+                    }
+                }
+
+            }
+
+        }
+    }
+}
+
+.text-h {
+    @include respond('phone-land') {
+        display: none;
+    }
+}
+
+.ant-select {
+    background-color: transparent;
+    border-radius: .3rem;
+    color: $text-D !important;
+    font-size: 13px !important;
+    height: 40px;
+    margin-bottom: 20px;
+    padding: 10px;
+    width: 100%;
+}
+
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+    background-color: $card-dark !important;
+    border: 1px solid$card-dark !important;
+    border-radius: .3rem !important;
+    height: 40px !important;
+    width: 100% !important;
+}
+
+.ant-select-selection-placeholder {
+    color: $text-D !important;
+}
+
+.ant-select-item {
+    color: $text-D !important;
+}
+
+.ant-select-arrow {
+    color: $text-D !important;
+}
+
+.ant-select-dropdown {
+    background-color: $card-dark !important;
+    box-shadow: 0 1px 15px rgba(0, 0, 0, .1), 0 1px 8px rgba(0, 0, 0, .1) !important;
+}
+
+.ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+    background-color: $divider !important;
+}
+
+.ant-select-single.ant-select-open .ant-select-selection-item {
+    color: $text-D !important
+}
+
+.ant-select-focused:not(.ant-select-disabled).ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+    border-color: $primary;
+    box-shadow: 0 0 0 1px rgba(122, 138, 101, 0.75) !important;
+}
+
+.ant-empty-image svg {
+    fill: $muted !important;
+}
+
+.ant-empty-description {
+    color: $text-D !important;
+}
+
+.ant-select-show-search.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+    cursor: pointer !important;
+    border: 1px solid #424242 !important;
+}
+
+
+.ant-select-single .ant-select-selector .ant-select-selection-item,
+.ant-select-single .ant-select-selector .ant-select-selection-placeholder {
+    line-height: 38px !important;
+}
+
+.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+    font-weight: 360 !important;
+    background-color: $text-L !important;
+}
+
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield !important;
+}
+
+.separador {
+    border: 1px solid $muted;
+    padding: 15px;
+    margin-bottom: 35px;
+
+    .spanSeparador {
+        color: $muted;
+        background-color: $card-dark;
+        margin-top: -35px;
+        margin-bottom: 10px;
+        position: absolute;
+        padding: 10px;
+    }
+}
+
+.MuiButtonGroup-groupedTextPrimary:not(:last-child) {
+    border-color: rgba(122, 138, 101, 0.75) !important;
+}
+
+.MuiButton-containedPrimary {
+    background-color: $primary !important;
+
+    &:disabled {
+        background-color: $divider !important;
+    }
+
+    svg {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+.MuiButton-outlinedPrimary {
+    color: $primary !important;
+    border: 1px solid rgba(122, 138, 101, 0.75) !important;
+}
+
+.MuiButtonGroup-groupedOutlinedPrimary:hover {
+    border-color: $primary !important;
+}
+
+.MuiButtonGroup-contained {
+    height: 40px;
+}
+
+.step3 {
+    text-align: center;
+
+    svg {
+        fill: $primary;
+        width: 100%;
+    }
+}
+
+.btn-Card,
+.btn-CB {
+    background-color: $primary;
+    border: none;
+    border-radius: .5rem;
+    color: $white;
+    font-size: 13px;
+    height: 45px;
+    width: 10rem;
+    text-align: center;
+    cursor: pointer;
+    line-height: 2;
+    outline: none;
+
+    @include respond('phone-land') {
+        width: 3rem;
+    }
+
+    &:hover {
+        background-color: $primary;
+    }
+
+    svg {
+        fill: $white;
+        width: 1.5em;
+        height: 1.5em;
+        vertical-align: middle;
+    }
+}
+
+.btn-CB {
+    width: 100%;
+    margin-top: 25px;
+}
+
+.btn-SVG {
+    background-color: $primary;
+    border: none;
+    border-radius: .5rem;
+    color: $white;
+    font-size: 13px;
+    height: 45px;
+    width: 10rem;
+    text-align: center;
+    cursor: pointer;
+    line-height: 2;
+    outline: none;
+
+    &:hover {
+        background-color: $primary;
+    }
+
+    svg {
+        fill: $white;
+        width: 1.5em;
+        height: 1.5em;
+        vertical-align: middle;
+    }
+}
+
+.btn-daT {
+    border: none !important;
+    width: 5rem;
+}
+
+.btn-info-DT {
+    background-color: #1890ff !important;
+    border: none !important;
+    border-radius: 5rem !important;
+    color: #fff !important;
+    width: 2.813rem !important;
+    text-align: center !important;
+
+    span {
+        font-size: 16px;
+        text-align: center;
+        text-transform: none;
+        vertical-align: middle;
+    }
+}
+
+.centered {
+    display: flex;
+
+    svg {
+        vertical-align: middle;
+        margin: 0 25px 0 25px;
+    }
+}
+
+.btn-scan {
+    height: 50px !important;
+    width: 50px !important;
+    border: none;
+    border-radius: 100px !important;
+    margin: 15px;
+    position: relative;
+    cursor: pointer;
+    background-color: $primary;
+    text-align: center;
+    line-height: 2;
+    outline: none;
+
+    &:hover {
+        background-color: $primary;
+    }
+
+    svg {
+        fill: $white;
+        width: 1.5em;
+        height: 1.5em;
+        vertical-align: middle;
+
+        @include respond('phone') {
+            display: block;
+            margin: 0 -7px;
+        }
+    }
+
+    @include respond('phone') {
+        height: 35px !important;
+        width: 35px !important;
+    }
+}
+
+.scan {
+    &::before {
+        content: '' !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        position: absolute !important;
+        height: 100%;
+        width: 100%;
+        border-radius: 100px !important;
+        box-sizing: border-box;
+        border: 5px solid #ccc;
+        display: block !important;
+        top: 0 !important;
+        background-color: transparent !important;
+    }
+}
+
+.scanFlotante {
+    position: relative;
+    float: right;
+    margin-top: -70px;
+
+    @media only screen and (max-width: 367px) {
+        margin-top: -32px !important;
+        margin-right: -12px;
+    }
+
+    @include respond('phone-land') {
+        margin-top: -75px;
+        margin-right: -7px;
+    }
+}
+
+.form-progress {
+    width: 10%;
+    height: 65px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+
+    &::before {
+        content: "";
+        width: calc(48% - 545px);
+        border-top: 2px solid $primary;
+        position: absolute;
+        top: 21.6%;
+        margin-left: 16px;
+        transform: translateY(-50%);
+        z-index: -100;
+
+        @include respond('phone-land') {
+            top: 21.6%;
+        }
+    }
+}
+
+.step {
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    border: 2px solid $primary;
+    background: $bg-dark;
+}
+
+.step-current {
+    border: 2px solid $primary;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 21.6%;
+        margin-left: 0;
+        width: 8px;
+        height: 8px;
+        border-radius: 4px;
+        background: $primary;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.step-done {
+    font-size: 0.75rem;
+    color: white;
+    border: 2px solid $primary;
+    background: $primary;
+}
+
+.step-done>i {
+    position: relative;
+    top: -2px;
+    z-index: 100;
+}
+
+.steps-action {
+    padding: 35px 0 25px 0 !important;
+}
+
+.cobertura {
+    margin-top: -3%;
+    clear: both;
+    min-height: 24px;
+    padding-top: 0;
+    color: $primary;
+    font-size: 12px;
+    line-height: 1.5715;
+    -webkit-transition: color .3s cubic-bezier(.215, .61, .355, 1);
+    transition: color .3s cubic-bezier(.215, .61, .355, 1);
+
+    @include respond('phone-land') {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    @include respond('tab-port') {
+        margin-top: 3%;
+    }
+}
+
+.ant-spin {
+    color: $primary !important;
+
+    svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+}
+
+.mb-3,
+.my-3 {
+    margin-bottom: 1rem !important;
+}
+
+.d-flex {
+    display: flex !important;
+}
+
+.fr {
+    float: right;
+}
+
+.fl {
+    float: left;
+}
+
+.mr-30 {
+    margin-right: 30px;
+}

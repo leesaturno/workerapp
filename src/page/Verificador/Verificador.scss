@@ -1,0 +1,149 @@
+@import "../../App.scss";
+
+.navbar {
+    .user {
+        margin-right: 50px;
+        img {
+            border-radius: 0;
+            width: 100px;
+            margin-top: 25px;
+            @include respond('phone-land') {
+                height: auto;
+                width: 70px;
+                margin-top: -12px;
+            }
+        }
+    }
+}
+.ant-modal {
+    color: $text-D !important;
+    font-size: 12px !important; }
+  
+  .ant-modal-title {
+    color: $text-D !important;}
+  
+  .ant-modal-content {
+    background-color: $card-dark !important;
+    border-radius: .75rem !important; 
+    video{
+        width: 300px !important;
+    }
+}
+  
+.ant-modal-header {
+    padding: 16px 24px;
+    color: $primary !important;
+    background: $card-dark !important;
+    border-bottom: 1px solid $divider !important; }
+
+.ant-modal-footer {
+    border-top: 1px solid$divider !important; }
+
+.ant-modal-footer button + button {
+    margin-bottom: 0;
+    margin-left: 8px; }
+      
+.ant-modal-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    padding: 0;
+    color: $text-D !important;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    transition: color 0.3s; }
+
+.ant-modal-close-x {
+    display: block;
+    width: 56px;
+    height: 56px;
+    font-size: 16px;
+    font-style: normal;
+    line-height: 56px;
+    text-align: center;
+    text-transform: none;
+    text-rendering: auto; }
+
+.ant-modal-footer button {
+    width: 17%;
+    @include respond('phone-land') {
+        width: 30%;
+    }
+}
+
+.ant-modal-footer {
+    .ant-btn {
+        &:hover{
+            border-color: $primary !important; 
+        } 
+        
+    }
+}
+
+.controls {
+    height: 80px;
+    width: 85%;
+    // background: $card-dark;
+    position: absolute;
+    bottom: 26%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @media only screen and (max-width: 367px) {
+        bottom: 18%;
+    }
+}
+
+.btnCapture {
+    height: 60px;
+    width: 60px;
+    background: #fff;
+    border: none;
+    border-radius: 100px;
+    margin: 15px;
+    position: relative;
+    cursor:pointer;
+}
+
+.snap{
+    &::before {
+        content: '';
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        border-radius: 100px;
+        box-sizing: border-box;
+        border: 5px solid #ccc;
+        display: block;
+        top: 0%;
+    }
+    &:active {
+        opacity:0.8;
+        transform:scale(0.99);
+        border: none;
+    }
+}
+
+form {
+    input {
+        &:read-only{
+            border: 1px solid #424242 !important;
+        }
+    }          
+}
+
+.btn-CB {
+    margin-top: 0 !important;
+}
+
+.center {
+    vertical-align: middle;
+    text-align: center;
+    margin-bottom: 10px;
+}

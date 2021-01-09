@@ -1,0 +1,21 @@
+@import "../../App.scss";
+
+footer {
+    height: 90px;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    color: $divider;
+    transition: color .3s;
+    transition: background .3s;
+    bottom: -115px;
+    position: absolute;
+    left: 174px;
+    @include respond('phone-land') {
+        left: 5%;
+        right: 5%;
+        text-align: center;
+        margin: 0 auto;
+        margin-left: 10%;
+    }
+}
